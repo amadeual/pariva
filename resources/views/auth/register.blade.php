@@ -3,14 +3,22 @@
 @section('title', 'Cadastre-se - Pariva')
 
 @section('content')
-<div class="px-6 py-8 flex flex-col justify-between min-h-screen max-w-md mx-auto bg-[#fbf9f8]">
+<div class="px-6 py-6 flex flex-col justify-between min-h-screen max-w-md mx-auto bg-[#fbf9f8]">
+
+    <!-- Top Return to Home Button -->
+    <div class="w-full flex justify-between items-center">
+        <a href="{{ url('/') }}" class="inline-flex items-center gap-1.5 text-xs font-extrabold text-[#590219] bg-[#590219]/10 px-3 py-1.5 rounded-full hover:bg-[#590219]/20 transition-all">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            <span>Página Inicial</span>
+        </a>
+    </div>
 
     <!-- Main Container -->
-    <div class="flex flex-col items-center gap-6 w-full pt-4">
+    <div class="flex flex-col items-center gap-6 w-full pt-2">
         
         <!-- Brand Header Logo -->
-        <div class="flex flex-col items-center gap-2">
-            <img src="{{ asset('images/logo.jpg') }}" alt="Pariva Logo" class="h-20 w-auto object-contain rounded-2xl shadow-sm">
+        <a href="{{ url('/') }}" class="flex flex-col items-center gap-2 group" title="Ir para a página inicial">
+            <img src="{{ asset('images/logo.jpg') }}" alt="Pariva Logo" class="h-20 w-auto object-contain rounded-2xl shadow-sm group-hover:scale-105 transition-transform">
             <p class="text-xs text-[#796a6e] text-center max-w-xs leading-relaxed mt-1">
                 Sua jornada rumo a conexões mais profundas começa aqui.
             </p>

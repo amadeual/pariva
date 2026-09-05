@@ -3,17 +3,13 @@
 @section('title', 'Esqueceu sua senha? - Pariva')
 
 @section('header')
-    <header class="w-full px-5 py-4 flex justify-between items-center bg-[#fbf9f8] border-b border-[#ede7e5]/40">
-        <div class="flex items-center gap-2">
-            <div class="w-7 h-7 rounded-lg bg-[#f0e6e4] flex items-center justify-center p-1">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#590219" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
-                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                </svg>
-            </div>
-            <span class="text-xl font-extrabold text-[#590219] tracking-tight">Assinatura Premium</span>
-        </div>
-        <a href="{{ route('profile.edit') }}" class="w-9 h-9 rounded-full overflow-hidden border-2 border-[#590219]/20 shadow-sm">
-            <img src="{{ asset('images/avatars/isabella.jpg') }}" alt="Perfil" class="w-full h-full object-cover">
+    <header class="w-full px-5 py-4 flex justify-between items-center bg-[#fbf9f8] border-b border-[#ede7e5]">
+        <a href="{{ url('/') }}" class="flex items-center gap-2">
+            <img src="{{ asset('images/logo.jpg') }}" alt="Pariva Logo" class="h-8 w-auto object-contain rounded-lg shadow-xs">
+            <span class="text-xl font-extrabold text-[#590219] tracking-tight">Pariva</span>
+        </a>
+        <a href="{{ url('/') }}" class="text-xs font-bold text-[#796a6e] hover:text-[#590219]">
+            Início
         </a>
     </header>
 @endsection

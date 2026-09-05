@@ -105,8 +105,13 @@
         <!-- Bottom Navigation Bar (Design Silencioso & Elegante Pariva) -->
         <nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-[#f7f2f0]/95 backdrop-blur-xl border-t border-[#e8dedb] z-50 py-2 px-1 flex justify-around items-center text-[10px] text-[#796a6e] shadow-[0_-4px_20px_rgba(89,2,25,0.05)]">
             <a href="{{ route('discover') }}" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-xl transition-all duration-200 {{ request()->routeIs('discover') ? 'text-[#590219] font-bold bg-[#590219]/10 shadow-xs' : 'hover:text-[#590219] hover:bg-[#eee8e5]' }}">
-                <i data-lucide="compass" class="w-5 h-5 {{ request()->routeIs('discover') ? 'stroke-[2.25px]' : 'stroke-[1.75px]' }}"></i>
+                <i data-lucide="sparkles" class="w-5 h-5 {{ request()->routeIs('discover') ? 'stroke-[2.25px]' : 'stroke-[1.75px]' }}"></i>
                 <span>Descobrir</span>
+            </a>
+
+            <a href="{{ route('explore') }}" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-xl transition-all duration-200 {{ request()->routeIs('explore') ? 'text-[#590219] font-bold bg-[#590219]/10 shadow-xs' : 'hover:text-[#590219] hover:bg-[#eee8e5]' }}">
+                <i data-lucide="compass" class="w-5 h-5 {{ request()->routeIs('explore') ? 'stroke-[2.25px]' : 'stroke-[1.75px]' }}"></i>
+                <span>Explorar</span>
             </a>
 
             <a href="{{ route('encontros') }}" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-xl transition-all duration-200 {{ request()->routeIs('encontros*') ? 'text-[#590219] font-bold bg-[#590219]/10 shadow-xs' : 'hover:text-[#590219] hover:bg-[#eee8e5]' }}">

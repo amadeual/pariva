@@ -64,6 +64,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('/descobrir', [AppController::class, 'discover'])->name('discover');
+    Route::get('/explorar', [AppController::class, 'explore'])->name('explore');
     Route::post('/like/{user}', [AppController::class, 'likeUser'])->name('like.user');
 
     Route::get('/curtidas', [AppController::class, 'likes'])->name('likes');

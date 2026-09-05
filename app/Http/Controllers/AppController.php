@@ -48,6 +48,32 @@ class AppController extends Controller
         return view('landing', compact('profiles'));
     }
 
+    public function explore(Request $request)
+    {
+        $currentUser = Auth::user();
+        $query = User::where('id', '!=', $currentUser->id);
+
+        if ($currentUser->interested_in && $currentUser->interested_in !== 'todos') {
+            if ($currentUser->interested_in === 'homens') {
+                $query->where('gender', 'homem');
+            } elseif ($currentUser->interested_in === 'mulheres') {
+                $query->where('gender', 'mulher');
+            } elseif ($currentUser->interested_in === 'nao_binarios') {
+                $query->where('gender', 'nao_binario');
+            }
+        }
+
+        $mode = $request->query('mode');
+        if ($mode) {
+            // Apply category filter logic or random subset based on intent mode
+            $users = $query->inRandomOrder()->take(6)->get();
+        } else {
+            $users = $query->inRandomOrder()->take(10)->get();
+        }
+
+        return view('explore', compact('users', 'mode'));
+    }
+
     public function discover()
     {
         $currentUser = Auth::user();

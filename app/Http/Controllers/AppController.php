@@ -98,6 +98,7 @@ class AppController extends Controller
         $user = Auth::user();
 
         $validated = $request->validate([
+            'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'],
             'age' => ['nullable', 'integer', 'min:18', 'max:120'],
             'location' => ['nullable', 'string', 'max:255'],
             'profession' => ['nullable', 'string', 'max:255'],
@@ -105,18 +106,27 @@ class AppController extends Controller
             'interests' => ['nullable', 'array', 'max:10'],
             'interests.*' => ['string', 'max:50'],
         ], [
+            'avatar.image' => 'O arquivo enviado deve ser uma imagem válida.',
+            'avatar.max' => 'A foto de perfil deve ter no máximo 5MB.',
             'age.min' => 'É necessário ter pelo menos 18 anos.',
             'age.max' => 'Informe uma idade válida.',
             'interests.max' => 'Você pode selecionar no máximo 10 interesses.',
         ]);
 
-        $user->update([
+        $updateData = [
             'age' => $validated['age'] ?? $user->age,
             'location' => $validated['location'] ?? $user->location,
             'profession' => $validated['profession'] ?? $user->profession,
             'bio' => $validated['bio'] ?? $user->bio,
             'interests' => $request->has('interests') ? array_values(array_filter($request->interests)) : ($user->interests ?? []),
-        ]);
+        ];
+
+        if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
+            $path = $request->file('avatar')->store('avatars', 'public');
+            $updateData['avatar'] = $path;
+        }
+
+        $user->update($updateData);
 
         return back()->with('success', 'Perfil atualizado com sucesso!');
     }

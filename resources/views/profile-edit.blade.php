@@ -41,15 +41,18 @@
     @endif
 
     <!-- Main Profile Edit Form -->
-    <form id="profile-edit-form" method="POST" action="{{ route('profile.update') }}" class="flex flex-col gap-6">
+    <form id="profile-edit-form" method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data" class="flex flex-col gap-6">
         @csrf
+
+        <!-- Hidden file input for photo upload -->
+        <input type="file" id="avatar-input" name="avatar" accept="image/*" class="hidden" onchange="previewAvatar(this)">
 
         <!-- Photos Grid (Exact Stitch Layout: 1 main big photo, 2 stacked, 3 empty slots) -->
         <div class="flex flex-col gap-2">
             <div class="grid grid-cols-3 gap-2">
                 <!-- Main Large Photo (Spans 2 cols & 2 rows) -->
                 <div class="col-span-2 row-span-2 relative h-60 rounded-2xl overflow-hidden shadow-sm border border-[#ede7e5] bg-[#eee9e6]">
-                    <img src="{{ Auth::user()->avatar ? (str_starts_with(Auth::user()->avatar, 'http') ? Auth::user()->avatar : asset('storage/' . Auth::user()->avatar)) : (file_exists(public_path('images/avatars/' . strtolower(explode(' ', Auth::user()->name)[0]) . '.jpg')) ? asset('images/avatars/' . strtolower(explode(' ', Auth::user()->name)[0]) . '.jpg') : asset('images/avatars/placeholder.jpg')) }}" 
+                    <img id="avatar-preview-img" src="{{ Auth::user()->avatar ? (str_starts_with(Auth::user()->avatar, 'http') ? Auth::user()->avatar : asset('storage/' . Auth::user()->avatar)) : (file_exists(public_path('images/avatars/' . strtolower(explode(' ', Auth::user()->name)[0]) . '.jpg')) ? asset('images/avatars/' . strtolower(explode(' ', Auth::user()->name)[0]) . '.jpg') : asset('images/avatars/placeholder.jpg')) }}" 
                          onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'"
                          alt="Foto Principal" class="w-full h-full object-cover">
                     <!-- Principal Badge -->
@@ -57,32 +60,37 @@
                         <i data-lucide="star" class="w-3 h-3 text-[#590219] fill-current"></i> PRINCIPAL
                     </div>
                     <!-- Edit Icon Badge -->
-                    <div class="absolute bottom-3 right-3 w-7 h-7 rounded-full bg-white text-[#221417] flex items-center justify-center shadow-md cursor-pointer">
-                        <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
-                    </div>
+                    <button type="button" onclick="document.getElementById('avatar-input').click()" class="absolute bottom-3 right-3 w-8 h-8 rounded-full bg-[#590219] text-white flex items-center justify-center shadow-md cursor-pointer hover:bg-[#3f0111] transition-transform hover:scale-105" title="Alterar Foto de Perfil">
+                        <i data-lucide="camera" class="w-4 h-4"></i>
+                    </button>
                 </div>
 
                 <!-- Photo 2 Slot -->
-                <button type="button" class="relative h-[116px] rounded-2xl bg-[#eee9e6] border-2 border-dashed border-[#d6c7c4] flex items-center justify-center text-[#796a6e] hover:bg-[#e6dfdc] transition-colors">
+                <button type="button" onclick="document.getElementById('avatar-input').click()" class="relative h-[116px] rounded-2xl bg-[#eee9e6] border-2 border-dashed border-[#d6c7c4] flex flex-col items-center justify-center gap-1 text-[#796a6e] hover:bg-[#e6dfdc] transition-colors">
                     <i data-lucide="plus" class="w-5 h-5"></i>
+                    <span class="text-[9px] font-bold">Adicionar</span>
                 </button>
 
                 <!-- Photo 3 Slot -->
-                <button type="button" class="relative h-[116px] rounded-2xl bg-[#eee9e6] border-2 border-dashed border-[#d6c7c4] flex items-center justify-center text-[#796a6e] hover:bg-[#e6dfdc] transition-colors">
+                <button type="button" onclick="document.getElementById('avatar-input').click()" class="relative h-[116px] rounded-2xl bg-[#eee9e6] border-2 border-dashed border-[#d6c7c4] flex flex-col items-center justify-center gap-1 text-[#796a6e] hover:bg-[#e6dfdc] transition-colors">
                     <i data-lucide="plus" class="w-5 h-5"></i>
+                    <span class="text-[9px] font-bold">Adicionar</span>
                 </button>
             </div>
 
             <!-- 3 Empty Slots Row -->
             <div class="grid grid-cols-3 gap-2">
-                <button type="button" class="h-24 rounded-2xl bg-[#eee9e6] border-2 border-dashed border-[#d6c7c4] flex items-center justify-center text-[#796a6e] hover:bg-[#e6dfdc] transition-colors">
-                    <i data-lucide="plus" class="w-6 h-6"></i>
+                <button type="button" onclick="document.getElementById('avatar-input').click()" class="h-24 rounded-2xl bg-[#eee9e6] border-2 border-dashed border-[#d6c7c4] flex flex-col items-center justify-center gap-1 text-[#796a6e] hover:bg-[#e6dfdc] transition-colors">
+                    <i data-lucide="plus" class="w-5 h-5"></i>
+                    <span class="text-[9px] font-bold">Foto</span>
                 </button>
-                <button type="button" class="h-24 rounded-2xl bg-[#eee9e6] border-2 border-dashed border-[#d6c7c4] flex items-center justify-center text-[#796a6e] hover:bg-[#e6dfdc] transition-colors">
-                    <i data-lucide="plus" class="w-6 h-6"></i>
+                <button type="button" onclick="document.getElementById('avatar-input').click()" class="h-24 rounded-2xl bg-[#eee9e6] border-2 border-dashed border-[#d6c7c4] flex flex-col items-center justify-center gap-1 text-[#796a6e] hover:bg-[#e6dfdc] transition-colors">
+                    <i data-lucide="plus" class="w-5 h-5"></i>
+                    <span class="text-[9px] font-bold">Foto</span>
                 </button>
-                <button type="button" class="h-24 rounded-2xl bg-[#eee9e6] border-2 border-dashed border-[#d6c7c4] flex items-center justify-center text-[#796a6e] hover:bg-[#e6dfdc] transition-colors">
-                    <i data-lucide="plus" class="w-6 h-6"></i>
+                <button type="button" onclick="document.getElementById('avatar-input').click()" class="h-24 rounded-2xl bg-[#eee9e6] border-2 border-dashed border-[#d6c7c4] flex flex-col items-center justify-center gap-1 text-[#796a6e] hover:bg-[#e6dfdc] transition-colors">
+                    <i data-lucide="plus" class="w-5 h-5"></i>
+                    <span class="text-[9px] font-bold">Foto</span>
                 </button>
             </div>
 
@@ -188,6 +196,19 @@
 </div>
 
 <script>
+    function previewAvatar(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.getElementById('avatar-preview-img');
+                if (img) {
+                    img.src = e.target.result;
+                }
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
     function updateInterestCount() {
         const wrapper = document.getElementById('interests-wrapper');
         const count = wrapper.querySelectorAll('.interest-chip').length;

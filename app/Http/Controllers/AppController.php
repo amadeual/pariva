@@ -64,7 +64,16 @@ class AppController extends Controller
             'is_superlike' => $isSuperlike,
         ]);
 
-        return redirect()->route('match.celebration', ['user' => $likedUserId]);
+        // Check if there is a mutual like (reciprocal match)
+        $reciprocalLike = UserLike::where('user_id', $likedUserId)
+            ->where('liked_user_id', $currentUser->id)
+            ->exists();
+
+        if ($reciprocalLike) {
+            return redirect()->route('match.celebration', ['user' => $likedUserId]);
+        }
+
+        return redirect()->route('discover')->with('success', 'Curtida enviada!');
     }
 
     public function matchCelebration(Request $request)

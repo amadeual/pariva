@@ -40,6 +40,7 @@ class User extends Authenticatable
         'featured_plan',
         'see_likes_until',
         'is_premium',
+        'direct_chat_credits',
     ];
 
     /**

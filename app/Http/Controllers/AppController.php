@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Date;
+use App\Models\Message;
 use App\Models\User;
 use App\Models\UserLike;
 use Illuminate\Http\Request;
@@ -233,6 +234,97 @@ class AppController extends Controller
         return redirect()->route('encontros')->with('success', 'Encontro agendado com sucesso!');
     }
 
+    public function chat(Request $request)
+    {
+        $currentUser = Auth::user();
+
+        // Fetch user IDs with mutual likes (matches)
+        $likedUserIds = UserLike::where('user_id', $currentUser->id)->pluck('liked_user_id');
+        $matchedUserIds = UserLike::where('liked_user_id', $currentUser->id)
+            ->whereIn('user_id', $likedUserIds)
+            ->pluck('user_id');
+
+        // Fetch users with existing message history (including direct credit chats)
+        $messagedUserIds = Message::where('sender_id', $currentUser->id)
+            ->pluck('receiver_id')
+            ->merge(Message::where('receiver_id', $currentUser->id)->pluck('sender_id'));
+
+        // All allowed active chat user IDs
+        $allowedUserIds = $matchedUserIds->merge($messagedUserIds)->unique();
+
+        $activeChats = User::whereIn('id', $allowedUserIds)->get();
+
+        // Selected recipient user
+        $selectedUserId = $request->query('user_id') ?? ($activeChats->first()->id ?? null);
+        $selectedUser = $selectedUserId ? User::find($selectedUserId) : null;
+
+        $messages = collect();
+        if ($selectedUser) {
+            $messages = Message::where(function ($q) use ($currentUser, $selectedUser) {
+                $q->where('sender_id', $currentUser->id)->where('receiver_id', $selectedUser->id);
+            })->orWhere(function ($q) use ($currentUser, $selectedUser) {
+                $q->where('sender_id', $selectedUser->id)->where('receiver_id', $currentUser->id);
+            })->orderBy('created_at', 'asc')->get();
+
+            // Mark unread messages as read
+            Message::where('sender_id', $selectedUser->id)
+                ->where('receiver_id', $currentUser->id)
+                ->update(['is_read' => true]);
+        }
+
+        return view('chat', compact('activeChats', 'selectedUser', 'messages'));
+    }
+
+    public function sendMessage(Request $request)
+    {
+        $request->validate([
+            'receiver_id' => 'required|exists:users,id',
+            'message' => 'required|string|max:1000',
+        ]);
+
+        $currentUser = Auth::user();
+        $receiverId = $request->receiver_id;
+
+        // Check if mutual match exists
+        $isMatch = UserLike::where('user_id', $currentUser->id)->where('liked_user_id', $receiverId)->exists()
+            && UserLike::where('user_id', $receiverId)->where('liked_user_id', $currentUser->id)->exists();
+
+        // Check if previous conversation exists
+        $hasHistory = Message::where(function ($q) use ($currentUser, $receiverId) {
+            $q->where('sender_id', $currentUser->id)->where('receiver_id', $receiverId);
+        })->orWhere(function ($q) use ($currentUser, $receiverId) {
+            $q->where('sender_id', $receiverId)->where('receiver_id', $currentUser->id);
+        })->exists();
+
+        // If no match and no previous history, require direct chat credit
+        if (!$isMatch && !$hasHistory) {
+            if ($currentUser->direct_chat_credits <= 0) {
+                return back()->withErrors([
+                    'chat_credit' => 'Você precisa de Crédito de Chat Direto ou um Match para iniciar esta conversa!'
+                ]);
+            }
+            // Consume 1 direct chat credit
+            $currentUser->decrement('direct_chat_credits');
+        }
+
+        Message::create([
+            'sender_id' => $currentUser->id,
+            'receiver_id' => $receiverId,
+            'message' => trim($request->message),
+        ]);
+
+        return redirect()->route('chat', ['user_id' => $receiverId]);
+    }
+
+    public function buyChatCredits(Request $request)
+    {
+        $user = Auth::user();
+        // R$ 15.00 package grants 3 direct chat credits
+        $user->increment('direct_chat_credits', 3);
+
+        return back()->with('success', 'Pacote de 3 Chats Diretos ativado com sucesso! (R$ 15,00)');
+    }
+
     public function reportUser(Request $request)
     {
         $validated = $request->validate([
@@ -380,11 +472,6 @@ class AppController extends Controller
     {
         $user = Auth::user();
         return view('filtros', compact('user'));
-    }
-
-    public function chat()
-    {
-        return view('chat');
     }
 
     public function games()

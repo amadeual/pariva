@@ -160,6 +160,42 @@
         </div>
     </div>
 
+    <!-- Section: Chat Direto Sem Match (R$ 15,00) -->
+    <div class="px-5 flex flex-col gap-3">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-7 h-7 rounded-lg bg-[#590219]/10 text-[#590219] flex items-center justify-center font-bold">
+                    💬
+                </div>
+                <h2 class="text-base font-extrabold text-[#221417]">Chat Direto sem Match</h2>
+            </div>
+            <span class="text-[10px] font-extrabold text-[#590219] bg-[#590219]/10 px-2.5 py-0.5 rounded-full">
+                Créditos: {{ Auth::user()->direct_chat_credits }}
+            </span>
+        </div>
+        <p class="text-xs text-[#796a6e]">
+            Envie mensagens para qualquer pessoa da plataforma mesmo sem ter dado match!
+        </p>
+
+        <form action="{{ route('user.buy-chat-credits') }}" method="POST">
+            @csrf
+            <div class="bg-gradient-to-r from-amber-500 via-[#880d2d] to-[#590219] text-white rounded-2xl p-4 shadow-md flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-2xl shrink-0">
+                        ⚡
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-xs font-extrabold">Pacote 3 Chats Diretos</span>
+                        <span class="text-[11px] text-white/80">Inicie até 3 conversas exclusivas</span>
+                    </div>
+                </div>
+                <button type="submit" class="px-4 py-2 bg-amber-400 text-[#590219] font-black text-xs rounded-xl shadow-sm hover:bg-amber-300 transition-colors shrink-0 cursor-pointer">
+                    R$ 15,00
+                </button>
+            </div>
+        </form>
+    </div>
+
     <!-- Section 3: Ver Quem Te Curtiu -->
     <div class="px-5 flex flex-col gap-3 mt-2">
         <div class="flex items-center gap-2">

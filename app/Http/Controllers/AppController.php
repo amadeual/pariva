@@ -12,7 +12,39 @@ class AppController extends Controller
 {
     public function landing()
     {
-        $profiles = User::inRandomOrder()->take(3)->get();
+        $profiles = [
+            [
+                'name' => 'Mariana',
+                'age' => 26,
+                'profession' => 'Arquiteta & Designer',
+                'location' => 'São Paulo, SP',
+                'avatar' => asset('images/avatars/ai_demo_mariana.png'),
+                'bio' => 'Apixonada por cafés charmosos, livros de arte e conversas profundas no fim de tarde.',
+                'compatibility' => 96,
+                'is_verified' => true,
+            ],
+            [
+                'name' => 'Lucas',
+                'age' => 29,
+                'profession' => 'Engenheiro de Software',
+                'location' => 'São Paulo, SP',
+                'avatar' => asset('images/avatars/ai_demo_lucas.png'),
+                'bio' => 'Adoro praticar corrida ao ar livre, viajar para a praia e cozinhar receitas novas nos finais de semana.',
+                'compatibility' => 94,
+                'is_verified' => true,
+            ],
+            [
+                'name' => 'Camila',
+                'age' => 27,
+                'profession' => 'Médica Veterinária',
+                'location' => 'Campinas, SP',
+                'avatar' => asset('images/avatars/ai_demo_camila.png'),
+                'bio' => 'Fã de fotografia analógica, trilhas na natureza e um bom vinho tinto.',
+                'compatibility' => 91,
+                'is_verified' => true,
+            ],
+        ];
+
         return view('landing', compact('profiles'));
     }
 

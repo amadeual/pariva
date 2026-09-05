@@ -105,68 +105,40 @@
         </div>
 
         <div class="grid grid-cols-1 gap-4">
-            @forelse($profiles as $profile)
+            @foreach($profiles as $profile)
                 <div class="bg-gradient-to-br from-white to-[#f7f2f0] rounded-3xl p-5 border border-[#ede7e5] shadow-md hover:shadow-lg transition-all flex flex-col gap-3 relative overflow-hidden">
                     <div class="flex items-center gap-4">
                         <div class="relative w-16 h-16 rounded-2xl overflow-hidden shrink-0 border-2 border-white shadow-sm bg-[#eee9e6]">
-                            <img src="{{ $profile->avatar ? (str_starts_with($profile->avatar, 'http') ? $profile->avatar : asset('storage/' . $profile->avatar)) : (file_exists(public_path('images/avatars/' . strtolower(explode(' ', $profile->name)[0]) . '.jpg')) ? asset('images/avatars/' . strtolower(explode(' ', $profile->name)[0]) . '.jpg') : asset('images/avatars/placeholder.jpg')) }}" 
+                            <img src="{{ $profile['avatar'] }}" 
                                  onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'"
-                                 alt="{{ $profile->name }}" class="w-full h-full object-cover">
+                                 alt="{{ $profile['name'] }}" class="w-full h-full object-cover">
                         </div>
 
                         <div class="flex flex-col gap-0.5 flex-1 min-w-0">
                             <div class="flex items-center gap-1.5">
-                                <h4 class="font-extrabold text-base text-[#221417] truncate">{{ $profile->name }}</h4>
-                                <span class="text-sm font-semibold text-[#796a6e]">, {{ $profile->age ?? '25' }}</span>
-                                @if($profile->is_verified)
+                                <h4 class="font-extrabold text-base text-[#221417] truncate">{{ $profile['name'] }}</h4>
+                                <span class="text-sm font-semibold text-[#796a6e]">, {{ $profile['age'] }}</span>
+                                @if($profile['is_verified'])
                                     <i data-lucide="badge-check" class="w-4 h-4 text-amber-500 fill-amber-500/20 shrink-0"></i>
                                 @endif
                             </div>
 
-                            <p class="text-xs text-[#796a6e] truncate">{{ $profile->profession ?? 'Profissional' }} • {{ $profile->location ?? 'São Paulo' }}</p>
+                            <p class="text-xs text-[#796a6e] truncate">{{ $profile['profession'] }} • {{ $profile['location'] }}</p>
 
                             <div class="mt-1 inline-flex items-center gap-1 text-[10px] font-bold text-[#590219] bg-[#590219]/10 px-2.5 py-0.5 rounded-full w-fit">
                                 <i data-lucide="sparkles" class="w-3 h-3 text-[#590219]"></i>
-                                <span>{{ rand(84, 98) }}% Compatível</span>
+                                <span>{{ $profile['compatibility'] }}% Compatível</span>
                             </div>
                         </div>
                     </div>
 
-                    @if($profile->bio)
+                    @if(!empty($profile['bio']))
                         <p class="text-xs text-[#221417]/80 italic line-clamp-2 bg-white/60 p-2.5 rounded-xl border border-[#ede7e5]/50">
-                            "{{ $profile->bio }}"
+                            "{{ $profile['bio'] }}"
                         </p>
                     @endif
                 </div>
-            @empty
-                <!-- Fallback 3 static profiles if database is empty -->
-                <div class="bg-gradient-to-br from-white to-[#f7f2f0] rounded-3xl p-5 border border-[#ede7e5] shadow-md flex items-center gap-4">
-                    <img src="{{ asset('images/avatars/mariana.jpg') }}" alt="Mariana" class="w-16 h-16 rounded-2xl object-cover border-2 border-white shadow-sm">
-                    <div>
-                        <h4 class="font-extrabold text-base text-[#221417]">Mariana, 26 <i data-lucide="badge-check" class="inline w-4 h-4 text-amber-500"></i></h4>
-                        <p class="text-xs text-[#796a6e]">Arquiteta • São Paulo</p>
-                        <span class="text-[10px] font-bold text-[#590219] bg-[#590219]/10 px-2 py-0.5 rounded-full mt-1 inline-block">96% Compatível</span>
-                    </div>
-                </div>
-
-                <div class="bg-gradient-to-br from-white to-[#f7f2f0] rounded-3xl p-5 border border-[#ede7e5] shadow-md flex items-center gap-4">
-                    <img src="{{ asset('images/avatars/lucas.jpg') }}" alt="Lucas" class="w-16 h-16 rounded-2xl object-cover border-2 border-white shadow-sm">
-                    <div>
-                        <h4 class="font-extrabold text-base text-[#221417]">Lucas, 29 <i data-lucide="badge-check" class="inline w-4 h-4 text-amber-500"></i></h4>
-                        <p class="text-xs text-[#796a6e]">Engenheiro • São Paulo</p>
-                        <span class="text-[10px] font-bold text-[#590219] bg-[#590219]/10 px-2 py-0.5 rounded-full mt-1 inline-block">92% Compatível</span>
-                    </div>
-                </div>
-
-                <div class="bg-gradient-to-br from-white to-[#f7f2f0] rounded-3xl p-5 border border-[#ede7e5] shadow-md flex items-center gap-4">
-                    <img src="{{ asset('images/avatars/isabella.jpg') }}" alt="Isabella" class="w-16 h-16 rounded-2xl object-cover border-2 border-white shadow-sm">
-                    <div>
-                        <h4 class="font-extrabold text-base text-[#221417]">Isabella, 27 <i data-lucide="badge-check" class="inline w-4 h-4 text-amber-500"></i></h4>
-                        <p class="text-xs text-[#796a6e]">Médica • Campinas</p>
-                        <span class="text-[10px] font-bold text-[#590219] bg-[#590219]/10 px-2 py-0.5 rounded-full mt-1 inline-block">89% Compatível</span>
-                    </div>
-                </div>
-            @endforelse
+            @endforeach
         </div>
     </section>
 

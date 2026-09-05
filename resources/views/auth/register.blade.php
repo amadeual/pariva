@@ -65,16 +65,79 @@
                 </div>
             </div>
 
-            <!-- Idade Input -->
-            <div class="flex flex-col gap-1">
+            <!-- Idade / Data de Nascimento Input -->
+            <div class="flex flex-col gap-1.5" x-data="{
+                mode: 'dob',
+                age: '{{ old('age') }}',
+                dob: '',
+                errorMsg: '',
+                calculateAgeFromDob() {
+                    if (!this.dob) return;
+                    const birthDate = new Date(this.dob);
+                    const today = new Date();
+                    let calcAge = today.getFullYear() - birthDate.getFullYear();
+                    const m = today.getMonth() - birthDate.getMonth();
+                    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                        calcAge--;
+                    }
+                    if (isNaN(calcAge) || calcAge < 0) {
+                        this.errorMsg = 'Data de nascimento inválida.';
+                        this.age = '';
+                    } else if (calcAge < 18) {
+                        this.errorMsg = 'Você deve ter no mínimo 18 anos para se cadastrar.';
+                        this.age = calcAge;
+                    } else {
+                        this.errorMsg = '';
+                        this.age = calcAge;
+                    }
+                },
+                validateAge() {
+                    const num = parseInt(this.age);
+                    if (isNaN(num)) {
+                        this.errorMsg = 'Por favor, informe sua idade.';
+                    } else if (num < 18) {
+                        this.errorMsg = 'Você deve ter no mínimo 18 anos para se cadastrar.';
+                    } else {
+                        this.errorMsg = '';
+                    }
+                }
+            }">
                 <div class="flex justify-between items-center">
-                    <label class="text-[11px] font-bold text-[#796a6e]">Sua Idade</label>
-                    <span class="text-[10px] font-extrabold text-[#590219] uppercase tracking-wider">Mínimo 18 anos</span>
+                    <label class="text-[11px] font-bold text-[#796a6e]">Sua Idade / Data de Nascimento</label>
+                    <div class="flex gap-2">
+                        <button type="button" @click="mode = 'dob'" :class="mode === 'dob' ? 'text-[#590219] font-bold border-b border-[#590219]' : 'text-[#a09497]'" class="text-[10px] pb-0.5 transition-colors">
+                            Data de Nascimento
+                        </button>
+                        <button type="button" @click="mode = 'age'" :class="mode === 'age' ? 'text-[#590219] font-bold border-b border-[#590219]' : 'text-[#a09497]'" class="text-[10px] pb-0.5 transition-colors">
+                            Digitar Idade
+                        </button>
+                    </div>
                 </div>
-                <div class="relative">
-                    <input type="number" name="age" value="{{ old('age') }}" min="18" max="120" placeholder="Ex: 24" required class="w-full bg-[#eee9e6] rounded-2xl py-3.5 pr-10 pl-4 text-xs text-[#221417] placeholder-[#a09497] border @error('age') border-red-500 @else border-transparent @enderror focus:border-[#590219] focus:outline-none font-medium">
+
+                <!-- Input mode: Data de Nascimento (Calendar) -->
+                <div x-show="mode === 'dob'" class="relative">
+                    <input type="date" x-model="dob" @change="calculateAgeFromDob()" max="{{ date('Y-m-d', strtotime('-18 years')) }}" class="w-full bg-[#eee9e6] rounded-2xl py-3.5 px-4 text-xs text-[#221417] border @error('age') border-red-500 @else border-transparent @enderror focus:border-[#590219] focus:outline-none font-medium">
+                </div>
+
+                <!-- Input mode: Direct Age -->
+                <div x-show="mode === 'age'" class="relative">
+                    <input type="number" x-model="age" @input="validateAge()" min="18" max="120" placeholder="Ex: 24" class="w-full bg-[#eee9e6] rounded-2xl py-3.5 pr-10 pl-4 text-xs text-[#221417] placeholder-[#a09497] border @error('age') border-red-500 @else border-transparent @enderror focus:border-[#590219] focus:outline-none font-medium">
                     <i data-lucide="calendar" class="w-4 h-4 text-[#a09497] absolute right-3.5 top-4"></i>
                 </div>
+
+                <!-- Hidden form field sent to Laravel backend -->
+                <input type="hidden" name="age" :value="age">
+
+                <!-- Real-time Validation Error Message -->
+                <template x-if="errorMsg">
+                    <p class="text-[11px] text-red-600 font-medium px-1" x-text="errorMsg"></p>
+                </template>
+                <template x-if="!errorMsg && age >= 18">
+                    <p class="text-[11px] text-emerald-700 font-medium px-1 flex items-center gap-1">
+                        <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+                        <span>Idade confirmada: <strong x-text="age + ' anos'"></strong></span>
+                    </p>
+                </template>
             </div>
 
             <!-- Gênero Selection -->

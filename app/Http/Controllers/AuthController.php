@@ -58,7 +58,7 @@ class AuthController extends Controller
 
         if ($user) {
             $token = \Illuminate\Support\Str::random(60);
-            \Illuminate\Support\Facades\DB::table('password_resets')->updateOrInsert(
+            \Illuminate\Support\Facades\DB::table('password_reset_tokens')->updateOrInsert(
                 ['email' => $user->email],
                 ['token' => \Illuminate\Support\Facades\Hash::make($token), 'created_at' => now()]
             );

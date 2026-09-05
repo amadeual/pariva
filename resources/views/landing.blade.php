@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Pariva - Encontre alguém que realmente combina com você')
+@section('title', 'Pariva - Aplicativo de Relacionamento Sério e Conexões Genuínas')
+@section('meta_description', 'Encontre solteiros em busca de relacionamentos sérios no Pariva. Teste de compatibilidade por IA, agendamento de dates seguros e perfis 100% verificados.')
+@section('meta_keywords', 'aplicativo de relacionamento sério, site de namoro confiavel, encontros seguros, pariva namoro, aplicativo tinder alternativo, solteiros em sao paulo')
+
 
 @section('header')
     <header class="w-full px-5 py-4 flex justify-between items-center bg-[#fbf9f8] border-b border-[#ede7e5]/40">

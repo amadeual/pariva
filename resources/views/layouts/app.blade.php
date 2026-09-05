@@ -3,7 +3,52 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title', 'Pariva - Conexões Genuínas')</title>
+    <!-- Primary Meta Tags -->
+    <title>@yield('title', 'Pariva - Aplicativo de Relacionamento Sério e Conexões Genuínas')</title>
+    <meta name="title" content="@yield('meta_title', 'Pariva - Aplicativo de Relacionamento Sério e Conexões Genuínas')">
+    <meta name="description" content="@yield('meta_description', 'Conheça solteiros com interesses em comum no Pariva. Aplicativo de relacionamento focado em conexões reais, encontros seguros, encontros com IA e dinâmicas interativas.')">
+    <meta name="keywords" content="@yield('meta_keywords', 'aplicativo de relacionamento, site de namoro, encontros serios, namoro online brasil, solteiros em sao paulo, pariva app, namoro seguro, encontros com ia, encontros de casal')">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Pariva Brasil Tecnologia Ltda">
+    <link rel="canonical" href="{{ url()->current() }}">
+
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="@yield('og_title', 'Pariva - Conexões Genuínas e Relacionamento Sério')">
+    <meta property="og:description" content="@yield('og_description', 'Encontre alguém que realmente combina com você. Cadastro gratuito com verificação de perfil e agendamento de encontros seguros.')">
+    <meta property="og:image" content="@yield('og_image', asset('images/logo.jpg'))">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:site_name" content="Pariva">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="{{ url()->current() }}">
+    <meta name="twitter:title" content="@yield('og_title', 'Pariva - Conexões Genuínas e Relacionamento Sério')">
+    <meta name="twitter:description" content="@yield('og_description', 'Encontre alguém que realmente combina com você. Cadastro gratuito com verificação de perfil e agendamento de encontros seguros.')">
+    <meta name="twitter:image" content="@yield('og_image', asset('images/logo.jpg'))">
+
+    <!-- Schema.org JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MobileApplication",
+      "name": "Pariva",
+      "operatingSystem": "iOS, Android, Web",
+      "applicationCategory": "LifestyleApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "BRL"
+      },
+      "description": "Aplicativo de relacionamento sério e encontros genuínos com verificação de segurança e recomendação por IA.",
+      "author": {
+        "@type": "Organization",
+        "name": "Pariva Brasil Tecnologia Ltda",
+        "url": "{{ url('/') }}"
+      }
+    }
+    </script>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

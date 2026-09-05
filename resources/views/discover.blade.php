@@ -228,10 +228,10 @@
             <i data-lucide="star" class="w-7 h-7 fill-current"></i>
         </button>
 
-        <!-- Chat / Message Instant -->
-        <a href="{{ route('chat') }}" class="w-12 h-12 rounded-full bg-[#eee9e6] flex items-center justify-center text-[#221417] shadow-sm hover:scale-105 active:scale-95 transition-transform">
+        <!-- Chat / Message Instant (Inicia conversa usando Crédito Direto ou Match) -->
+        <button id="btn-instant-chat" type="button" onclick="startDirectChat()" class="w-12 h-12 rounded-full bg-[#eee9e6] flex items-center justify-center text-[#590219] shadow-sm hover:scale-105 active:scale-95 transition-transform" title="Iniciar Conversa">
             <i data-lucide="message-square" class="w-5 h-5"></i>
-        </a>
+        </button>
     </div>
 
     <!-- Multi-Gift Modal -->
@@ -433,11 +433,14 @@
             </div>
 
             <!-- Footer Action Buttons -->
-            <div class="p-4 bg-white border-t border-[#ede7e5] flex justify-center gap-4">
-                <button type="button" onclick="closeProfileModal(); document.getElementById('btn-dislike').click();" class="w-12 h-12 rounded-full bg-white border border-[#ede7e5] flex items-center justify-center text-[#221417] shadow-md hover:scale-105 transition-transform">
+            <div class="p-4 bg-white border-t border-[#ede7e5] flex justify-center items-center gap-3">
+                <button type="button" onclick="closeProfileModal(); document.getElementById('btn-dislike').click();" class="w-12 h-12 rounded-full bg-white border border-[#ede7e5] flex items-center justify-center text-[#221417] shadow-md hover:scale-105 transition-transform" title="Passar">
                     <i data-lucide="x" class="w-6 h-6"></i>
                 </button>
-                <button type="button" onclick="closeProfileModal(); document.getElementById('btn-like').click();" class="w-14 h-14 rounded-full bg-[#590219] text-white flex items-center justify-center shadow-xl hover:scale-105 transition-transform">
+                <a id="profile-modal-chat-btn" href="#" class="w-12 h-12 rounded-full bg-[#fdf2f4] border border-[#590219]/20 flex items-center justify-center text-[#590219] shadow-md hover:scale-105 transition-transform" title="Enviar Mensagem Direta">
+                    <i data-lucide="message-circle" class="w-6 h-6"></i>
+                </a>
+                <button type="button" onclick="closeProfileModal(); document.getElementById('btn-like').click();" class="w-14 h-14 rounded-full bg-[#590219] text-white flex items-center justify-center shadow-xl hover:scale-105 transition-transform" title="Curtir">
                     <i data-lucide="heart" class="w-7 h-7 fill-current"></i>
                 </button>
             </div>
@@ -775,6 +778,16 @@ function prevPhoto(el, event) {
     });
 }
 
+function startDirectChat() {
+    const topCard = getTopCard();
+    if (!topCard) {
+        window.location.href = '/chat';
+        return;
+    }
+    const userId = topCard.dataset.userId;
+    window.location.href = `/chat?user_id=${userId}`;
+}
+
 function openProfileModal(user) {
     const firstName = user.name.split(' ')[0];
     const mainImg = `/images/avatars/${firstName.toLowerCase()}.jpg`;
@@ -789,6 +802,11 @@ function openProfileModal(user) {
 
     document.getElementById('profile-modal-gallery-1').src = '/images/moments/picnic.jpg';
     document.getElementById('profile-modal-gallery-2').src = '/images/moments/cafe.jpg';
+
+    const chatBtn = document.getElementById('profile-modal-chat-btn');
+    if (chatBtn) {
+        chatBtn.href = `/chat?user_id=${user.id}`;
+    }
 
     const modal = document.getElementById('profile-modal');
     modal.classList.remove('hidden');

@@ -131,14 +131,17 @@
                 @endif
             </div>
 
-            <!-- Action Buttons (Cross & Heart) -->
-            <div class="p-2.5 flex justify-around items-center bg-white">
+            <!-- Action Buttons (Cross, Direct Chat & Heart) -->
+            <div class="p-2.5 flex justify-around items-center bg-white gap-1">
                 @if(Auth::user()->canSeeWhoLiked())
-                    <a href="{{ route('likes') }}" class="w-10 h-10 rounded-full border border-[#ede7e5] text-[#796a6e] flex items-center justify-center hover:bg-[#fbf9f8]">
-                        <i data-lucide="x" class="w-5 h-5"></i>
+                    <a href="{{ route('likes') }}" class="w-9 h-9 rounded-full border border-[#ede7e5] text-[#796a6e] flex items-center justify-center hover:bg-[#fbf9f8]" title="Passar">
+                        <i data-lucide="x" class="w-4 h-4"></i>
                     </a>
-                    <a href="{{ route('match.celebration', ['user' => $like->user->id]) }}" class="w-10 h-10 rounded-full bg-[#590219] text-white flex items-center justify-center shadow-md hover:bg-[#3f0111]">
-                        <i data-lucide="heart" class="w-5 h-5 fill-current"></i>
+                    <a href="{{ route('chat', ['user_id' => $like->user->id]) }}" class="w-9 h-9 rounded-full bg-[#fdf2f4] text-[#590219] border border-[#590219]/20 flex items-center justify-center shadow-xs hover:bg-[#590219] hover:text-white transition-colors" title="Conversar Agora">
+                        <i data-lucide="message-square" class="w-4 h-4"></i>
+                    </a>
+                    <a href="{{ route('match.celebration', ['user' => $like->user->id]) }}" class="w-9 h-9 rounded-full bg-[#590219] text-white flex items-center justify-center shadow-md hover:bg-[#3f0111]" title="Dar Match">
+                        <i data-lucide="heart" class="w-4 h-4 fill-current"></i>
                     </a>
                 @else
                     <form action="{{ route('user.see-likes') }}" method="POST" class="w-full">

@@ -48,9 +48,9 @@
         <div class="flex flex-col gap-2">
             <div class="grid grid-cols-3 gap-2">
                 <!-- Main Large Photo (Spans 2 cols & 2 rows) -->
-                <div class="col-span-2 row-span-2 relative h-60 rounded-2xl overflow-hidden shadow-sm border border-[#ede7e5]">
-                    <img src="{{ asset('images/avatars/' . (strtolower(explode(' ', Auth::user()->name)[0])) . '.jpg') }}" 
-                         onerror="this.src='{{ asset('images/avatars/isabella.jpg') }}'"
+                <div class="col-span-2 row-span-2 relative h-60 rounded-2xl overflow-hidden shadow-sm border border-[#ede7e5] bg-[#eee9e6]">
+                    <img src="{{ Auth::user()->avatar ? (str_starts_with(Auth::user()->avatar, 'http') ? Auth::user()->avatar : asset('storage/' . Auth::user()->avatar)) : (file_exists(public_path('images/avatars/' . strtolower(explode(' ', Auth::user()->name)[0]) . '.jpg')) ? asset('images/avatars/' . strtolower(explode(' ', Auth::user()->name)[0]) . '.jpg') : asset('images/avatars/placeholder.jpg')) }}" 
+                         onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'"
                          alt="Foto Principal" class="w-full h-full object-cover">
                     <!-- Principal Badge -->
                     <div class="absolute bottom-3 left-3 bg-white/90 backdrop-blur-md text-[10px] font-bold text-[#221417] px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm flex items-center gap-1">
@@ -62,21 +62,15 @@
                     </div>
                 </div>
 
-                <!-- Photo 2 -->
-                <div class="relative h-[116px] rounded-2xl overflow-hidden shadow-sm border border-[#ede7e5]">
-                    <img src="{{ asset('images/avatars/sofia.jpg') }}" alt="Foto 2" class="w-full h-full object-cover">
-                    <div class="absolute bottom-2 right-2 w-6 h-6 rounded-full bg-white text-[#221417] flex items-center justify-center shadow-sm cursor-pointer">
-                        <i data-lucide="pencil" class="w-3 h-3"></i>
-                    </div>
-                </div>
+                <!-- Photo 2 Slot -->
+                <button type="button" class="relative h-[116px] rounded-2xl bg-[#eee9e6] border-2 border-dashed border-[#d6c7c4] flex items-center justify-center text-[#796a6e] hover:bg-[#e6dfdc] transition-colors">
+                    <i data-lucide="plus" class="w-5 h-5"></i>
+                </button>
 
-                <!-- Photo 3 -->
-                <div class="relative h-[116px] rounded-2xl overflow-hidden shadow-sm border border-[#ede7e5]">
-                    <img src="{{ asset('images/avatars/isabella.jpg') }}" alt="Foto 3" class="w-full h-full object-cover">
-                    <div class="absolute bottom-2 right-2 w-6 h-6 rounded-full bg-white text-[#221417] flex items-center justify-center shadow-sm cursor-pointer">
-                        <i data-lucide="pencil" class="w-3 h-3"></i>
-                    </div>
-                </div>
+                <!-- Photo 3 Slot -->
+                <button type="button" class="relative h-[116px] rounded-2xl bg-[#eee9e6] border-2 border-dashed border-[#d6c7c4] flex items-center justify-center text-[#796a6e] hover:bg-[#e6dfdc] transition-colors">
+                    <i data-lucide="plus" class="w-5 h-5"></i>
+                </button>
             </div>
 
             <!-- 3 Empty Slots Row -->

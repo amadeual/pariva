@@ -9,8 +9,8 @@
             <span class="text-xl font-extrabold text-[#590219] tracking-tight">Pariva</span>
         </div>
         <a href="{{ route('profile.edit') }}" class="w-9 h-9 rounded-full overflow-hidden border-2 border-[#590219]/20 shadow-sm flex items-center justify-center bg-[#eee9e6] font-bold text-xs text-[#590219]" title="{{ Auth::user()->name }}">
-            <img src="{{ asset('images/avatars/' . (strtolower(explode(' ', Auth::user()->name)[0])) . '.jpg') }}" 
-                 onerror="this.src='{{ asset('images/avatars/isabella.jpg') }}'" 
+            <img src="{{ Auth::user()->avatar ? (str_starts_with(Auth::user()->avatar, 'http') ? Auth::user()->avatar : asset('storage/' . Auth::user()->avatar)) : (file_exists(public_path('images/avatars/' . strtolower(explode(' ', Auth::user()->name)[0]) . '.jpg')) ? asset('images/avatars/' . strtolower(explode(' ', Auth::user()->name)[0]) . '.jpg') : asset('images/avatars/placeholder.jpg')) }}" 
+                 onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'" 
                  alt="{{ Auth::user()->name }}" class="w-full h-full object-cover">
         </a>
     </header>
@@ -95,8 +95,8 @@
         <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-[#ede7e5] flex flex-col relative group">
             
             <div class="relative w-full h-52 overflow-hidden">
-                <img src="{{ asset('images/avatars/' . (strtolower(explode(' ', $like->user->name)[0])) . '.jpg') }}" 
-                     onerror="this.src='{{ asset('images/avatars/mariana.jpg') }}'"
+                <img src="{{ $like->user->avatar ? (str_starts_with($like->user->avatar, 'http') ? $like->user->avatar : asset('storage/' . $like->user->avatar)) : (file_exists(public_path('images/avatars/' . strtolower(explode(' ', $like->user->name)[0]) . '.jpg')) ? asset('images/avatars/' . strtolower(explode(' ', $like->user->name)[0]) . '.jpg') : asset('images/avatars/placeholder.jpg')) }}" 
+                     onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'"
                      alt="{{ $like->user->name }}" 
                      class="w-full h-full object-cover {{ !Auth::user()->canSeeWhoLiked() ? 'blur-md scale-110' : '' }}">
                 

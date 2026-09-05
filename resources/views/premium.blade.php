@@ -198,11 +198,11 @@
 
     <!-- Footer Links -->
     <div class="flex justify-center gap-4 text-[11px] text-[#796a6e] mt-4">
-        <a href="{{ route('legal.termos') }}" class="hover:underline">Termos de Uso</a>
+        <a href="{{ route('termos') }}" class="hover:underline">Termos de Uso</a>
         <span>•</span>
-        <a href="{{ route('legal.privacidade') }}" class="hover:underline">Política de Privacidade</a>
+        <a href="{{ route('privacidade') }}" class="hover:underline">Política de Privacidade</a>
         <span>•</span>
-        <a href="{{ route('legal.seguranca') }}" class="hover:underline">Segurança</a>
+        <a href="{{ route('seguranca') }}" class="hover:underline">Segurança</a>
     </div>
 
 </div>

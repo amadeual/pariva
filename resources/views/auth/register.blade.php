@@ -168,8 +168,10 @@
             <!-- Age & Terms Confirmation Checkbox -->
             <div class="flex items-start gap-2 pt-1 px-0.5">
                 <input type="checkbox" id="terms" required class="mt-0.5 w-4 h-4 rounded border-[#d6c7c4] accent-[#590219]">
-                <label for="terms" class="text-[11px] text-[#796a6e] leading-snug">
-                    Declaro que tenho <strong>18 anos de idade ou mais</strong> e concordo com os <a href="{{ route('legal.termos') }}" class="text-[#590219] font-bold underline">Termos de Uso</a> e a <a href="{{ route('legal.privacidade') }}" class="text-[#590219] font-bold underline">Política de Privacidade</a>.
+                <label for="terms">
+                    <p class="text-[10px] text-[#796a6e] text-center max-w-xs mx-auto leading-relaxed mt-2">
+                        Ao se cadastrar, você concorda com nossos <a href="{{ route('termos') }}" class="underline hover:text-[#221417]">Termos</a> e <a href="{{ route('privacidade') }}" class="underline hover:text-[#221417]">Política de Privacidade</a>.
+                    </p>
                 </label>
             </div>
 

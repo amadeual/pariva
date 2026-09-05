@@ -11,15 +11,27 @@ Route::get('/', function () {
 
 Route::get('/termos', function () {
     return view('legal.termos');
-})->name('legal.termos')->name('termos');
+})->name('termos');
+
+Route::get('/legal/termos', function () {
+    return view('legal.termos');
+})->name('legal.termos');
 
 Route::get('/privacidade', function () {
     return view('legal.privacidade');
-})->name('legal.privacidade')->name('privacidade');
+})->name('privacidade');
+
+Route::get('/legal/privacidade', function () {
+    return view('legal.privacidade');
+})->name('legal.privacidade');
 
 Route::get('/seguranca', function () {
     return view('legal.seguranca');
-})->name('legal.seguranca')->name('seguranca');
+})->name('seguranca');
+
+Route::get('/legal/seguranca', function () {
+    return view('legal.seguranca');
+})->name('legal.seguranca');
 
 
 // Guest Authentication Routes

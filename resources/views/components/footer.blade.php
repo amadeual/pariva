@@ -47,9 +47,9 @@
         </div>
         <div class="flex flex-col gap-2">
             <h5 class="text-white font-bold text-xs uppercase tracking-wider mb-1">Legal & Ajuda</h5>
-            <a href="{{ route('legal.termos') }}" class="text-[#a39598] hover:text-white transition-colors">Termos de Uso</a>
-            <a href="{{ route('legal.privacidade') }}" class="text-[#a39598] hover:text-white transition-colors">Privacidade</a>
-            <a href="{{ route('legal.seguranca') }}" class="text-[#a39598] hover:text-white transition-colors">Central de Segurança</a>
+            <a href="{{ route('termos') }}" class="text-[#a39598] hover:text-white transition-colors">Termos de Uso</a>
+            <a href="{{ route('privacidade') }}" class="text-[#a39598] hover:text-white transition-colors">Privacidade</a>
+            <a href="{{ route('seguranca') }}" class="text-[#a39598] hover:text-white transition-colors">Central de Segurança</a>
             <a href="mailto:suporte@pariva.com.br" class="text-[#a39598] hover:text-white transition-colors">Suporte</a>
         </div>
     </div>

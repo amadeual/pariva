@@ -58,46 +58,27 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/encontros', [AppController::class, 'encontros'])->name('encontros');
 
-    Route::get('/encontros/agendar', function () {
-        return view('encontros-agendar');
-    })->name('encontros.agendar');
+    Route::get('/encontros/agendar/{userId}', [AppController::class, 'agendarEncontro'])->name('encontros.agendar');
+    Route::post('/encontros/agendar', [AppController::class, 'storeEncontro'])->name('encontros.store');
 
-    Route::post('/encontros/agendar', [AppController::class, 'storeDate'])->name('encontros.store');
+    Route::get('/encontros/convite/{dateId}', [AppController::class, 'conviteEncontro'])->name('encontros.convite');
+    Route::post('/encontros/responder/{dateId}', [AppController::class, 'responderEncontro'])->name('encontros.responder');
 
-    Route::get('/encontros/convite', function () {
-        return view('encontros-convite');
-    })->name('encontros.convite');
-
-    Route::get('/games/quem-e-mais-provavel', function () {
-        return view('games-trivia');
-    })->name('games.trivia');
-
-    Route::get('/games/resultado', function () {
-        return view('games-result');
-    })->name('games.result');
+    Route::get('/games/quem-e-mais-provavel', [AppController::class, 'gamesTrivia'])->name('games.trivia');
+    Route::get('/games/resultado', [AppController::class, 'gamesResult'])->name('games.result');
 
     Route::get('/match-celebration', [AppController::class, 'matchCelebration'])->name('match.celebration');
 
-    Route::get('/onboarding/interesses', function () {
-        return view('onboarding-interesses');
-    })->name('onboarding.interesses');
+    Route::get('/onboarding/interesses', [AppController::class, 'onboardingInteresses'])->name('onboarding.interesses');
+    Route::post('/onboarding/interesses', [AppController::class, 'saveOnboardingInteresses'])->name('onboarding.interesses.save');
 
-    Route::get('/filtros', function () {
-        return view('filtros');
-    })->name('filtros');
+    Route::get('/filtros', [AppController::class, 'filtros'])->name('filtros');
     Route::post('/filtros', [AppController::class, 'updateFilters'])->name('filtros.update');
 
-    Route::get('/premium', function () {
-        return view('premium');
-    })->name('premium');
+    Route::get('/premium', [AppController::class, 'premium'])->name('premium');
+    Route::get('/chat', [AppController::class, 'chat'])->name('chat');
 
-    Route::get('/chat', function () {
-        return view('chat');
-    })->name('chat');
-
-    Route::get('/perfil/editar', function () {
-        return view('profile-edit');
-    })->name('profile.edit');
+    Route::get('/perfil/editar', [AppController::class, 'editProfile'])->name('profile.edit');
     Route::post('/perfil/editar', [AppController::class, 'updateProfile'])->name('profile.update');
 
     Route::get('/matches', function () {

@@ -88,7 +88,7 @@
                 Vocês dois concordaram que o Rafael faria uma viagem sem planejar nada. Que tal agendar um encontro para conversarem sobre isso?
             </p>
 
-            <a href="{{ route('encontros.agendar') }}" class="text-[11px] font-extrabold text-[#590219] flex items-center gap-1 uppercase tracking-wider mt-1 hover:underline text-left">
+            <a href="{{ route('encontros.agendar', ['userId' => 1]) }}" class="text-[11px] font-extrabold text-[#590219] flex items-center gap-1 uppercase tracking-wider mt-1 hover:underline text-left">
                 <span>AGENDAR ENCONTRO AGORA</span>
                 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
             </a>

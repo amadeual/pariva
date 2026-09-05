@@ -8,7 +8,7 @@
             <img src="{{ asset('images/logo.jpg') }}" alt="Pariva Logo" class="h-8 w-auto object-contain rounded-lg shadow-xs">
             <span class="text-xl font-extrabold text-[#590219] tracking-tight">Pariva</span>
         </div>
-        <a href="{{ route('encontros.agendar') }}" class="text-xs font-bold text-white bg-[#590219] px-3.5 py-1.5 rounded-xl shadow-xs hover:bg-[#3f0111] transition-colors flex items-center gap-1.5">
+        <a href="{{ route('encontros.agendar', ['userId' => 1]) }}" class="text-xs font-bold text-white bg-[#590219] px-3.5 py-1.5 rounded-xl shadow-xs hover:bg-[#3f0111] transition-colors flex items-center gap-1.5">
             <i data-lucide="plus" class="w-3.5 h-3.5"></i>
             <span>Agendar Date</span>
         </a>
@@ -83,14 +83,14 @@
     <!-- Date Ideas Section Header -->
     <div class="flex justify-between items-center px-1 pt-2">
         <h2 class="text-base font-extrabold text-[#221417]">Sugestões de Locais</h2>
-        <a href="{{ route('encontros.agendar') }}" class="text-[10px] font-extrabold uppercase tracking-widest text-[#590219] hover:underline">Ver Todos</a>
+        <a href="{{ route('encontros.agendar', ['userId' => 1]) }}" class="text-[10px] font-extrabold uppercase tracking-widest text-[#590219] hover:underline">Ver Todos</a>
     </div>
 
     <!-- Date Ideas Grid -->
     <div class="flex flex-col gap-4">
 
         <!-- Card 1: Café & Conversa -->
-        <a href="{{ route('encontros.agendar') }}" class="relative w-full h-40 rounded-3xl overflow-hidden shadow-md group cursor-pointer border border-[#ede7e5] block">
+        <a href="{{ route('encontros.agendar', ['userId' => 1]) }}" class="relative w-full h-40 rounded-3xl overflow-hidden shadow-md group cursor-pointer border border-[#ede7e5] block">
             <img src="{{ asset('images/moments/cafe.jpg') }}" alt="Café & Conversa" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
             
@@ -106,7 +106,7 @@
         <!-- Row 2: 2 Column Cards -->
         <div class="grid grid-cols-2 gap-3">
             <!-- Card 2: Jantar Romântico -->
-            <a href="{{ route('encontros.agendar') }}" class="relative h-40 rounded-3xl overflow-hidden shadow-md group cursor-pointer border border-[#ede7e5] block">
+            <a href="{{ route('encontros.agendar', ['userId' => 1]) }}" class="relative h-40 rounded-3xl overflow-hidden shadow-md group cursor-pointer border border-[#ede7e5] block">
                 <img src="{{ asset('images/avatars/mariana.jpg') }}" alt="Jantar Romântico" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent"></div>
                 
@@ -118,7 +118,7 @@
             </a>
 
             <!-- Card 3: Passeio ao Ar Livre -->
-            <a href="{{ route('encontros.agendar') }}" class="relative h-40 rounded-3xl overflow-hidden shadow-md group cursor-pointer border border-[#ede7e5] block">
+            <a href="{{ route('encontros.agendar', ['userId' => 1]) }}" class="relative h-40 rounded-3xl overflow-hidden shadow-md group cursor-pointer border border-[#ede7e5] block">
                 <img src="{{ asset('images/moments/picnic.jpg') }}" alt="Passeio ao Ar Livre" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent"></div>
                 
@@ -133,7 +133,7 @@
     </div>
 
     <!-- Bottom Button: Novo Agendamento -->
-    <a href="{{ route('encontros.agendar') }}" class="w-full py-4 bg-[#590219] text-white font-bold text-sm rounded-2xl shadow-xl hover:bg-[#3f0111] transition-all flex items-center justify-center gap-2 mt-2">
+    <a href="{{ route('encontros.agendar', ['userId' => 1]) }}" class="w-full py-4 bg-[#590219] text-white font-bold text-sm rounded-2xl shadow-xl hover:bg-[#3f0111] transition-all flex items-center justify-center gap-2 mt-2">
         <i data-lucide="calendar-plus" class="w-4 h-4"></i>
         <span>Agendar Novo Encontro</span>
     </a>

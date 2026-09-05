@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Conversa com Rafael')
+@section('title', 'Chat & Mensagens')
 
 @section('header')
     <header class="w-full px-4 py-3 flex justify-between items-center bg-[#fbf9f8] border-b border-[#ede7e5] sticky top-0 z-40">
@@ -8,15 +8,9 @@
             <a href="{{ route('discover') }}" class="text-[#221417] p-1">
                 <i data-lucide="arrow-left" class="w-5 h-5"></i>
             </a>
-            <div class="relative w-10 h-10 rounded-full overflow-hidden border border-[#ede7e5]">
-                <img src="{{ asset('images/avatars/mariana.jpg') }}" alt="Rafael" class="w-full h-full object-cover">
-            </div>
             <div class="flex flex-col">
-                <div class="flex items-center gap-1">
-                    <h2 class="font-bold text-sm text-[#221417]">Rafael</h2>
-                    <i data-lucide="badge-check" class="w-4 h-4 text-[#590219] fill-[#590219]/10"></i>
-                </div>
-                <span class="text-[11px] text-[#590219] font-medium">92% compatível</span>
+                <h2 class="font-bold text-sm text-[#221417]">Chat & Mensagens</h2>
+                <span class="text-[11px] text-[#796a6e] font-medium">Suas conexões</span>
             </div>
         </div>
 
@@ -32,67 +26,23 @@
     <!-- Messages Container -->
     <div class="flex flex-col gap-4">
 
-        <!-- Game Finished Divider Badge -->
-        <div class="flex items-center justify-center my-2">
-            <div class="border-t border-[#ede7e5] flex-1"></div>
-            <span class="bg-[#f0e8e6] text-[#796a6e] text-[10px] font-extrabold uppercase px-4 py-1.5 rounded-full tracking-wider">
-                JOGO FINALIZADO
-            </span>
-            <div class="border-t border-[#ede7e5] flex-1"></div>
-        </div>
-
-        <!-- Game Result Highlight Box (Stitch Pink Box) -->
-        <div class="bg-[#fdf2f4] border border-[#f5d6dc] rounded-2xl p-4 text-center">
-            <p class="text-xs text-[#590219] font-medium leading-relaxed">
-                Vocês concordaram em 4 de 5 cenários. Parece que temos uma dupla dinâmica aqui.
-            </p>
-        </div>
-
-        <!-- Received Message (Rafael) -->
-        <div class="flex gap-2.5 items-end max-w-[85%]">
-            <div class="w-8 h-8 rounded-full overflow-hidden border border-[#ede7e5] shrink-0">
-                <img src="{{ asset('images/avatars/mariana.jpg') }}" alt="Rafael" class="w-full h-full object-cover">
+        <!-- Empty Chat State for New Users -->
+        <div class="bg-white border border-[#ede7e5] rounded-3xl p-6 text-center flex flex-col items-center gap-3 my-4 shadow-xs">
+            <div class="w-14 h-14 rounded-2xl bg-[#fdf2f4] text-[#590219] flex items-center justify-center">
+                <i data-lucide="message-square-heart" class="w-7 h-7"></i>
             </div>
-            <div class="bg-[#eee9e6] rounded-2xl rounded-bl-xs p-3.5 text-xs text-[#221417] leading-relaxed relative">
-                <p>Hahaha, eu realmente roubaria comida do seu prato no primeiro encontro! 🍕</p>
-                <span class="text-[9px] text-[#796a6e] block text-right mt-1 font-medium">14:23</span>
-            </div>
-        </div>
-
-        <!-- Sent Message (Me / Isabella) -->
-        <div class="flex flex-col items-end max-w-[85%] self-end">
-            <div class="bg-[#590219] text-white rounded-2xl rounded-br-xs p-3.5 text-xs leading-relaxed relative shadow-sm">
-                <p>Estou avisada então! Vou ter que pedir uma porção extra. 😅</p>
-                <div class="flex items-center justify-end gap-1 text-[9px] text-white/80 mt-1">
-                    <span>14:25</span>
-                    <i data-lucide="check-check" class="w-3 h-3 text-white"></i>
-                </div>
+            <div class="flex flex-col gap-1">
+                <h3 class="font-bold text-sm text-[#221417]">Sua conversa começa aqui!</h3>
+                <p class="text-xs text-[#796a6e] leading-relaxed max-w-xs">
+                    Faça um match no Descobrir para iniciar conversas reais e agendar encontros incríveis.
+                </p>
             </div>
         </div>
 
     </div>
 
-    <!-- Bottom Suggestion Card & Input Area -->
+    <!-- Bottom Input Area -->
     <div class="flex flex-col gap-3 sticky bottom-14 pt-2 bg-[#fbf9f8]">
-        
-        <!-- Pariva AI Suggestion Card (Stitch Suggestion Box) -->
-        <div class="bg-[#fdf2f4] border border-[#f5d6dc] rounded-2xl p-4 flex flex-col gap-2 relative">
-            <div class="flex items-center gap-2 text-[#590219] font-bold text-xs">
-                <div class="w-6 h-6 rounded-full bg-[#fce4e8] flex items-center justify-center">
-                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#590219]"></i>
-                </div>
-                <span>Sugestão da Pariva</span>
-            </div>
-
-            <p class="text-xs text-[#796a6e] leading-relaxed">
-                Vocês dois concordaram que o Rafael faria uma viagem sem planejar nada. Que tal agendar um encontro para conversarem sobre isso?
-            </p>
-
-            <a href="{{ route('encontros.agendar', ['userId' => 1]) }}" class="text-[11px] font-extrabold text-[#590219] flex items-center gap-1 uppercase tracking-wider mt-1 hover:underline text-left">
-                <span>AGENDAR ENCONTRO AGORA</span>
-                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-            </a>
-        </div>
 
         <!-- Message Composer Input (Stitch Capsule Input) -->
         <div class="bg-[#eee9e6] rounded-full p-2 px-4 flex items-center gap-2 shadow-inner">

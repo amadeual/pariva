@@ -32,51 +32,41 @@
     <div class="flex flex-col gap-3">
         <div class="flex justify-between items-center px-1">
             <h2 class="text-base font-extrabold text-[#221417]">Encontros Agendados</h2>
-            <span class="text-[10px] font-extrabold uppercase tracking-widest text-[#590219] bg-[#f8d7da] px-2.5 py-0.5 rounded-full">2 PRÓXIMOS</span>
+            <span class="text-[10px] font-extrabold uppercase tracking-widest text-[#590219] bg-[#f8d7da] px-2.5 py-0.5 rounded-full">{{ count($dates) }} {{ count($dates) == 1 ? 'AGENDADO' : 'AGENDADOS' }}</span>
         </div>
 
         <div class="flex flex-col gap-2.5">
-            <!-- Scheduled Date 1 -->
+            @forelse($dates as $date)
             <div class="bg-white rounded-2xl p-4 border border-[#ede7e5] shadow-sm flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 rounded-full overflow-hidden border border-[#590219]/20 shrink-0">
-                        <img src="{{ asset('images/avatars/rafael.jpg') }}" alt="Rafael" class="w-full h-full object-cover">
+                    <div class="w-12 h-12 rounded-full overflow-hidden border border-[#590219]/20 shrink-0 bg-[#fdf2f4] flex items-center justify-center font-extrabold text-[#590219]">
+                        {{ strtoupper(substr($date->title ?? 'E', 0, 1)) }}
                     </div>
                     <div class="flex flex-col">
-                        <h3 class="font-extrabold text-xs text-[#221417]">Vinhos & Tapas com Rafael</h3>
+                        <h3 class="font-extrabold text-xs text-[#221417]">{{ $date->title }}</h3>
                         <p class="text-[11px] text-[#796a6e] font-medium flex items-center gap-1 mt-0.5">
-                            <i data-lucide="calendar" class="w-3 h-3 text-[#590219]"></i> Sex, 13 de Out • 20:00
+                            <i data-lucide="calendar" class="w-3 h-3 text-[#590219]"></i> {{ \Carbon\Carbon::parse($date->date_time)->format('d/m/Y H:i') }}
                         </p>
                         <span class="text-[10px] text-[#590219] font-bold mt-0.5 flex items-center gap-1">
-                            <i data-lucide="map-pin" class="w-3 h-3"></i> Vino! Vila Madalena
+                            <i data-lucide="map-pin" class="w-3 h-3"></i> {{ $date->location }}
                         </span>
                     </div>
                 </div>
                 <span class="bg-emerald-50 text-emerald-700 text-[9px] font-extrabold uppercase px-2 py-1 rounded-lg border border-emerald-200">
-                    Confirmado
+                    {{ ucfirst($date->status ?? 'Confirmado') }}
                 </span>
             </div>
-
-            <!-- Scheduled Date 2 -->
-            <div class="bg-white rounded-2xl p-4 border border-[#ede7e5] shadow-sm flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 rounded-full overflow-hidden border border-[#590219]/20 shrink-0">
-                        <img src="{{ asset('images/avatars/mariana.jpg') }}" alt="Mariana" class="w-full h-full object-cover">
-                    </div>
-                    <div class="flex flex-col">
-                        <h3 class="font-extrabold text-xs text-[#221417]">Café & Conversa com Mariana</h3>
-                        <p class="text-[11px] text-[#796a6e] font-medium flex items-center gap-1 mt-0.5">
-                            <i data-lucide="calendar" class="w-3 h-3 text-[#590219]"></i> Sáb, 21 de Out • 16:00
-                        </p>
-                        <span class="text-[10px] text-[#590219] font-bold mt-0.5 flex items-center gap-1">
-                            <i data-lucide="map-pin" class="w-3 h-3"></i> Sofá Café - Pinheiros
-                        </span>
-                    </div>
+            @empty
+            <div class="bg-white rounded-2xl p-6 border border-[#ede7e5] shadow-xs text-center flex flex-col items-center gap-2">
+                <div class="w-12 h-12 rounded-2xl bg-[#fdf2f4] text-[#590219] flex items-center justify-center">
+                    <i data-lucide="calendar-heart" class="w-6 h-6"></i>
                 </div>
-                <span class="bg-amber-50 text-amber-700 text-[9px] font-extrabold uppercase px-2 py-1 rounded-lg border border-amber-200">
-                    Pendente
-                </span>
+                <h3 class="font-bold text-xs text-[#221417]">Nenhum encontro agendado ainda</h3>
+                <p class="text-[11px] text-[#796a6e] max-w-xs">
+                    Explore os perfis no Descobrir e convide alguém especial para um date seguro!
+                </p>
             </div>
+            @endforelse
         </div>
     </div>
 

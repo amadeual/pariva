@@ -6,16 +6,18 @@
 
 
 @section('header')
-    <header class="w-full px-5 py-4 flex justify-between items-center bg-[#fbf9f8] border-b border-[#ede7e5]/40">
+    <header class="w-full px-5 py-3.5 flex justify-between items-center bg-[#fbf9f8]/80 backdrop-blur-xl border-b border-[#ede7e5]/80 sticky top-0 z-50 shadow-[0_4px_20px_rgba(0,0,0,0.03)]">
         <div class="flex items-center gap-2.5">
-            <img src="{{ asset('images/logo.jpg') }}" alt="Pariva Logo" class="h-9 w-auto object-contain rounded-lg shadow-xs">
+            <img src="{{ asset('images/logo.jpg') }}" alt="Pariva Logo" class="h-9 w-auto object-contain rounded-xl shadow-xs border border-[#590219]/10">
+            <span class="text-xl font-extrabold text-[#590219] tracking-tight">Pariva</span>
         </div>
         <div class="flex items-center gap-2">
-            <a href="{{ route('login') }}" class="text-xs font-bold text-[#590219] px-3 py-1.5 rounded-lg hover:bg-[#f5ebe8] transition-colors">
+            <a href="{{ route('login') }}" class="text-xs font-bold text-[#590219] px-3.5 py-2 rounded-xl hover:bg-[#f7ecee] transition-all">
                 Entrar
             </a>
-            <a href="{{ route('register') }}" class="text-xs font-bold text-white bg-[#590219] px-3.5 py-1.5 rounded-lg shadow-sm hover:bg-[#3f0111] transition-colors">
-                Cadastrar
+            <a href="{{ route('register') }}" class="text-xs font-bold text-white bg-gradient-to-r from-[#590219] to-[#7c0d28] px-4 py-2 rounded-xl shadow-md hover:shadow-lg hover:brightness-110 active:scale-95 transition-all flex items-center gap-1">
+                <span>Cadastrar</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
             </a>
         </div>
     </header>
@@ -95,18 +97,77 @@
         </div>
     </section>
 
-    <!-- Preview Profile Card (Sofia) Stitch -->
-    <section class="bg-gradient-to-b from-[#f5f2f0] to-[#eae5e2] rounded-2xl p-6 flex flex-col items-center text-center border border-[#ede7e5] shadow-sm">
-        <div class="w-20 h-20 rounded-full overflow-hidden mb-3 border-2 border-white shadow-sm">
-            <img src="{{ asset('images/avatars/sofia.jpg') }}" alt="Sofia" class="w-full h-full object-cover">
+    <!-- Preview Profiles Carousel / Grid Section -->
+    <section class="flex flex-col gap-4">
+        <div class="flex flex-col items-center text-center gap-1">
+            <span class="text-[10px] font-extrabold uppercase tracking-widest text-[#590219] bg-[#590219]/10 px-3 py-1 rounded-full">Pessoas na sua Região</span>
+            <h2 class="text-xl font-bold text-[#221417]">Conexões reais esperando por você</h2>
         </div>
-        <div class="bg-[#590219] text-white text-[10px] font-bold px-3 py-1 rounded-full flex items-center gap-1 mb-2">
-            <i data-lucide="heart" class="w-3 h-3 fill-current"></i> 89% Compatível
+
+        <div class="grid grid-cols-1 gap-4">
+            @forelse($profiles as $profile)
+                <div class="bg-gradient-to-br from-white to-[#f7f2f0] rounded-3xl p-5 border border-[#ede7e5] shadow-md hover:shadow-lg transition-all flex flex-col gap-3 relative overflow-hidden">
+                    <div class="flex items-center gap-4">
+                        <div class="relative w-16 h-16 rounded-2xl overflow-hidden shrink-0 border-2 border-white shadow-sm bg-[#eee9e6]">
+                            <img src="{{ $profile->avatar ? (str_starts_with($profile->avatar, 'http') ? $profile->avatar : asset('storage/' . $profile->avatar)) : (file_exists(public_path('images/avatars/' . strtolower(explode(' ', $profile->name)[0]) . '.jpg')) ? asset('images/avatars/' . strtolower(explode(' ', $profile->name)[0]) . '.jpg') : asset('images/avatars/placeholder.jpg')) }}" 
+                                 onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'"
+                                 alt="{{ $profile->name }}" class="w-full h-full object-cover">
+                        </div>
+
+                        <div class="flex flex-col gap-0.5 flex-1 min-w-0">
+                            <div class="flex items-center gap-1.5">
+                                <h4 class="font-extrabold text-base text-[#221417] truncate">{{ $profile->name }}</h4>
+                                <span class="text-sm font-semibold text-[#796a6e]">, {{ $profile->age ?? '25' }}</span>
+                                @if($profile->is_verified)
+                                    <i data-lucide="badge-check" class="w-4 h-4 text-amber-500 fill-amber-500/20 shrink-0"></i>
+                                @endif
+                            </div>
+
+                            <p class="text-xs text-[#796a6e] truncate">{{ $profile->profession ?? 'Profissional' }} • {{ $profile->location ?? 'São Paulo' }}</p>
+
+                            <div class="mt-1 inline-flex items-center gap-1 text-[10px] font-bold text-[#590219] bg-[#590219]/10 px-2.5 py-0.5 rounded-full w-fit">
+                                <i data-lucide="sparkles" class="w-3 h-3 text-[#590219]"></i>
+                                <span>{{ rand(84, 98) }}% Compatível</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if($profile->bio)
+                        <p class="text-xs text-[#221417]/80 italic line-clamp-2 bg-white/60 p-2.5 rounded-xl border border-[#ede7e5]/50">
+                            "{{ $profile->bio }}"
+                        </p>
+                    @endif
+                </div>
+            @empty
+                <!-- Fallback 3 static profiles if database is empty -->
+                <div class="bg-gradient-to-br from-white to-[#f7f2f0] rounded-3xl p-5 border border-[#ede7e5] shadow-md flex items-center gap-4">
+                    <img src="{{ asset('images/avatars/mariana.jpg') }}" alt="Mariana" class="w-16 h-16 rounded-2xl object-cover border-2 border-white shadow-sm">
+                    <div>
+                        <h4 class="font-extrabold text-base text-[#221417]">Mariana, 26 <i data-lucide="badge-check" class="inline w-4 h-4 text-amber-500"></i></h4>
+                        <p class="text-xs text-[#796a6e]">Arquiteta • São Paulo</p>
+                        <span class="text-[10px] font-bold text-[#590219] bg-[#590219]/10 px-2 py-0.5 rounded-full mt-1 inline-block">96% Compatível</span>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-white to-[#f7f2f0] rounded-3xl p-5 border border-[#ede7e5] shadow-md flex items-center gap-4">
+                    <img src="{{ asset('images/avatars/lucas.jpg') }}" alt="Lucas" class="w-16 h-16 rounded-2xl object-cover border-2 border-white shadow-sm">
+                    <div>
+                        <h4 class="font-extrabold text-base text-[#221417]">Lucas, 29 <i data-lucide="badge-check" class="inline w-4 h-4 text-amber-500"></i></h4>
+                        <p class="text-xs text-[#796a6e]">Engenheiro • São Paulo</p>
+                        <span class="text-[10px] font-bold text-[#590219] bg-[#590219]/10 px-2 py-0.5 rounded-full mt-1 inline-block">92% Compatível</span>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-white to-[#f7f2f0] rounded-3xl p-5 border border-[#ede7e5] shadow-md flex items-center gap-4">
+                    <img src="{{ asset('images/avatars/isabella.jpg') }}" alt="Isabella" class="w-16 h-16 rounded-2xl object-cover border-2 border-white shadow-sm">
+                    <div>
+                        <h4 class="font-extrabold text-base text-[#221417]">Isabella, 27 <i data-lucide="badge-check" class="inline w-4 h-4 text-amber-500"></i></h4>
+                        <p class="text-xs text-[#796a6e]">Médica • Campinas</p>
+                        <span class="text-[10px] font-bold text-[#590219] bg-[#590219]/10 px-2 py-0.5 rounded-full mt-1 inline-block">89% Compatível</span>
+                    </div>
+                </div>
+            @endforelse
         </div>
-        <h4 class="font-bold text-base text-[#221417]">Sofia, 28</h4>
-        <p class="text-xs text-[#796a6e] italic mt-1 max-w-xs">
-            "Amo fotografia, vinhos aos sábados e conversas profundas sobre livros."
-        </p>
     </section>
 
     <!-- Security & Privacy Cards -->

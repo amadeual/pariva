@@ -5,9 +5,7 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 // Public Landing & Legal Routes
-Route::get('/', function () {
-    return view('landing');
-})->name('landing');
+Route::get('/', [AppController::class, 'landing'])->name('landing');
 
 Route::get('/termos', function () {
     return view('legal.termos');

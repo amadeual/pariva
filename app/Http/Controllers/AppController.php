@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Auth;
 
 class AppController extends Controller
 {
+    public function landing()
+    {
+        $profiles = User::inRandomOrder()->take(3)->get();
+        return view('landing', compact('profiles'));
+    }
+
     public function discover()
     {
         $currentUser = Auth::user();

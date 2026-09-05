@@ -57,7 +57,7 @@
                     <span class="text-xs font-extrabold">Verifique seu Perfil</span>
                     <span class="bg-amber-400 text-black text-[9px] font-black px-1.5 py-0.2 rounded-full uppercase">OFICIAL</span>
                 </div>
-                <span class="text-[10px] text-white/80">Ganhe até 4x mais visitas por R$ 9,90/ano</span>
+                <span class="text-[10px] text-white/80">Ganhe até 4x mais visitas com um pagamento único de R$ 14,99</span>
             </div>
         </div>
         <button type="button" onclick="openVerificationModal()" class="px-3 py-1.5 bg-amber-400 text-[#590219] text-xs font-extrabold rounded-xl shadow-xs hover:bg-amber-300 transition-colors shrink-0">
@@ -462,11 +462,11 @@
             <!-- Pricing Banner -->
             <div class="bg-gradient-to-r from-amber-500/10 to-amber-600/20 rounded-2xl p-4 border border-amber-300/40 flex items-center justify-between">
                 <div class="flex flex-col">
-                    <span class="text-[11px] font-bold text-[#590219] uppercase tracking-wider">Assinatura Anual</span>
-                    <span class="text-2xl font-black text-[#221417]">R$ 9,90 <span class="text-xs font-normal text-[#796a6e]">/ano</span></span>
+                    <span class="text-[11px] font-bold text-[#590219] uppercase tracking-wider">Pagamento Único</span>
+                    <span class="text-2xl font-black text-[#221417]">R$ 14,99</span>
                 </div>
                 <span class="bg-[#590219] text-amber-300 text-[10px] font-extrabold px-2.5 py-1 rounded-full border border-amber-300/30">
-                    APENAS R$ 0,82/MÊS
+                    TAXA ÚNICA
                 </span>
             </div>
 
@@ -486,8 +486,8 @@
                 </li>
             </ul>
 
-            <button type="button" onclick="alert('Pagamento via PIX/Cartão simulado com sucesso! Seu selo de verificação anual está ativo.'); closeVerificationModal();" class="w-full py-4 bg-[#590219] text-white font-black text-xs rounded-2xl shadow-xl hover:bg-[#3f0111] transition-all flex items-center justify-center gap-2">
-                <span>Garantir Meu Selo Por R$ 9,90/ano</span>
+            <button type="button" onclick="alert('Pagamento via PIX/Cartão simulado com sucesso! Seu selo de verificação vitalício está ativo.'); closeVerificationModal();" class="w-full py-4 bg-[#590219] text-white font-black text-xs rounded-2xl shadow-xl hover:bg-[#3f0111] transition-all flex items-center justify-center gap-2">
+                <span>Garantir Meu Selo Por R$ 14,99</span>
                 <i data-lucide="arrow-right" class="w-4 h-4 text-amber-300"></i>
             </button>
         </div>

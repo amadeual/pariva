@@ -272,5 +272,86 @@ class AppController extends Controller
 
         return redirect()->route('likes')->with('success', "👀 'Quem Curtiu Você' ({$label}) ativado com sucesso! Todos os perfis foram revelados.");
     }
+
+    public function onboardingInteresses()
+    {
+        return view('onboarding-interesses');
+    }
+
+    public function saveOnboardingInteresses(Request $request)
+    {
+        $user = Auth::user();
+        if ($request->has('interests')) {
+            $user->update(['interests' => array_values(array_filter($request->interests))]);
+        }
+        return redirect()->route('discover');
+    }
+
+    public function editProfile()
+    {
+        $user = Auth::user();
+        return view('profile-edit', compact('user'));
+    }
+
+    public function filtros()
+    {
+        $user = Auth::user();
+        return view('filtros', compact('user'));
+    }
+
+    public function chat()
+    {
+        return view('chat');
+    }
+
+    public function games()
+    {
+        return view('games');
+    }
+
+    public function gamesTrivia()
+    {
+        return view('games-trivia');
+    }
+
+    public function gamesResult()
+    {
+        return view('games-result');
+    }
+
+    public function premium()
+    {
+        return view('premium');
+    }
+
+    public function moments()
+    {
+        return view('moments');
+    }
+
+    public function agendarEncontro($userId)
+    {
+        $targetUser = User::findOrFail($userId);
+        return view('encontros-agendar', compact('targetUser'));
+    }
+
+    public function storeEncontro(Request $request)
+    {
+        return $this->storeDate($request);
+    }
+
+    public function conviteEncontro($dateId)
+    {
+        $date = Date::with(['user', 'targetUser'])->findOrFail($dateId);
+        return view('encontros-convite', compact('date'));
+    }
+
+    public function responderEncontro(Request $request, $dateId)
+    {
+        $date = Date::findOrFail($dateId);
+        $date->update(['status' => $request->input('status', 'aceito')]);
+        return redirect()->route('encontros')->with('success', 'Resposta enviada!');
+    }
 }
+
 

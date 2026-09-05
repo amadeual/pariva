@@ -51,7 +51,7 @@
 
             <!-- Forgot password link -->
             <div class="flex justify-end px-1">
-                <a href="{{ route('password.request') }}" class="text-[11px] font-semibold text-[#796a6e] hover:text-[#590219]">
+                <a href="{{ route('forgot-password') }}" class="text-[11px] font-semibold text-[#796a6e] hover:text-[#590219]">
                     Esqueceu sua senha?
                 </a>
             </div>

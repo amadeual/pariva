@@ -44,6 +44,8 @@ Route::middleware('guest')->group(function () {
         return view('auth.forgot-password');
     })->name('password.request');
 
+    Route::post('/forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
+
     Route::get('/esqueci-senha', function () {
         return view('auth.forgot-password');
     })->name('forgot-password');

@@ -48,6 +48,12 @@ class GoogleController extends Controller
                     'password'    => null,
                     'is_verified' => true, // Auto-verify Google SSO users
                 ]);
+
+                try {
+                    \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\WelcomeMail($user));
+                } catch (\Throwable $mailErr) {
+                    Log::error('Google SSO Welcome mail error: ' . $mailErr->getMessage());
+                }
             }
 
             Auth::login($user, true);

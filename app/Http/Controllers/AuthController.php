@@ -45,6 +45,36 @@ class AuthController extends Controller
         }
     }
 
+    public function sendResetLinkEmail(Request $request)
+    {
+        $request->validate([
+            'email' => ['required', 'email'],
+        ], [
+            'email.required' => 'Por favor, informe seu endereço de e-mail.',
+            'email.email' => 'Por favor, insira um e-mail válido.',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if ($user) {
+            $token = \Illuminate\Support\Str::random(60);
+            \Illuminate\Support\Facades\DB::table('password_resets')->updateOrInsert(
+                ['email' => $user->email],
+                ['token' => \Illuminate\Support\Facades\Hash::make($token), 'created_at' => now()]
+            );
+
+            $resetUrl = url('/reset-password?token=' . $token . '&email=' . urlencode($user->email));
+
+            try {
+                \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\ResetPasswordMail($user, $resetUrl));
+            } catch (\Throwable $mailErr) {
+                \Illuminate\Support\Facades\Log::error('Reset password mail error: ' . $mailErr->getMessage());
+            }
+        }
+
+        return back()->with('status', 'Se o e-mail informado estiver cadastrado em nossa plataforma, enviamos um link para redefinição de sua senha.');
+    }
+
     public function showRegister()
     {
         return view('auth.register');
@@ -84,6 +114,13 @@ class AuthController extends Controller
             ]);
 
             Auth::login($user);
+
+            // Send Welcome Email asynchronously or safely
+            try {
+                \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\WelcomeMail($user));
+            } catch (\Throwable $mailErr) {
+                \Illuminate\Support\Facades\Log::error('Welcome mail error: ' . $mailErr->getMessage());
+            }
 
             return redirect()->route('onboarding.interesses');
 

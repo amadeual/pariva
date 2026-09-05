@@ -45,18 +45,31 @@
             </p>
         </div>
 
+        @if(session('status'))
+            <div class="w-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold p-3.5 rounded-2xl text-center shadow-xs">
+                {{ session('status') }}
+            </div>
+        @endif
+
+        @if($errors->any())
+            <div class="w-full bg-rose-50 border border-rose-200 text-rose-800 text-xs font-semibold p-3.5 rounded-2xl text-center shadow-xs">
+                {{ $errors->first() }}
+            </div>
+        @endif
+
         <!-- Reset Password Form -->
-        <form class="w-full flex flex-col gap-4 mt-2">
+        <form method="POST" action="{{ route('password.email') }}" class="w-full flex flex-col gap-4 mt-2">
+            @csrf
             <div class="relative">
-                <input type="text" placeholder="E-mail, CPF ou Telefone" class="w-full bg-white rounded-2xl py-4 pr-10 pl-12 text-xs text-[#221417] placeholder-[#a09497] border border-[#ede7e5] focus:border-[#590219] focus:outline-none font-medium shadow-xs">
-                <i data-lucide="user" class="w-4 h-4 text-[#a09497] absolute left-4 top-4"></i>
+                <input type="email" name="email" required placeholder="Digite seu e-mail cadastrado" class="w-full bg-white rounded-2xl py-4 pr-10 pl-12 text-xs text-[#221417] placeholder-[#a09497] border border-[#ede7e5] focus:border-[#590219] focus:outline-none font-medium shadow-xs">
+                <i data-lucide="mail" class="w-4 h-4 text-[#a09497] absolute left-4 top-4"></i>
             </div>
 
             <!-- Submit Button (Vinho Dark Button) -->
-            <a href="{{ route('login') }}" class="w-full py-4 bg-[#590219] text-white font-bold text-sm rounded-2xl shadow-xl hover:bg-[#3f0111] transition-all flex items-center justify-center gap-2 text-center mt-2">
-                <span>Enviar Código</span>
+            <button type="submit" class="w-full py-4 bg-[#590219] text-white font-bold text-sm rounded-2xl shadow-xl hover:bg-[#3f0111] transition-all flex items-center justify-center gap-2 text-center mt-2 cursor-pointer">
+                <span>Enviar Link de Redefinição</span>
                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
-            </a>
+            </button>
         </form>
 
     </div>

@@ -1,0 +1,39 @@
+/* Pariva Stitch Design System Tokens */
+:root {
+  --pariva-burgundy: #590219;
+  --pariva-burgundy-dark: #3f0111;
+  --pariva-burgundy-light: #7c0d28;
+  --pariva-pink-bg: #fdf2f4;
+  --pariva-pink-light: #fae6e9;
+  --pariva-bg: #fbf9f8;
+  --pariva-card-bg: #f5f2f0;
+  --pariva-text-dark: #221417;
+  --pariva-text-muted: #796a6e;
+  --pariva-star-yellow: #f5b800;
+  --pariva-green-match: #10b981;
+  --pariva-border: #ede7e5;
+  --pariva-shadow: 0 10px 25px -5px rgba(89, 2, 25, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--pariva-bg);
+  color: var(--pariva-text-dark);
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--pariva-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--pariva-border);
+  border-radius: 10px;
+}

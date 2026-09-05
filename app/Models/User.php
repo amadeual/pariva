@@ -1,0 +1,86 @@
+<?php
+
+namespace App\Models;
+
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+
+class User extends Authenticatable
+{
+    use HasApiTokens, HasFactory, Notifiable;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'google_id',
+        'avatar',
+        'age',
+        'location',
+        'profession',
+        'bio',
+        'interests',
+        'gender',
+        'interested_in',
+        'max_distance',
+        'is_verified',
+        'verification_badge',
+        'roses_count',
+        'superlikes_count',
+        'boosted_until',
+        'featured_until',
+        'featured_plan',
+        'see_likes_until',
+        'is_premium',
+    ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+        'interests' => 'array',
+        'boosted_until' => 'datetime',
+        'featured_until' => 'datetime',
+        'see_likes_until' => 'datetime',
+        'is_premium' => 'boolean',
+        'is_verified' => 'boolean',
+    ];
+
+    public function isBoosted(): bool
+    {
+        return $this->boosted_until && $this->boosted_until->isFuture();
+    }
+
+    public function isFeatured(): bool
+    {
+        return $this->featured_until && $this->featured_until->isFuture();
+    }
+
+    public function canSeeWhoLiked(): bool
+    {
+        return $this->is_premium || ($this->see_likes_until && $this->see_likes_until->isFuture());
+    }
+}
+

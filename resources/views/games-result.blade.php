@@ -13,12 +13,16 @@
             <span class="text-xl font-extrabold text-[#590219] tracking-tight">Descobrir</span>
         </div>
         <a href="{{ route('profile.edit') }}" class="w-9 h-9 rounded-full overflow-hidden border-2 border-[#590219]/20 shadow-sm">
-            <img src="{{ asset('images/avatars/isabella.jpg') }}" alt="Perfil" class="w-full h-full object-cover">
+            <img src="{{ Auth::user()->avatar_url }}" onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'" alt="Perfil" class="w-full h-full object-cover">
         </a>
     </header>
 @endsection
 
 @section('content')
+@php
+    $matchName = isset($matchedUser) ? explode(' ', $matchedUser->name)[0] : 'Rafael';
+    $matchAvatar = isset($matchedUser) ? $matchedUser->avatar_url : asset('images/avatars/rafael.jpg');
+@endphp
 <div class="px-5 py-2 flex flex-col items-center gap-6 max-w-md mx-auto pb-10">
 
     <!-- Top Hero Banner with Holding Hands Image -->
@@ -68,8 +72,8 @@
     <div class="w-full bg-[#eee9e6] rounded-2xl p-4 flex flex-col gap-2 border border-[#ede7e5] relative">
         <div class="flex items-center gap-2">
             <div class="flex -space-x-2">
-                <img src="{{ asset('images/avatars/mariana.jpg') }}" alt="Você" class="w-6 h-6 rounded-full border border-white object-cover">
-                <img src="{{ asset('images/avatars/rafael.jpg') }}" alt="Rafael" class="w-6 h-6 rounded-full border border-white object-cover">
+                <img src="{{ Auth::user()->avatar_url }}" onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'" alt="Você" class="w-6 h-6 rounded-full border border-white object-cover">
+                <img src="{{ $matchAvatar }}" onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'" alt="{{ $matchName }}" class="w-6 h-6 rounded-full border border-white object-cover">
             </div>
             <span class="bg-[#e4deda] text-[#590219] font-bold text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full">
                 SINTONIA
@@ -77,7 +81,7 @@
         </div>
 
         <p class="text-xs text-[#221417] leading-relaxed font-medium">
-            Ambos acham que <strong class="text-[#590219]">Rafael</strong> faria uma viagem de última hora sem planejar absolutamente nada.
+            Ambos acham que <strong class="text-[#590219]">{{ $matchName }}</strong> faria uma viagem de última hora sem planejar absolutamente nada.
         </p>
     </div>
 
@@ -85,8 +89,8 @@
     <div class="w-full bg-[#eee9e6] rounded-2xl p-4 flex flex-col gap-2 border border-[#ede7e5] relative">
         <div class="flex items-center gap-2">
             <div class="flex -space-x-2">
-                <img src="{{ asset('images/avatars/mariana.jpg') }}" alt="Você" class="w-6 h-6 rounded-full border border-white object-cover">
-                <img src="{{ asset('images/avatars/rafael.jpg') }}" alt="Rafael" class="w-6 h-6 rounded-full border border-white object-cover">
+                <img src="{{ Auth::user()->avatar_url }}" onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'" alt="Você" class="w-6 h-6 rounded-full border border-white object-cover">
+                <img src="{{ $matchAvatar }}" onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'" alt="{{ $matchName }}" class="w-6 h-6 rounded-full border border-white object-cover">
             </div>
             <span class="bg-[#e4deda] text-[#590219] font-bold text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full">
                 CURIOSIDADE

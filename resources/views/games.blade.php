@@ -13,7 +13,7 @@
             <span class="text-xl font-extrabold text-[#590219] tracking-tight">Descobrir</span>
         </div>
         <a href="{{ route('profile.edit') }}" class="w-9 h-9 rounded-full overflow-hidden border-2 border-[#590219]/20 shadow-sm">
-            <img src="{{ asset('images/avatars/isabella.jpg') }}" alt="Perfil" class="w-full h-full object-cover">
+            <img src="{{ Auth::user()->avatar_url }}" onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'" alt="Perfil" class="w-full h-full object-cover">
         </a>
     </header>
 @endsection

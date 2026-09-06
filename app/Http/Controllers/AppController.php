@@ -531,12 +531,16 @@ class AppController extends Controller
 
     public function gamesTrivia()
     {
-        return view('games-trivia');
+        $user = Auth::user();
+        $matchedUser = User::where('id', '!=', $user->id)->first();
+        return view('games-trivia', compact('user', 'matchedUser'));
     }
 
     public function gamesResult()
     {
-        return view('games-result');
+        $user = Auth::user();
+        $matchedUser = User::where('id', '!=', $user->id)->first();
+        return view('games-result', compact('user', 'matchedUser'));
     }
 
     public function premium()

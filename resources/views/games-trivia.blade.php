@@ -9,8 +9,8 @@
             <span class="text-xl font-extrabold text-[#590219] tracking-tight">Pariva</span>
         </div>
         <a href="{{ route('profile.edit') }}" class="w-9 h-9 rounded-full overflow-hidden border-2 border-[#590219]/20 shadow-sm flex items-center justify-center bg-[#eee9e6] font-bold text-xs text-[#590219]" title="{{ Auth::user()->name }}">
-            <img src="{{ asset('images/avatars/' . (strtolower(explode(' ', Auth::user()->name)[0])) . '.jpg') }}" 
-                 onerror="this.src='{{ asset('images/avatars/isabella.jpg') }}'" 
+            <img src="{{ Auth::user()->avatar_url }}" 
+                 onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'" 
                  alt="{{ Auth::user()->name }}" class="w-full h-full object-cover">
         </a>
     </header>
@@ -48,24 +48,28 @@
     <!-- Selection Cards (User vs Match) -->
     <div class="w-full flex flex-col gap-4">
 
-        <!-- Option 1: Juliana / Você -->
+        <!-- Option 1: Logged-in User -->
         <div onclick="window.location.href='{{ route('games.result') }}'" class="relative w-full h-56 rounded-3xl overflow-hidden shadow-md border-2 border-transparent hover:border-[#590219] transition-all cursor-pointer group">
-            <img src="{{ asset('images/avatars/mariana.jpg') }}" alt="Juliana (Você)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+            <img src="{{ Auth::user()->avatar_url }}" onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'" alt="{{ Auth::user()->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
 
             <div class="absolute bottom-4 left-4 text-white flex flex-col">
-                <h3 class="font-extrabold text-lg leading-tight">Juliana</h3>
+                <h3 class="font-extrabold text-lg leading-tight">{{ explode(' ', Auth::user()->name)[0] }}</h3>
                 <span class="text-xs opacity-90 font-light">Você</span>
             </div>
         </div>
 
-        <!-- Option 2: Rafael / Match -->
+        <!-- Option 2: Matched User -->
+        @php
+            $matchName = isset($matchedUser) ? explode(' ', $matchedUser->name)[0] : 'Rafael';
+            $matchAvatar = isset($matchedUser) ? $matchedUser->avatar_url : asset('images/avatars/rafael.jpg');
+        @endphp
         <div onclick="window.location.href='{{ route('games.result') }}'" class="relative w-full h-56 rounded-3xl overflow-hidden shadow-md border-2 border-transparent hover:border-[#590219] transition-all cursor-pointer group">
-            <img src="{{ asset('images/avatars/rafael.jpg') }}" alt="Rafael (Match)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+            <img src="{{ $matchAvatar }}" onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'" alt="{{ $matchName }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
 
             <div class="absolute bottom-4 left-4 text-white flex flex-col">
-                <h3 class="font-extrabold text-lg leading-tight">Rafael</h3>
+                <h3 class="font-extrabold text-lg leading-tight">{{ $matchName }}</h3>
                 <span class="text-xs opacity-90 font-light">Match</span>
             </div>
         </div>

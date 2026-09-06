@@ -130,7 +130,7 @@ class User extends Authenticatable
             if (!empty($this->avatar)) {
                 $photos = [$this->avatar];
             } else {
-                return [];
+                return [asset('images/avatars/placeholder.jpg')];
             }
         }
 

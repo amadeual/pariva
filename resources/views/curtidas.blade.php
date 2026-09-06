@@ -9,7 +9,7 @@
             <span class="text-xl font-extrabold text-[#590219] tracking-tight">Pariva</span>
         </div>
         <a href="{{ route('profile.edit') }}" class="w-9 h-9 rounded-full overflow-hidden border-2 border-[#590219]/20 shadow-sm flex items-center justify-center bg-[#eee9e6] font-bold text-xs text-[#590219]" title="{{ Auth::user()->name }}">
-            <img src="{{ Auth::user()->avatar ? (str_starts_with(Auth::user()->avatar, 'http') ? Auth::user()->avatar : asset('storage/' . Auth::user()->avatar)) : (file_exists(public_path('images/avatars/' . strtolower(explode(' ', Auth::user()->name)[0]) . '.jpg')) ? asset('images/avatars/' . strtolower(explode(' ', Auth::user()->name)[0]) . '.jpg') : asset('images/avatars/placeholder.jpg')) }}" 
+            <img src="{{ Auth::user()->avatar_url }}" 
                  onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'" 
                  alt="{{ Auth::user()->name }}" class="w-full h-full object-cover">
         </a>

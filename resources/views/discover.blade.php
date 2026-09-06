@@ -52,7 +52,8 @@
         <!-- Swipe Card -->
         <div class="swipe-card absolute inset-0 w-full h-full rounded-3xl overflow-hidden shadow-xl border border-[#ede7e5] bg-gray-900 select-none touch-none transition-transform duration-300 ease-out cursor-grab active:cursor-grabbing"
              style="z-index: {{ count($users) - $index }};"
-             data-user-id="{{ $user->id }}">
+             data-user-id="{{ $user->id }}"
+             data-photos='@json($user->photo_urls)'>
             
             <!-- LIKE Badge -->
             <div class="like-badge opacity-0 pointer-events-none absolute top-10 left-8 z-30 border-4 border-emerald-500 text-emerald-500 px-4 py-1.5 rounded-2xl text-2xl font-black uppercase tracking-widest -rotate-12 transition-opacity duration-150">
@@ -76,10 +77,10 @@
                  alt="{{ $user->name }}" class="card-img w-full h-full object-cover pointer-events-none transition-all duration-300">
 
             <!-- Top Progress Bars (Photos indicator) -->
-            <div class="absolute top-3 left-4 right-4 flex gap-1.5 z-20 pointer-events-none">
-                <div class="photo-bar h-1 flex-1 bg-white rounded-full opacity-100 transition-opacity"></div>
-                <div class="photo-bar h-1 flex-1 bg-white/40 rounded-full opacity-40 transition-opacity"></div>
-                <div class="photo-bar h-1 flex-1 bg-white/40 rounded-full opacity-40 transition-opacity"></div>
+            <div class="photo-bars-container absolute top-3 left-4 right-4 flex gap-1.5 z-20 pointer-events-none">
+                @foreach($user->photo_urls as $pIndex => $pUrl)
+                    <div class="photo-bar h-1 flex-1 bg-white {{ $pIndex === 0 ? 'opacity-100' : 'opacity-40' }} rounded-full transition-opacity"></div>
+                @endforeach
             </div>
 
             <!-- Match Badge & Safety Options -->
@@ -423,13 +424,10 @@
                     </div>
                 </div>
 
-                <!-- Additional Photos Gallery Grid -->
-                <div class="flex flex-col gap-2 pt-2 border-t border-[#ede7e5]">
+                <!-- Additional Photos Gallery Grid (Only rendered if user has manually uploaded multiple photos) -->
+                <div id="profile-modal-gallery-container" class="flex flex-col gap-2 pt-2 border-t border-[#ede7e5] hidden">
                     <h4 class="text-xs font-bold uppercase tracking-wider text-[#796a6e]">Galeria de Fotos</h4>
-                    <div class="grid grid-cols-2 gap-2">
-                        <img id="profile-modal-gallery-1" src="" class="w-full h-36 object-cover rounded-2xl border border-[#ede7e5]">
-                        <img id="profile-modal-gallery-2" src="" class="w-full h-36 object-cover rounded-2xl border border-[#ede7e5]">
-                    </div>
+                    <div id="profile-modal-gallery-grid" class="grid grid-cols-2 gap-2"></div>
                 </div>
             </div>
 
@@ -765,26 +763,23 @@ function closeRoseModal() {
     modal.classList.remove('flex');
 }
 
-// Photo switching logic (Tinder style photo tap navigation)
-const userPhotosMap = {
-    'Mariana': ['/images/avatars/mariana.jpg', '/images/moments/picnic.jpg', '/images/moments/museum.jpg'],
-    'Isabella': ['/images/avatars/isabella.jpg', '/images/moments/cafe.jpg', '/images/moments/art_gallery.jpg'],
-    'Camila': ['/images/avatars/camila.jpg', '/images/moments/picnic.jpg', '/images/moments/cafe.jpg'],
-    'Lucas': ['/images/avatars/lucas.jpg', '/images/moments/museum.jpg', '/images/moments/cafe.jpg']
-};
-
+// Photo switching logic (Tinder style photo tap navigation using real user photos)
 function nextPhoto(el, event) {
     event.stopPropagation();
     const card = el.closest('.swipe-card');
-    const userName = card.querySelector('h2 span').innerText.trim();
-    const photos = userPhotosMap[userName] || ['/images/avatars/mariana.jpg', '/images/moments/picnic.jpg', '/images/moments/cafe.jpg'];
+    let photos = [];
+    try {
+        photos = JSON.parse(card.dataset.photos || '[]');
+    } catch(e) {}
+    
+    if (!photos || photos.length <= 1) return;
     
     let currentIndex = parseInt(card.dataset.photoIndex || '0');
     currentIndex = (currentIndex + 1) % photos.length;
     card.dataset.photoIndex = currentIndex;
 
     const img = card.querySelector('.card-img');
-    img.src = photos[currentIndex];
+    if (img) img.src = photos[currentIndex];
 
     // Update photo progress indicators
     const bars = card.querySelectorAll('.photo-bar');
@@ -802,15 +797,19 @@ function nextPhoto(el, event) {
 function prevPhoto(el, event) {
     event.stopPropagation();
     const card = el.closest('.swipe-card');
-    const userName = card.querySelector('h2 span').innerText.trim();
-    const photos = userPhotosMap[userName] || ['/images/avatars/mariana.jpg', '/images/moments/picnic.jpg', '/images/moments/cafe.jpg'];
+    let photos = [];
+    try {
+        photos = JSON.parse(card.dataset.photos || '[]');
+    } catch(e) {}
+    
+    if (!photos || photos.length <= 1) return;
     
     let currentIndex = parseInt(card.dataset.photoIndex || '0');
     currentIndex = (currentIndex - 1 + photos.length) % photos.length;
     card.dataset.photoIndex = currentIndex;
 
     const img = card.querySelector('.card-img');
-    img.src = photos[currentIndex];
+    if (img) img.src = photos[currentIndex];
 
     // Update photo progress indicators
     const bars = card.querySelectorAll('.photo-bar');
@@ -836,19 +835,36 @@ function startDirectChat() {
 }
 
 function openProfileModal(user) {
-    const firstName = user.name.split(' ')[0];
-    const mainImg = `/images/avatars/${firstName.toLowerCase()}.jpg`;
+    const photos = (user.photo_urls && user.photo_urls.length > 0) 
+        ? user.photo_urls 
+        : [user.avatar_url || '/images/avatars/placeholder.jpg'];
     
-    document.getElementById('profile-modal-img').src = mainImg;
+    document.getElementById('profile-modal-img').src = photos[0];
     document.getElementById('profile-modal-name').innerText = user.name;
     document.getElementById('profile-modal-age').innerText = user.age || 28;
     document.getElementById('profile-modal-badge').innerText = user.verification_badge || 'Verificado';
-    document.getElementById('profile-modal-profession').innerText = user.profession || 'Designer & Fotógrafa';
+    document.getElementById('profile-modal-profession').innerText = user.profession || 'Pariva Member';
     document.getElementById('profile-modal-location').innerText = user.location || 'São Paulo, SP';
-    document.getElementById('profile-modal-bio').innerText = user.bio || 'Adoro viajar, descobrir restaurantes novos e passar o domingo no parque ouvindo boa música...';
+    document.getElementById('profile-modal-bio').innerText = user.bio || 'Sem biografia cadastrada.';
 
-    document.getElementById('profile-modal-gallery-1').src = '/images/moments/picnic.jpg';
-    document.getElementById('profile-modal-gallery-2').src = '/images/moments/cafe.jpg';
+    const galleryContainer = document.getElementById('profile-modal-gallery-container');
+    const galleryGrid = document.getElementById('profile-modal-gallery-grid');
+    
+    if (galleryGrid && galleryContainer) {
+        galleryGrid.innerHTML = '';
+        if (photos.length > 1) {
+            galleryContainer.classList.remove('hidden');
+            photos.slice(1).forEach(photoUrl => {
+                const img = document.createElement('img');
+                img.src = photoUrl;
+                img.onerror = () => { img.src = '/images/avatars/placeholder.jpg'; };
+                img.className = 'w-full h-36 object-cover rounded-2xl border border-[#ede7e5]';
+                galleryGrid.appendChild(img);
+            });
+        } else {
+            galleryContainer.classList.add('hidden');
+        }
+    }
 
     const chatBtn = document.getElementById('profile-modal-chat-btn');
     if (chatBtn) {

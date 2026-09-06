@@ -299,6 +299,12 @@ class AppController extends Controller
         // If no match and no previous history, require direct chat credit
         if (!$isMatch && !$hasHistory) {
             if ($currentUser->direct_chat_credits <= 0) {
+                if ($request->wantsJson() || $request->ajax()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Você precisa de Crédito de Chat Direto ou um Match para iniciar esta conversa!'
+                    ], 403);
+                }
                 return back()->withErrors([
                     'chat_credit' => 'Você precisa de Crédito de Chat Direto ou um Match para iniciar esta conversa!'
                 ]);
@@ -307,13 +313,57 @@ class AppController extends Controller
             $currentUser->decrement('direct_chat_credits');
         }
 
-        Message::create([
+        $msg = Message::create([
             'sender_id' => $currentUser->id,
             'receiver_id' => $receiverId,
             'message' => trim($request->message),
         ]);
 
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => [
+                    'id' => $msg->id,
+                    'sender_id' => $msg->sender_id,
+                    'receiver_id' => $msg->receiver_id,
+                    'message' => e($msg->message),
+                    'is_me' => true,
+                    'time' => $msg->created_at->format('H:i'),
+                ]
+            ]);
+        }
+
         return redirect()->route('chat', ['user_id' => $receiverId]);
+    }
+
+    public function fetchMessages($receiverId)
+    {
+        $currentUser = Auth::user();
+
+        $messages = Message::where(function ($q) use ($currentUser, $receiverId) {
+            $q->where('sender_id', $currentUser->id)->where('receiver_id', $receiverId);
+        })->orWhere(function ($q) use ($currentUser, $receiverId) {
+            $q->where('sender_id', $receiverId)->where('receiver_id', $currentUser->id);
+        })->orderBy('created_at', 'asc')->get();
+
+        // Mark unread messages as read
+        Message::where('sender_id', $receiverId)
+            ->where('receiver_id', $currentUser->id)
+            ->update(['is_read' => true]);
+
+        return response()->json([
+            'success' => true,
+            'messages' => $messages->map(function ($msg) use ($currentUser) {
+                return [
+                    'id' => $msg->id,
+                    'sender_id' => $msg->sender_id,
+                    'receiver_id' => $msg->receiver_id,
+                    'message' => e($msg->message),
+                    'is_me' => $msg->sender_id === $currentUser->id,
+                    'time' => $msg->created_at->format('H:i'),
+                ];
+            })
+        ]);
     }
 
     public function buyChatCredits(Request $request)

@@ -94,6 +94,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/premium', [AppController::class, 'premium'])->name('premium');
     Route::get('/chat', [AppController::class, 'chat'])->name('chat');
+    Route::get('/chat/fetch/{receiverId}', [AppController::class, 'fetchMessages'])->name('chat.fetch');
     Route::post('/chat/send', [AppController::class, 'sendMessage'])->name('chat.send');
     Route::post('/user/buy-chat-credits', [AppController::class, 'buyChatCredits'])->name('user.buy-chat-credits');
 

@@ -76,7 +76,7 @@
             </div>
 
             <!-- Messages Stream -->
-            <div class="flex flex-col gap-3 overflow-y-auto mb-4 max-h-[380px] px-1 scrollbar-thin">
+            <div id="messagesContainer" class="flex flex-col gap-3 overflow-y-auto mb-4 max-h-[380px] px-1 scrollbar-thin">
                 @forelse($messages as $msg)
                     @if($msg->sender_id === Auth::id())
                         <!-- Sent Message (Right Bubble) -->
@@ -115,11 +115,11 @@
             @endif
 
             <!-- Message Input Form -->
-            <form action="{{ route('chat.send') }}" method="POST" class="sticky bottom-14 pt-2 bg-[#fbf9f8]">
+            <form id="chatForm" action="{{ route('chat.send') }}" method="POST" class="sticky bottom-14 pt-2 bg-[#fbf9f8]">
                 @csrf
                 <input type="hidden" name="receiver_id" value="{{ $selectedUser->id }}">
                 <div class="bg-white rounded-full p-1.5 pr-2 pl-4 flex items-center gap-2 shadow-md border border-[#ede7e5]">
-                    <input type="text" name="message" required placeholder="Escreva sua mensagem..." class="bg-transparent flex-1 text-xs text-[#221417] focus:outline-none placeholder-[#a09497] font-medium">
+                    <input type="text" id="messageInput" name="message" required autocomplete="off" placeholder="Escreva sua mensagem..." class="bg-transparent flex-1 text-xs text-[#221417] focus:outline-none placeholder-[#a09497] font-medium">
 
                     <button type="submit" class="w-9 h-9 rounded-full bg-[#590219] text-white flex items-center justify-center shadow-sm hover:bg-[#3f0111] transition-all cursor-pointer">
                         <i data-lucide="send" class="w-4 h-4"></i>
@@ -153,4 +153,142 @@
     </div>
 
 </div>
+
+@if($selectedUser)
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const messagesContainer = document.getElementById('messagesContainer');
+        const chatForm = document.getElementById('chatForm');
+        const messageInput = document.getElementById('messageInput');
+        const receiverId = {{ $selectedUser->id }};
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        
+        let lastMessageCount = {{ count($messages) }};
+
+        function scrollToBottom() {
+            if (messagesContainer) {
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+        }
+        scrollToBottom();
+
+        if (chatForm) {
+            chatForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const text = messageInput.value.trim();
+                if (!text) return;
+
+                messageInput.value = '';
+
+                // Create temporary sent message bubble instantly
+                const tempDiv = document.createElement('div');
+                tempDiv.className = 'flex flex-col items-end gap-1 ml-auto max-w-[80%] transition-opacity';
+                const now = new Date();
+                const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+                
+                tempDiv.innerHTML = `
+                    <div class="bg-[#590219] text-white p-3 rounded-2xl rounded-tr-none text-xs shadow-xs font-normal leading-relaxed">
+                        ${escapeHtml(text)}
+                    </div>
+                    <span class="text-[9px] text-[#796a6e] font-semibold">${timeStr}</span>
+                `;
+
+                // Remove empty placeholder if present
+                const emptyPlaceholder = messagesContainer.querySelector('.text-center.py-8');
+                if (emptyPlaceholder) emptyPlaceholder.remove();
+
+                messagesContainer.appendChild(tempDiv);
+                scrollToBottom();
+
+                try {
+                    const response = await fetch('{{ route("chat.send") }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': csrfToken,
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            receiver_id: receiverId,
+                            message: text
+                        })
+                    });
+
+                    const data = await response.json();
+                    if (!data.success && data.message) {
+                        if (typeof showToast === 'function') {
+                            showToast(data.message, 'error');
+                        }
+                    } else {
+                        fetchRealtimeMessages();
+                    }
+                } catch (err) {
+                    console.error('Erro ao enviar mensagem:', err);
+                }
+            });
+        }
+
+        async function fetchRealtimeMessages() {
+            try {
+                const res = await fetch(`/chat/fetch/${receiverId}`, {
+                    headers: { 'Accept': 'application/json' }
+                });
+                const data = await res.json();
+                if (data.success && Array.isArray(data.messages)) {
+                    if (data.messages.length !== lastMessageCount) {
+                        lastMessageCount = data.messages.length;
+                        renderMessages(data.messages);
+                    }
+                }
+            } catch (e) {}
+        }
+
+        function renderMessages(msgs) {
+            messagesContainer.innerHTML = '';
+            if (msgs.length === 0) {
+                messagesContainer.innerHTML = `
+                    <div class="text-center py-8 text-xs text-[#796a6e] flex flex-col items-center gap-2">
+                        <div class="w-10 h-10 rounded-full bg-[#fdf2f4] text-[#590219] flex items-center justify-center">
+                            <i data-lucide="message-square-heart" class="w-5 h-5"></i>
+                        </div>
+                        <p class="font-bold text-[#221417]">Diga Olá para {{ explode(' ', $selectedUser->name)[0] }}! 👋</p>
+                        <p class="text-[11px]">Quebre o gelo enviando uma mensagem simpática.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            msgs.forEach(msg => {
+                const msgDiv = document.createElement('div');
+                if (msg.is_me) {
+                    msgDiv.className = 'flex flex-col items-end gap-1 ml-auto max-w-[80%]';
+                    msgDiv.innerHTML = `
+                        <div class="bg-[#590219] text-white p-3 rounded-2xl rounded-tr-none text-xs shadow-xs font-normal leading-relaxed">
+                            ${msg.message}
+                        </div>
+                        <span class="text-[9px] text-[#796a6e] font-semibold">${msg.time}</span>
+                    `;
+                } else {
+                    msgDiv.className = 'flex flex-col items-start gap-1 mr-auto max-w-[80%]';
+                    msgDiv.innerHTML = `
+                        <div class="bg-white border border-[#ede7e5] text-[#221417] p-3 rounded-2xl rounded-tl-none text-xs shadow-xs font-normal leading-relaxed">
+                            ${msg.message}
+                        </div>
+                        <span class="text-[9px] text-[#796a6e] font-semibold">${msg.time}</span>
+                    `;
+                }
+                messagesContainer.appendChild(msgDiv);
+            });
+            scrollToBottom();
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+
+        setInterval(fetchRealtimeMessages, 2500);
+    });
+</script>
+@endif
+
 @endsection

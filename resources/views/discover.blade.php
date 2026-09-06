@@ -522,13 +522,16 @@ document.addEventListener('DOMContentLoaded', () => {
     let activeCard = null;
 
     function getTopCard() {
-        return cards.filter(c => !c.classList.contains('dismissed')).pop();
+        return cards.find(c => !c.classList.contains('dismissed')) || null;
     }
 
     function initCardEvents(card) {
         if (!card) return;
 
         const onPointerDown = (e) => {
+            // Only allow interaction with the topmost visible card (Tinder behavior)
+            if (card !== getTopCard()) return;
+
             isDragging = true;
             activeCard = card;
             card.classList.remove('transition-transform', 'duration-300');
@@ -605,7 +608,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function swipeRight(card, isSuper = false) {
         if (!card) return;
-        card.classList.add('dismissed', 'transition-transform', 'duration-500');
+        const likeBadge = card.querySelector('.like-badge');
+        if (likeBadge) likeBadge.style.opacity = '1';
+        card.classList.add('dismissed', 'transition-transform', 'duration-300');
         card.style.transform = `translate3d(${window.innerWidth + 200}px, ${currentY || 0}px, 0) rotate(30deg)`;
         
         const userId = card.dataset.userId;
@@ -618,7 +623,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function swipeLeft(card) {
         if (!card) return;
-        card.classList.add('dismissed', 'transition-transform', 'duration-500');
+        const nopeBadge = card.querySelector('.nope-badge');
+        if (nopeBadge) nopeBadge.style.opacity = '1';
+        card.classList.add('dismissed', 'transition-transform', 'duration-300');
         card.style.transform = `translate3d(-${window.innerWidth + 200}px, ${currentY || 0}px, 0) rotate(-30deg)`;
         
         setTimeout(() => {
@@ -699,11 +706,11 @@ function showReportForm() {
 }
 
 function openRoseModal() {
-    const topCard = document.querySelectorAll('.swipe-card:not(.dismissed)');
-    if (!topCard.length) return;
-    const card = topCard[topCard.length - 1];
-    const userId = card.dataset.userId;
-    const userName = card.querySelector('h2').innerText;
+    const cards = Array.from(document.querySelectorAll('.swipe-card'));
+    const topCard = cards.find(c => !c.classList.contains('dismissed'));
+    if (!topCard) return;
+    const userId = topCard.dataset.userId;
+    const userName = topCard.querySelector('h2 span')?.innerText.trim() || 'Usuário';
 
     document.getElementById('rose-user-name').innerText = userName;
     document.getElementById('rose-receiver-id').value = userId;

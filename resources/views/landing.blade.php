@@ -4,7 +4,6 @@
 @section('meta_description', 'Encontre solteiros em busca de relacionamentos sérios no Pariva. Teste de compatibilidade por IA, agendamento de dates seguros e perfis 100% verificados.')
 @section('meta_keywords', 'aplicativo de relacionamento sério, site de namoro confiavel, encontros seguros, pariva namoro, aplicativo tinder alternativo, solteiros em sao paulo')
 
-
 @section('header')
     <header class="w-full px-5 py-3.5 flex justify-between items-center bg-[#fbf9f8]/80 backdrop-blur-xl border-b border-[#ede7e5]/80 sticky top-0 z-50 shadow-[0_4px_20px_rgba(0,0,0,0.03)]">
         <div class="flex items-center gap-2.5">
@@ -15,7 +14,7 @@
             <a href="{{ route('login') }}" class="text-xs font-bold text-[#590219] px-3.5 py-2 rounded-xl hover:bg-[#f7ecee] transition-all">
                 Entrar
             </a>
-            <a href="{{ route('register') }}" class="text-xs font-bold text-white bg-gradient-to-r from-[#590219] to-[#7c0d28] px-4 py-2 rounded-xl shadow-md hover:shadow-lg hover:brightness-110 active:scale-95 transition-all flex items-center gap-1">
+            <a href="{{ route('register') }}" class="text-xs font-bold text-white bg-gradient-to-r from-[#ff007f] via-[#c4065c] to-[#590219] px-4 py-2 rounded-xl shadow-md hover:shadow-lg hover:brightness-110 active:scale-95 transition-all flex items-center gap-1">
                 <span>Cadastrar</span>
                 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
             </a>
@@ -23,7 +22,8 @@
     </header>
 @endsection
 
-@section('conte<div class="px-5 py-6 flex flex-col gap-10">
+@section('content')
+<div class="px-5 py-6 flex flex-col gap-10">
 
     <!-- Hero Section Stitch -->
     <section class="flex flex-col items-center text-center">
@@ -96,7 +96,7 @@
                 <div>
                     <h3 class="font-bold text-sm text-[#221417] mb-1">Crie uma conexão</h3>
                     <p class="text-xs text-[#796a6e] leading-relaxed">
-                        Inicie conversas significativas e deixe a faísca acontecer naturalmente.
+                        Inicie conversas significativas e deixe a faísca acontecer naturally.
                     </p>
                 </div>
             </div>
@@ -237,12 +237,7 @@
         </a>
     </section>
 
-</div>agora
-        </a>
-    </section>
-
 </div>
 
 @include('components.footer')
 @endsection
-

@@ -23,18 +23,23 @@
     </header>
 @endsection
 
-@section('content')
-<div class="px-5 py-6 flex flex-col gap-10">
+@section('conte<div class="px-5 py-6 flex flex-col gap-10">
 
     <!-- Hero Section Stitch -->
     <section class="flex flex-col items-center text-center">
+        <!-- Rosa Choque Pill Tagline -->
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-[#ff007f] bg-[#ff007f]/10 border border-[#ff007f]/25 mb-5 shadow-xs">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#ff007f]"></i>
+            <span>#1 App de Relacionamentos Sérios</span>
+        </div>
+
         <!-- Logo Emblem -->
-        <div class="mb-6 flex flex-col items-center">
-            <img src="{{ asset('images/logo.jpg') }}" alt="Pariva Logo" class="h-24 w-auto object-contain rounded-2xl shadow-sm">
+        <div class="mb-5 flex flex-col items-center">
+            <img src="{{ asset('images/logo.jpg') }}" alt="Pariva Logo" class="h-24 w-auto object-contain rounded-2xl shadow-sm border border-[#ff007f]/20">
         </div>
 
         <h1 class="text-2xl sm:text-3xl font-extrabold text-[#590219] leading-snug max-w-xs mb-3">
-            Encontre alguém que realmente combina com você.
+            Encontre alguém que <span class="bg-gradient-to-r from-[#ff007f] via-[#e91e63] to-[#590219] bg-clip-text text-transparent">realmente combina</span> com você.
         </h1>
 
         <p class="text-xs sm:text-sm text-[#796a6e] max-w-xs leading-relaxed mb-6">
@@ -42,10 +47,11 @@
         </p>
 
         <div class="w-full flex flex-col gap-3 max-w-xs">
-            <a href="{{ route('discover') }}" class="w-full py-3.5 px-4 bg-[#590219] text-white font-semibold text-sm rounded-xl shadow-md hover:bg-[#3f0111] transition-all text-center">
-                Criar meu perfil gratuitamente
+            <a href="{{ route('discover') }}" class="w-full py-3.5 px-4 bg-gradient-to-r from-[#ff007f] via-[#c4065c] to-[#590219] text-white font-bold text-sm rounded-xl shadow-lg shadow-[#ff007f]/25 hover:shadow-xl hover:shadow-[#ff007f]/35 hover:brightness-110 active:scale-98 transition-all text-center flex items-center justify-center gap-2">
+                <span>Criar meu perfil gratuitamente</span>
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
             </a>
-            <a href="#como-funciona" class="w-full py-3.5 px-4 bg-white text-[#590219] font-medium text-sm rounded-xl border border-[#d6c7c4] hover:bg-[#fdf2f4] transition-all text-center">
+            <a href="#como-funciona" class="w-full py-3.5 px-4 bg-white text-[#590219] font-medium text-sm rounded-xl border border-[#d6c7c4] hover:bg-[#fdf2f4] hover:border-[#ff007f]/40 hover:text-[#ff007f] transition-all text-center">
                 Como funciona
             </a>
         </div>
@@ -58,7 +64,7 @@
         <div class="flex flex-col gap-5">
             <!-- Step 1 -->
             <div class="flex gap-4 items-start">
-                <div class="w-8 h-8 rounded-full bg-[#590219] text-white flex items-center justify-center font-bold text-sm shrink-0">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-[#ff007f] to-[#590219] text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-sm shadow-[#ff007f]/20">
                     1
                 </div>
                 <div>
@@ -71,7 +77,7 @@
 
             <!-- Step 2 -->
             <div class="flex gap-4 items-start">
-                <div class="w-8 h-8 rounded-full bg-[#590219] text-white flex items-center justify-center font-bold text-sm shrink-0">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-[#ff007f] to-[#590219] text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-sm shadow-[#ff007f]/20">
                     2
                 </div>
                 <div>
@@ -84,7 +90,7 @@
 
             <!-- Step 3 -->
             <div class="flex gap-4 items-start">
-                <div class="w-8 h-8 rounded-full bg-[#590219] text-white flex items-center justify-center font-bold text-sm shrink-0">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-[#ff007f] to-[#590219] text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-sm shadow-[#ff007f]/20">
                     3
                 </div>
                 <div>
@@ -100,15 +106,15 @@
     <!-- Preview Profiles Carousel / Grid Section -->
     <section class="flex flex-col gap-4">
         <div class="flex flex-col items-center text-center gap-1">
-            <span class="text-[10px] font-extrabold uppercase tracking-widest text-[#590219] bg-[#590219]/10 px-3 py-1 rounded-full">Pessoas na sua Região</span>
+            <span class="text-[10px] font-extrabold uppercase tracking-widest text-[#ff007f] bg-[#ff007f]/10 border border-[#ff007f]/20 px-3 py-1 rounded-full">Pessoas na sua Região</span>
             <h2 class="text-xl font-bold text-[#221417]">Conexões reais esperando por você</h2>
         </div>
 
         <div class="grid grid-cols-1 gap-4">
             @foreach($profiles as $profile)
-                <div class="bg-gradient-to-br from-white to-[#f7f2f0] rounded-3xl p-5 border border-[#ede7e5] shadow-md hover:shadow-lg transition-all flex flex-col gap-3 relative overflow-hidden">
+                <div class="bg-gradient-to-br from-white via-[#fffafd] to-[#f7f2f0] rounded-3xl p-5 border border-[#ede7e5] shadow-md hover:shadow-lg transition-all flex flex-col gap-3 relative overflow-hidden">
                     <div class="flex items-center gap-4">
-                        <div class="relative w-16 h-16 rounded-2xl overflow-hidden shrink-0 border-2 border-white shadow-sm bg-[#eee9e6]">
+                        <div class="relative w-16 h-16 rounded-2xl overflow-hidden shrink-0 border-2 border-[#ff007f]/30 shadow-sm bg-[#eee9e6]">
                             <img src="{{ $profile['avatar'] }}" 
                                  onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'"
                                  alt="{{ $profile['name'] }}" class="w-full h-full object-cover">
@@ -125,8 +131,8 @@
 
                             <p class="text-xs text-[#796a6e] truncate">{{ $profile['profession'] }} • {{ $profile['location'] }}</p>
 
-                            <div class="mt-1 inline-flex items-center gap-1 text-[10px] font-bold text-[#590219] bg-[#590219]/10 px-2.5 py-0.5 rounded-full w-fit">
-                                <i data-lucide="sparkles" class="w-3 h-3 text-[#590219]"></i>
+                            <div class="mt-1 inline-flex items-center gap-1 text-[10px] font-bold text-[#ff007f] bg-[#ff007f]/10 border border-[#ff007f]/20 px-2.5 py-0.5 rounded-full w-fit">
+                                <i data-lucide="sparkles" class="w-3 h-3 text-[#ff007f]"></i>
                                 <span>{{ $profile['compatibility'] }}% Compatível</span>
                             </div>
                         </div>
@@ -145,7 +151,7 @@
     <!-- Security & Privacy Cards -->
     <section class="flex flex-col gap-3">
         <div class="bg-[#f5f2f0] p-4 rounded-xl flex items-center gap-3 border border-[#ede7e5]">
-            <div class="w-9 h-9 rounded-full bg-[#590219] text-white flex items-center justify-center shrink-0">
+            <div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#ff007f] to-[#590219] text-white flex items-center justify-center shrink-0">
                 <i data-lucide="shield-check" class="w-5 h-5"></i>
             </div>
             <div>
@@ -155,7 +161,7 @@
         </div>
 
         <div class="bg-[#f5f2f0] p-4 rounded-xl flex items-center gap-3 border border-[#ede7e5]">
-            <div class="w-9 h-9 rounded-full bg-[#590219] text-white flex items-center justify-center shrink-0">
+            <div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#ff007f] to-[#590219] text-white flex items-center justify-center shrink-0">
                 <i data-lucide="lock" class="w-5 h-5"></i>
             </div>
             <div>
@@ -171,7 +177,7 @@
 
         <!-- Feature 1: Matching com IA -->
         <div class="bg-gradient-to-br from-[#fbf9f8] to-[#f4ebe8] p-5 rounded-2xl border border-[#ede7e5] shadow-xs flex items-start gap-4">
-            <div class="w-12 h-12 rounded-2xl bg-[#590219] text-white flex items-center justify-center shrink-0 shadow-md">
+            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#ff007f] to-[#590219] text-white flex items-center justify-center shrink-0 shadow-md shadow-[#ff007f]/20">
                 <i data-lucide="sparkles" class="w-6 h-6"></i>
             </div>
             <div class="flex flex-col gap-1">
@@ -184,7 +190,7 @@
 
         <!-- Feature 2: Agendar Dates Seguros -->
         <div class="bg-gradient-to-br from-[#fbf9f8] to-[#f4ebe8] p-5 rounded-2xl border border-[#ede7e5] shadow-xs flex items-start gap-4">
-            <div class="w-12 h-12 rounded-2xl bg-[#590219] text-white flex items-center justify-center shrink-0 shadow-md">
+            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#ff007f] to-[#590219] text-white flex items-center justify-center shrink-0 shadow-md shadow-[#ff007f]/20">
                 <i data-lucide="calendar-heart" class="w-6 h-6"></i>
             </div>
             <div class="flex flex-col gap-1">
@@ -197,7 +203,7 @@
 
         <!-- Feature 3: Eventos da Comunidade -->
         <div class="bg-gradient-to-br from-[#fbf9f8] to-[#f4ebe8] p-5 rounded-2xl border border-[#ede7e5] shadow-xs flex items-start gap-4">
-            <div class="w-12 h-12 rounded-2xl bg-[#590219] text-white flex items-center justify-center shrink-0 shadow-md">
+            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#ff007f] to-[#590219] text-white flex items-center justify-center shrink-0 shadow-md shadow-[#ff007f]/20">
                 <i data-lucide="users" class="w-6 h-6"></i>
             </div>
             <div class="flex flex-col gap-1">
@@ -209,13 +215,13 @@
         </div>
     </section>
 
-    <!-- Pariva Games Banner (Stitch Burgundy Banner) -->
-    <section class="bg-[#590219] text-white rounded-2xl p-6 flex flex-col items-center text-center gap-2 shadow-lg">
-        <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center mb-1">
+    <!-- Pariva Games Banner (Stitch Burgundy Banner with Rosa Choque Glow) -->
+    <section class="bg-gradient-to-r from-[#590219] via-[#80082c] to-[#ff007f] text-white rounded-2xl p-6 flex flex-col items-center text-center gap-2 shadow-lg shadow-[#ff007f]/15">
+        <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center mb-1 backdrop-blur-sm">
             <i data-lucide="gamepad-2" class="w-6 h-6 text-white"></i>
         </div>
         <h3 class="font-extrabold text-base tracking-wide">Pariva Games</h3>
-        <p class="text-xs text-white/80 leading-relaxed max-w-xs">
+        <p class="text-xs text-white/90 leading-relaxed max-w-xs">
             Quebre o gelo de forma divertida. Conheça pessoas através de dinâmicas e jogos interativos ("Quem é mais provável", Trivia) antes do primeiro date.
         </p>
     </section>
@@ -225,8 +231,13 @@
         <h2 class="text-xl font-extrabold text-[#590219] leading-snug max-w-xs">
             Sua próxima grande conexão pode começar aqui.
         </h2>
-        <a href="{{ route('discover') }}" class="w-full max-w-xs py-3.5 px-4 bg-[#590219] text-white font-semibold text-sm rounded-xl shadow-md hover:bg-[#3f0111] transition-all text-center">
-            Começar agora
+        <a href="{{ route('discover') }}" class="w-full max-w-xs py-3.5 px-4 bg-gradient-to-r from-[#ff007f] via-[#c4065c] to-[#590219] text-white font-bold text-sm rounded-xl shadow-lg shadow-[#ff007f]/25 hover:shadow-xl hover:brightness-110 active:scale-98 transition-all text-center flex items-center justify-center gap-2">
+            <span>Começar agora</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </a>
+    </section>
+
+</div>agora
         </a>
     </section>
 

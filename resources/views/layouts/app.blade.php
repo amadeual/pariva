@@ -160,8 +160,98 @@
         @endunless
     </div>
 
+    <!-- Custom Pariva Professional Modal Dialog -->
+    <div id="pariva-custom-modal" class="fixed inset-0 z-[100] bg-black/60 backdrop-blur-md flex items-center justify-center p-4 hidden animate-fadeIn">
+        <div class="bg-white rounded-3xl p-6 max-w-xs w-full shadow-2xl border border-[#ede7e5] flex flex-col items-center text-center gap-4 transition-all transform scale-100">
+            <!-- Modal Icon Container -->
+            <div id="pariva-modal-icon-wrapper" class="w-14 h-14 rounded-2xl bg-[#fdf2f4] text-[#590219] flex items-center justify-center shadow-xs">
+                <div id="pariva-modal-icon">
+                    <i data-lucide="help-circle" class="w-7 h-7"></i>
+                </div>
+            </div>
+
+            <!-- Modal Content -->
+            <div class="flex flex-col gap-1">
+                <h3 id="pariva-modal-title" class="text-base font-extrabold text-[#221417] leading-tight">Confirmação</h3>
+                <p id="pariva-modal-message" class="text-xs text-[#796a6e] font-medium leading-relaxed">Tem certeza que deseja prosseguir?</p>
+            </div>
+
+            <!-- Modal Buttons -->
+            <div class="grid grid-cols-2 gap-2.5 w-full mt-1">
+                <button id="pariva-modal-cancel" type="button" class="py-3 px-4 rounded-xl bg-[#eee9e6] hover:bg-[#e2dad6] text-[#221417] font-bold text-xs transition-colors cursor-pointer flex-1">
+                    Cancelar
+                </button>
+                <button id="pariva-modal-confirm" type="button" class="py-3 px-4 rounded-xl bg-[#590219] hover:bg-[#3f0111] text-white font-extrabold text-xs transition-colors shadow-md cursor-pointer flex-1">
+                    Confirmar
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         lucide.createIcons();
+        
+        // Custom Promise-based Pariva Modal Confirmation
+        window.parivaConfirm = function({ title = 'Confirmação', message = 'Tem certeza que deseja continuar?', icon = 'help-circle', confirmText = 'Confirmar', cancelText = 'Cancelar', isDestructive = false }) {
+            return new Promise((resolve) => {
+                const modal = document.getElementById('pariva-custom-modal');
+                const iconContainer = document.getElementById('pariva-modal-icon-wrapper');
+                const iconEl = document.getElementById('pariva-modal-icon');
+                const titleEl = document.getElementById('pariva-modal-title');
+                const msgEl = document.getElementById('pariva-modal-message');
+                const confirmBtn = document.getElementById('pariva-modal-confirm');
+                const cancelBtn = document.getElementById('pariva-modal-cancel');
+
+                titleEl.innerText = title;
+                msgEl.innerText = message;
+                confirmBtn.innerText = confirmText;
+                cancelBtn.innerText = cancelText;
+
+                if (isDestructive) {
+                    iconContainer.className = 'w-14 h-14 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center shadow-xs';
+                    confirmBtn.className = 'py-3 px-4 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-extrabold text-xs transition-colors shadow-md cursor-pointer flex-1';
+                } else {
+                    iconContainer.className = 'w-14 h-14 rounded-2xl bg-[#fdf2f4] text-[#590219] flex items-center justify-center shadow-xs';
+                    confirmBtn.className = 'py-3 px-4 rounded-xl bg-[#590219] hover:bg-[#3f0111] text-white font-extrabold text-xs transition-colors shadow-md cursor-pointer flex-1';
+                }
+
+                iconEl.innerHTML = `<i data-lucide="${icon}" class="w-7 h-7"></i>`;
+                if (window.lucide) lucide.createIcons();
+
+                modal.classList.remove('hidden');
+
+                const cleanup = () => {
+                    modal.classList.add('hidden');
+                    confirmBtn.onclick = null;
+                    cancelBtn.onclick = null;
+                };
+
+                confirmBtn.onclick = () => { cleanup(); resolve(true); };
+                cancelBtn.onclick = () => { cleanup(); resolve(false); };
+            });
+        };
+
+        // Custom Pariva Toast Notification
+        window.parivaToast = function(message, type = 'success') {
+            const toast = document.createElement('div');
+            const isSuccess = type === 'success';
+            const isError = type === 'error';
+            toast.className = `fixed top-5 left-1/2 -translate-x-1/2 z-[110] ${isError ? 'bg-gradient-to-r from-rose-700 to-rose-900' : 'bg-gradient-to-r from-[#590219] via-[#7c0d28] to-[#ff007f]'} text-white px-5 py-3 rounded-full text-xs font-extrabold shadow-2xl flex items-center gap-2 border border-white/20 transition-all duration-400 transform -translate-y-2 opacity-0 pointer-events-none`;
+            toast.innerHTML = `<i data-lucide="${isError ? 'alert-circle' : 'check-circle'}" class="w-4 h-4 text-white"></i><span>${message}</span>`;
+            document.body.appendChild(toast);
+            if (window.lucide) lucide.createIcons();
+            
+            setTimeout(() => {
+                toast.style.transform = 'translate(-50%, 0)';
+                toast.style.opacity = '1';
+            }, 50);
+
+            setTimeout(() => {
+                toast.style.transform = 'translate(-50%, -20px)';
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 400);
+            }, 2500);
+        };
         
         // Auto-dismiss toast notification smoothly after 1.8s
         document.addEventListener('DOMContentLoaded', () => {

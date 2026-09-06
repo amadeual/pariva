@@ -71,7 +71,7 @@
 
                     @if(Auth::user()->avatar)
                     <!-- Delete Avatar Action -->
-                    <button type="button" onclick="if(confirm('Deseja realmente remover esta foto de perfil?')){ document.getElementById('delete-avatar-form').submit(); }" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-rose-600/90 text-white flex items-center justify-center shadow-md cursor-pointer hover:bg-rose-700 transition-transform hover:scale-105" title="Remover Foto">
+                    <button type="button" onclick="parivaConfirm({ title: 'Remover Foto', message: 'Tem certeza que deseja remover sua foto de perfil?', icon: 'trash-2', confirmText: 'Remover', cancelText: 'Cancelar', isDestructive: true }).then(confirmed => { if(confirmed) document.getElementById('delete-avatar-form').submit(); })" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-rose-600/90 text-white flex items-center justify-center shadow-md cursor-pointer hover:bg-rose-700 transition-transform hover:scale-105" title="Remover Foto">
                         <i data-lucide="trash-2" class="w-4 h-4"></i>
                     </button>
                     @endif
@@ -285,7 +285,7 @@
         if (!val) return;
 
         if (currentCount >= 5) {
-            alert('Você pode selecionar no máximo 5 interesses.');
+            parivaToast('Você pode selecionar no máximo 5 interesses.', 'error');
             return;
         }
 

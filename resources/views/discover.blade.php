@@ -46,41 +46,8 @@
     </div>
     @endif
 
-    <!-- Banner CTA 1: Verificação Profissional por R$ 9,90/ano -->
-    <div class="w-full bg-gradient-to-r from-[#590219] to-[#880d2d] rounded-2xl p-3 text-white flex items-center justify-between shadow-md border border-white/10">
-        <div class="flex items-center gap-2.5">
-            <div class="w-9 h-9 rounded-xl bg-amber-400/20 text-amber-300 flex items-center justify-center shrink-0">
-                <i data-lucide="badge-check" class="w-5 h-5"></i>
-            </div>
-            <div class="flex flex-col">
-                <div class="flex items-center gap-1">
-                    <span class="text-xs font-extrabold">Verifique seu Perfil</span>
-                    <span class="bg-amber-400 text-black text-[9px] font-black px-1.5 py-0.2 rounded-full uppercase">OFICIAL</span>
-                </div>
-                <span class="text-[10px] text-white/80">Ganhe até 4x mais visitas com um pagamento único de R$ 14,99</span>
-            </div>
-        </div>
-        <button type="button" onclick="openVerificationModal()" class="px-3 py-1.5 bg-amber-400 text-[#590219] text-xs font-extrabold rounded-xl shadow-xs hover:bg-amber-300 transition-colors shrink-0">
-            Verificar
-        </button>
-    </div>
-
-    <!-- Banner CTA 2: Boost & Destaques de Perfil ⚡ -->
-    <div class="w-full bg-amber-50 border border-amber-200 rounded-2xl p-2.5 flex items-center justify-between shadow-xs">
-        <div class="flex items-center gap-2">
-            <span class="text-xl">⚡</span>
-            <div class="flex flex-col">
-                <span class="text-xs font-bold text-amber-950">Aumente suas curtidas em 10x!</span>
-                <span class="text-[10px] text-amber-800 font-medium">Ative o Boost ou coloque seu Perfil em Destaque!</span>
-            </div>
-        </div>
-        <a href="{{ route('premium') }}" class="px-3 py-1.5 bg-[#590219] text-white text-xs font-bold rounded-xl hover:bg-[#3f0111] transition-colors shrink-0">
-            Turbinar ⚡
-        </a>
-    </div>
-
     <!-- Swipe Deck Stack Container -->
-    <div id="swipe-deck" class="relative w-full h-[520px]">
+    <div id="swipe-deck" class="relative w-full h-[460px] sm:h-[500px]">
         @forelse($users as $index => $user)
         <!-- Swipe Card -->
         <div class="swipe-card absolute inset-0 w-full h-full rounded-3xl overflow-hidden shadow-xl border border-[#ede7e5] bg-gray-900 select-none touch-none transition-transform duration-300 ease-out cursor-grab active:cursor-grabbing"
@@ -232,6 +199,39 @@
         <button id="btn-instant-chat" type="button" onclick="startDirectChat()" class="w-12 h-12 rounded-full bg-white border-2 border-purple-200 text-purple-600 shadow-md shadow-purple-500/15 hover:border-purple-400 hover:bg-purple-50/50 hover:scale-110 active:scale-95 transition-all cursor-pointer flex items-center justify-center shrink-0" title="Iniciar Conversa">
             <i data-lucide="message-circle" class="w-5 h-5 stroke-[2.5px]"></i>
         </button>
+    </div>
+
+    <!-- Banner CTA 1: Verificação Profissional (Abaixo da foto e dos botões) -->
+    <div class="w-full bg-gradient-to-r from-[#590219] to-[#880d2d] rounded-2xl p-3 text-white flex items-center justify-between shadow-md border border-white/10 my-1">
+        <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-amber-400/20 text-amber-300 flex items-center justify-center shrink-0">
+                <i data-lucide="badge-check" class="w-5 h-5"></i>
+            </div>
+            <div class="flex flex-col">
+                <div class="flex items-center gap-1">
+                    <span class="text-xs font-extrabold">Verifique seu Perfil</span>
+                    <span class="bg-amber-400 text-black text-[9px] font-black px-1.5 py-0.2 rounded-full uppercase">OFICIAL</span>
+                </div>
+                <span class="text-[10px] text-white/80">Ganhe até 4x mais visitas com um pagamento único de R$ 14,99</span>
+            </div>
+        </div>
+        <button type="button" onclick="openVerificationModal()" class="px-3 py-1.5 bg-amber-400 text-[#590219] text-xs font-extrabold rounded-xl shadow-xs hover:bg-amber-300 transition-colors shrink-0">
+            Verificar
+        </button>
+    </div>
+
+    <!-- Banner CTA 2: Boost & Destaques de Perfil ⚡ (Abaixo dos botões) -->
+    <div class="w-full bg-amber-50 border border-amber-200 rounded-2xl p-2.5 flex items-center justify-between shadow-xs mb-2">
+        <div class="flex items-center gap-2">
+            <span class="text-xl">⚡</span>
+            <div class="flex flex-col">
+                <span class="text-xs font-bold text-amber-950">Aumente suas curtidas em 10x!</span>
+                <span class="text-[10px] text-amber-800 font-medium">Ative o Boost ou coloque seu Perfil em Destaque!</span>
+            </div>
+        </div>
+        <a href="{{ route('premium') }}" class="px-3 py-1.5 bg-[#590219] text-white text-xs font-bold rounded-xl hover:bg-[#3f0111] transition-colors shrink-0">
+            Turbinar ⚡
+        </a>
     </div>
 
     <!-- Multi-Gift Modal -->

@@ -6,6 +6,7 @@ use App\Models\Date;
 use App\Models\Message;
 use App\Models\User;
 use App\Models\UserLike;
+use App\Models\UserBlock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -52,7 +53,19 @@ class AppController extends Controller
     public function explore(Request $request)
     {
         $currentUser = Auth::user();
-        $query = User::where('id', '!=', $currentUser->id);
+
+        // Exclude users already liked, matches, and blocked users
+        $likedUserIds = UserLike::where('user_id', $currentUser->id)->pluck('liked_user_id');
+        $blockedUserIds = UserBlock::where('blocker_id', $currentUser->id)->pluck('blocked_user_id');
+        $blockingUserIds = UserBlock::where('blocked_user_id', $currentUser->id)->pluck('blocker_id');
+
+        $excludedUserIds = $likedUserIds
+            ->merge($blockedUserIds)
+            ->merge($blockingUserIds)
+            ->push($currentUser->id)
+            ->unique();
+
+        $query = User::whereNotIn('id', $excludedUserIds);
 
         if ($currentUser->interested_in && $currentUser->interested_in !== 'todos') {
             if ($currentUser->interested_in === 'homens') {
@@ -66,7 +79,6 @@ class AppController extends Controller
 
         $mode = $request->query('mode');
         if ($mode) {
-            // Apply category filter logic or random subset based on intent mode
             $users = $query->inRandomOrder()->take(6)->get();
         } else {
             $users = $query->inRandomOrder()->take(10)->get();
@@ -79,7 +91,18 @@ class AppController extends Controller
     {
         $currentUser = Auth::user();
         
-        $query = User::where('id', '!=', $currentUser->id);
+        // Exclude users already liked, matches, and blocked users
+        $likedUserIds = UserLike::where('user_id', $currentUser->id)->pluck('liked_user_id');
+        $blockedUserIds = UserBlock::where('blocker_id', $currentUser->id)->pluck('blocked_user_id');
+        $blockingUserIds = UserBlock::where('blocked_user_id', $currentUser->id)->pluck('blocker_id');
+
+        $excludedUserIds = $likedUserIds
+            ->merge($blockedUserIds)
+            ->merge($blockingUserIds)
+            ->push($currentUser->id)
+            ->unique();
+
+        $query = User::whereNotIn('id', $excludedUserIds);
 
         if ($currentUser->interested_in && $currentUser->interested_in !== 'todos') {
             if ($currentUser->interested_in === 'homens') {

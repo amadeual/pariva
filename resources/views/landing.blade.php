@@ -27,11 +27,6 @@
 
     <!-- Hero Section Stitch -->
     <section class="flex flex-col items-center text-center">
-        <!-- Rosa Choque Pill Tagline -->
-        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-[#ff007f] bg-[#ff007f]/10 border border-[#ff007f]/25 mb-5 shadow-xs">
-            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#ff007f]"></i>
-            <span>#1 App de Relacionamentos Sérios</span>
-        </div>
 
         <!-- Logo Emblem -->
         <div class="mb-5 flex flex-col items-center">

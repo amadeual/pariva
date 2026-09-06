@@ -217,7 +217,7 @@
             </div>
 
             <!-- Submit Button -->
-            <button type="submit" class="w-full py-4 bg-gradient-to-r from-[#ff007f] via-[#c4065c] to-[#590219] text-white font-bold text-sm rounded-2xl shadow-lg shadow-[#ff007f]/25 hover:shadow-xl hover:brightness-110 active:scale-[0.99] transition-all flex items-center justify-center gap-2 text-center mt-2">
+            <button type="submit" class="w-full py-4 bg-[#590219] hover:bg-[#3f0111] text-white font-bold text-sm rounded-2xl shadow-md hover:shadow-lg active:scale-[0.99] transition-all flex items-center justify-center gap-2 text-center mt-2">
                 <span>Criar minha conta gratuita</span>
                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
             </button>

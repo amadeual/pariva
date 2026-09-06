@@ -14,7 +14,7 @@
             <a href="{{ route('login') }}" class="text-xs font-bold text-[#590219] px-3.5 py-2 rounded-xl hover:bg-[#f7ecee] transition-all">
                 Entrar
             </a>
-            <a href="{{ route('register') }}" class="text-xs font-bold text-white bg-gradient-to-r from-[#ff007f] via-[#c4065c] to-[#590219] px-4 py-2 rounded-xl shadow-md hover:shadow-lg hover:brightness-110 active:scale-95 transition-all flex items-center gap-1">
+            <a href="{{ route('register') }}" class="text-xs font-bold text-white bg-[#590219] hover:bg-[#3f0111] px-4 py-2 rounded-xl shadow-md hover:shadow-lg active:scale-95 transition-all flex items-center gap-1">
                 <span>Cadastrar</span>
                 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
             </a>
@@ -42,7 +42,7 @@
         </p>
 
         <div class="w-full flex flex-col gap-3 max-w-xs">
-            <a href="{{ route('discover') }}" class="w-full py-3.5 px-4 bg-gradient-to-r from-[#ff007f] via-[#c4065c] to-[#590219] text-white font-bold text-sm rounded-xl shadow-lg shadow-[#ff007f]/25 hover:shadow-xl hover:shadow-[#ff007f]/35 hover:brightness-110 active:scale-98 transition-all text-center flex items-center justify-center gap-2">
+            <a href="{{ route('discover') }}" class="w-full py-3.5 px-4 bg-[#590219] hover:bg-[#3f0111] text-white font-bold text-sm rounded-xl shadow-md hover:shadow-lg active:scale-98 transition-all text-center flex items-center justify-center gap-2">
                 <span>Criar meu perfil gratuitamente</span>
                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
             </a>
@@ -226,7 +226,7 @@
         <h2 class="text-xl font-extrabold text-[#590219] leading-snug max-w-xs">
             Sua próxima grande conexão pode começar aqui.
         </h2>
-        <a href="{{ route('discover') }}" class="w-full max-w-xs py-3.5 px-4 bg-gradient-to-r from-[#ff007f] via-[#c4065c] to-[#590219] text-white font-bold text-sm rounded-xl shadow-lg shadow-[#ff007f]/25 hover:shadow-xl hover:brightness-110 active:scale-98 transition-all text-center flex items-center justify-center gap-2">
+        <a href="{{ route('discover') }}" class="w-full max-w-xs py-3.5 px-4 bg-[#590219] hover:bg-[#3f0111] text-white font-bold text-sm rounded-xl shadow-md hover:shadow-lg active:scale-98 transition-all text-center flex items-center justify-center gap-2">
             <span>Começar agora</span>
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
         </a>

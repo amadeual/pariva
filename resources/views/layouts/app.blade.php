@@ -2,7 +2,10 @@
 <html lang="pt-BR">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#fbf9f8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <!-- Primary Meta Tags -->
     <title>@yield('title', 'Pariva - Aplicativo de Relacionamento Sério e Conexões Genuínas')</title>
     <meta name="title" content="@yield('meta_title', 'Pariva - Aplicativo de Relacionamento Sério e Conexões Genuínas')">
@@ -111,7 +114,7 @@
 
         @unless(request()->is('/') || request()->is('login') || request()->is('register') || request()->is('landing') || request()->is('forgot-password') || request()->is('reset-password'))
         <!-- Bottom Navigation Bar (Design Silencioso & Elegante Pariva) -->
-        <nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-white/95 backdrop-blur-xl border-t border-[#ede7e5] z-50 py-2 px-1 flex justify-around items-center text-[10px] text-[#796a6e] shadow-[0_-4px_20px_rgba(89,2,25,0.06)]">
+        <nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-white/95 backdrop-blur-xl border-t border-[#ede7e5] z-50 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] px-1 flex justify-around items-center text-[10px] text-[#796a6e] shadow-[0_-4px_20px_rgba(89,2,25,0.06)] select-none">
             <!-- Descobrir (Flame Icon, Tinder-style) -->
             <a href="{{ route('discover') }}" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-2xl transition-all duration-200 {{ request()->routeIs('discover') ? 'text-[#590219] font-bold bg-[#590219]/10 shadow-xs scale-105' : 'hover:text-[#590219] hover:bg-[#eee8e5]' }}">
                 <i data-lucide="flame" class="w-5 h-5 {{ request()->routeIs('discover') ? 'text-[#ff007f] fill-[#ff007f] stroke-[#ff007f]' : 'stroke-[1.75px]' }}"></i>

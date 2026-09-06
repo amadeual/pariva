@@ -5,8 +5,12 @@
 @section('header')
     <header class="w-full px-5 py-3.5 flex justify-between items-center bg-[#fbf9f8] border-b border-[#ede7e5]">
         <div class="flex items-center gap-2">
-            <a href="{{ route('discover') }}" class="text-xs font-bold text-[#796a6e] hover:text-[#221417]">
-                Cancelar
+            <a href="{{ route('discover') }}" class="text-xs font-bold {{ session('success') ? 'text-[#590219] font-extrabold flex items-center gap-1 bg-[#590219]/10 px-3 py-1 rounded-full' : 'text-[#796a6e] hover:text-[#221417]' }}">
+                @if(session('success'))
+                    <i data-lucide="check" class="w-3.5 h-3.5"></i> OK
+                @else
+                    Cancelar
+                @endif
             </a>
         </div>
         <div class="flex items-center gap-1.5">
@@ -23,9 +27,14 @@
 <div class="px-5 py-5 flex flex-col gap-6 max-w-md mx-auto">
 
     @if(session('success'))
-        <div class="bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-3 rounded-2xl text-xs font-semibold flex items-center gap-2 shadow-sm">
-            <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600"></i>
-            <span>{{ session('success') }}</span>
+        <div class="bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-3 rounded-2xl text-xs font-semibold flex items-center justify-between shadow-sm">
+            <div class="flex items-center gap-2">
+                <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600"></i>
+                <span>{{ session('success') }}</span>
+            </div>
+            <a href="{{ route('discover') }}" class="bg-emerald-600 text-white font-extrabold px-3 py-1 rounded-xl text-xs hover:bg-emerald-700 transition-colors shadow-xs">
+                OK
+            </a>
         </div>
     @endif
 

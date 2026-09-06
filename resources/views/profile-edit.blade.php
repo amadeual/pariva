@@ -99,6 +99,37 @@
             </p>
         </div>
 
+        <!-- Section: Status da Verificação de Identidade -->
+        @php
+            $latestVerif = Auth::user()->latestVerification;
+        @endphp
+        <div class="w-full bg-gradient-to-r from-[#590219] to-[#880d2d] rounded-2xl p-4 text-white flex flex-col gap-3 shadow-md border border-white/10">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-9 h-9 rounded-xl bg-amber-400/20 text-amber-300 flex items-center justify-center shrink-0">
+                        <i data-lucide="shield-check" class="w-5 h-5"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-xs font-extrabold">Verificação de Identidade</span>
+                        <span class="text-[10px] text-white/80">Confirme seu documento + selfie para obter o selo oficial</span>
+                    </div>
+                </div>
+                @if(Auth::user()->is_verified)
+                    <span class="bg-emerald-400 text-emerald-950 text-[10px] font-black px-2.5 py-1 rounded-full uppercase">VERIFICADO ✅</span>
+                @elseif($latestVerif && $latestVerif->status === 'pending')
+                    <span class="bg-amber-400 text-amber-950 text-[10px] font-black px-2.5 py-1 rounded-full uppercase">EM ANÁLISE ⏳</span>
+                @else
+                    <span class="bg-white/20 text-white text-[10px] font-black px-2.5 py-1 rounded-full uppercase">NÃO VERIFICADO</span>
+                @endif
+            </div>
+
+            @if(!Auth::user()->is_verified && (!$latestVerif || $latestVerif->status !== 'pending'))
+                <a href="{{ route('discover') }}#verificar" onclick="window.location.href='{{ route('discover') }}'; setTimeout(() => openVerificationModal(), 300);" class="w-full py-2.5 bg-amber-400 text-[#590219] font-black text-xs rounded-xl shadow-sm text-center hover:bg-amber-300 transition-colors block">
+                    Solicitar Selo de Verificação (Documento + Selfie)
+                </a>
+            @endif
+        </div>
+
         <!-- Section: Básico -->
         <div class="flex flex-col gap-3">
             <h2 class="text-xl font-bold text-[#590219]">Básico</h2>

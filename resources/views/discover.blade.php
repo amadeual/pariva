@@ -448,52 +448,98 @@
         </div>
     </div>
 
-    <!-- Verification Modal (R$ 9,90/ano Monetization CTA) -->
+    <!-- Verification Modal (Kyc Document + Selfie Flow) -->
     <div id="verification-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-md hidden items-center justify-center p-4">
-        <div class="bg-white w-full max-w-sm rounded-3xl p-6 flex flex-col gap-4 shadow-2xl relative border border-[#ede7e5]">
+        <div class="bg-white w-full max-w-sm rounded-3xl p-6 flex flex-col gap-4 shadow-2xl relative border border-[#ede7e5] max-h-[90vh] overflow-y-auto">
             <button type="button" onclick="closeVerificationModal()" class="absolute top-4 right-4 text-[#796a6e] hover:text-[#221417]">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
 
             <div class="flex flex-col items-center text-center gap-2 pt-2">
-                <div class="w-16 h-16 rounded-3xl bg-[#590219] text-amber-300 flex items-center justify-center shadow-lg shadow-[#590219]/30">
-                    <i data-lucide="badge-check" class="w-10 h-10"></i>
+                <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#590219] to-[#880d2d] text-amber-300 flex items-center justify-center shadow-lg shadow-[#590219]/25">
+                    <i data-lucide="shield-check" class="w-8 h-8"></i>
                 </div>
-                <h3 class="text-xl font-extrabold text-[#221417]">Selo de Perfil Oficial</h3>
-                <p class="text-xs text-[#796a6e]">Aumente a confiança, ganhe destaque no topo das buscas e receba até **4x mais curtidas** no Pariva!</p>
+                <h3 class="text-xl font-extrabold text-[#221417]">Verificação de Perfil</h3>
+                <p class="text-xs text-[#796a6e]">Envie um documento oficial (RG, CNH ou Passaporte) e uma selfie para confirmar sua identidade.</p>
             </div>
 
-            <!-- Pricing Banner -->
-            <div class="bg-gradient-to-r from-amber-500/10 to-amber-600/20 rounded-2xl p-4 border border-amber-300/40 flex items-center justify-between">
-                <div class="flex flex-col">
-                    <span class="text-[11px] font-bold text-[#590219] uppercase tracking-wider">Pagamento Único</span>
-                    <span class="text-2xl font-black text-[#221417]">R$ 14,99</span>
+            @php
+                $latestVerif = Auth::user()->latestVerification;
+            @endphp
+
+            @if(Auth::user()->is_verified)
+                <div class="p-4 bg-emerald-50 border border-emerald-300 rounded-2xl flex flex-col items-center text-center gap-2">
+                    <div class="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center">
+                        <i data-lucide="check" class="w-6 h-6"></i>
+                    </div>
+                    <span class="text-sm font-extrabold text-emerald-950">Seu perfil está Oficialmente Verificado!</span>
+                    <span class="text-xs text-emerald-800">Sua identidade foi auditada e aprovada pela nossa equipe.</span>
                 </div>
-                <span class="bg-[#590219] text-amber-300 text-[10px] font-extrabold px-2.5 py-1 rounded-full border border-amber-300/30">
-                    TAXA ÚNICA
-                </span>
-            </div>
+            @elseif($latestVerif && $latestVerif->status === 'pending')
+                <div class="p-4 bg-amber-50 border border-amber-300 rounded-2xl flex flex-col items-center text-center gap-2">
+                    <div class="w-10 h-10 rounded-full bg-amber-500 text-white flex items-center justify-center animate-pulse">
+                        <i data-lucide="clock" class="w-6 h-6"></i>
+                    </div>
+                    <span class="text-sm font-extrabold text-amber-950">Verificação em Análise</span>
+                    <span class="text-xs text-amber-800">Seu documento e selfie foram recebidos e estão em análise pela nossa equipe de moderação.</span>
+                </div>
+            @else
+                @if($latestVerif && $latestVerif->status === 'rejected')
+                    <div class="p-3 bg-rose-50 border border-rose-200 rounded-2xl text-xs text-rose-900 flex flex-col gap-1">
+                        <span class="font-extrabold flex items-center gap-1">
+                            <i data-lucide="alert-triangle" class="w-4 h-4 text-rose-600"></i>
+                            Solicitação Anterior Recusada
+                        </span>
+                        <span>Motivo: {{ $latestVerif->rejection_reason ?? 'Foto ilegível' }}. Por favor, envie novamente com boa iluminação.</span>
+                    </div>
+                @endif
 
-            <!-- Features List -->
-            <ul class="flex flex-col gap-2 text-xs font-semibold text-[#221417]">
-                <li class="flex items-center gap-2">
-                    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0"></i>
-                    <span>Selo Azul/Dourado em destaque no seu nome</span>
-                </li>
-                <li class="flex items-center gap-2">
-                    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0"></i>
-                    <span>Maior prioridade no Swipe Deck dos outros usuários</span>
-                </li>
-                <li class="flex items-center gap-2">
-                    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0"></i>
-                    <span>Acesso total ao selo de confiança verificado</span>
-                </li>
-            </ul>
+                <form method="POST" action="{{ route('verification.store') }}" enctype="multipart/form-data" class="flex flex-col gap-3.5 mt-1">
+                    @csrf
+                    
+                    <!-- Document Type Selector -->
+                    <div class="flex flex-col gap-1">
+                        <label class="text-xs font-extrabold text-[#221417] flex items-center gap-1">
+                            <i data-lucide="file-text" class="w-3.5 h-3.5 text-[#590219]"></i>
+                            <span>1. Tipo de Documento Oficial</span>
+                        </label>
+                        <select name="document_type" class="w-full bg-[#fbf9f8] border border-[#ede7e5] rounded-xl p-2.5 text-xs text-[#221417] font-semibold focus:border-[#590219] focus:outline-none" required>
+                            <option value="rg">RG (Carteira de Identidade)</option>
+                            <option value="cnh">CNH (Carteira de Motorista)</option>
+                            <option value="passport">Passaporte Nacional</option>
+                        </select>
+                    </div>
 
-            <button type="button" onclick="alert('Pagamento via PIX/Cartão simulado com sucesso! Seu selo de verificação vitalício está ativo.'); closeVerificationModal();" class="w-full py-4 bg-[#590219] text-white font-black text-xs rounded-2xl shadow-xl hover:bg-[#3f0111] transition-all flex items-center justify-center gap-2">
-                <span>Garantir Meu Selo Por R$ 14,99</span>
-                <i data-lucide="arrow-right" class="w-4 h-4 text-amber-300"></i>
-            </button>
+                    <!-- Upload Document Photo -->
+                    <div class="flex flex-col gap-1">
+                        <label class="text-xs font-extrabold text-[#221417] flex items-center gap-1">
+                            <i data-lucide="id-card" class="w-3.5 h-3.5 text-[#590219]"></i>
+                            <span>2. Foto do Documento (Frente e Verso)</span>
+                        </label>
+                        <div class="relative border-2 border-dashed border-[#ede7e5] rounded-xl p-3 bg-[#fdfaf8] hover:border-[#590219]/40 transition-colors flex items-center gap-3">
+                            <i data-lucide="camera" class="w-6 h-6 text-[#796a6e]"></i>
+                            <input type="file" name="document_photo" accept="image/*" class="w-full text-xs text-[#796a6e] file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-[10px] file:font-extrabold file:bg-[#590219] file:text-white cursor-pointer" required>
+                        </div>
+                    </div>
+
+                    <!-- Upload Selfie Photo -->
+                    <div class="flex flex-col gap-1">
+                        <label class="text-xs font-extrabold text-[#221417] flex items-center gap-1">
+                            <i data-lucide="user-check" class="w-3.5 h-3.5 text-[#590219]"></i>
+                            <span>3. Selfie para Validação Rosto</span>
+                        </label>
+                        <div class="relative border-2 border-dashed border-[#ede7e5] rounded-xl p-3 bg-[#fdfaf8] hover:border-[#590219]/40 transition-colors flex items-center gap-3">
+                            <i data-lucide="smile" class="w-6 h-6 text-[#796a6e]"></i>
+                            <input type="file" name="selfie_photo" accept="image/*" class="w-full text-xs text-[#796a6e] file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-[10px] file:font-extrabold file:bg-[#590219] file:text-white cursor-pointer" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-[#590219] via-[#880d2d] to-[#ff007f] text-white font-extrabold text-xs rounded-2xl shadow-lg shadow-[#590219]/20 hover:brightness-110 transition-all flex items-center justify-center gap-2 mt-2">
+                        <span>Enviar Documento & Selfie para Análise</span>
+                        <i data-lucide="send" class="w-4 h-4 text-amber-300"></i>
+                    </button>
+                </form>
+            @endif
         </div>
     </div>
 

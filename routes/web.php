@@ -100,6 +100,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/perfil/editar', [AppController::class, 'editProfile'])->name('profile.edit');
     Route::post('/perfil/editar', [AppController::class, 'updateProfile'])->name('profile.update');
 
+    // Identity Verification (Kyc - Document + Selfie)
+    Route::post('/perfil/verificacao', [\App\Http\Controllers\VerificationController::class, 'store'])->name('verification.store');
+
+    // Admin Verification Portal
+    Route::get('/admin/verificacoes', [\App\Http\Controllers\VerificationController::class, 'adminIndex'])->name('admin.verifications');
+    Route::post('/admin/verificacoes/{id}/aprovar', [\App\Http\Controllers\VerificationController::class, 'adminApprove'])->name('admin.verifications.approve');
+    Route::post('/admin/verificacoes/{id}/rejeitar', [\App\Http\Controllers\VerificationController::class, 'adminReject'])->name('admin.verifications.reject');
+
     Route::get('/matches', function () {
         return redirect()->route('chat');
     })->name('matches');

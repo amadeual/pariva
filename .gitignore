@@ -13,4 +13,6 @@ npm-debug.log
 yarn-error.log
 /.fleet
 /.idea
-/.vscode
+node_modules
+/public/hot
+

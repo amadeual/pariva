@@ -83,5 +83,24 @@ class User extends Authenticatable
     {
         return $this->is_premium || ($this->see_likes_until && $this->see_likes_until->isFuture());
     }
+
+    public function verifications()
+    {
+        return $this->hasMany(UserVerification::class);
+    }
+
+    public function latestVerification()
+    {
+        return $this->hasOne(UserVerification::class)->latestOfMany();
+    }
+
+    public function getVerificationStatusAttribute(): string
+    {
+        if ($this->is_verified) {
+            return 'approved';
+        }
+        $latest = $this->latestVerification;
+        return $latest ? $latest->status : 'unverified';
+    }
 }
 

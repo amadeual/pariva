@@ -9,7 +9,7 @@
                 <i data-lucide="arrow-left" class="w-5 h-5"></i>
             </a>
             <div class="flex flex-col">
-                <h2 class="font-extrabold text-sm text-[#221417]">Mensagens</h2>
+                <h2 class="font-extrabold text-sm text-[#221417]">Chat</h2>
                 <span class="text-[10px] text-[#796a6e] font-semibold">Créditos de Chat Direto: {{ Auth::user()->direct_chat_credits }}</span>
             </div>
         </div>

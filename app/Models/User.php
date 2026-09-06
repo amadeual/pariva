@@ -120,5 +120,10 @@ class User extends Authenticatable
 
         return asset('images/avatars/placeholder.jpg');
     }
+
+    public function unreadMessagesCount(): int
+    {
+        return \App\Models\Message::where('receiver_id', $this->id)->where('is_read', false)->count();
+    }
 }
 

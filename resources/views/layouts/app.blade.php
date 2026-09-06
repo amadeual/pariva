@@ -137,9 +137,19 @@
                 <span>Jogos</span>
             </a>
 
-            <a href="{{ route('chat') }}" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-xl transition-all duration-200 {{ request()->routeIs('chat') ? 'text-[#590219] font-bold bg-[#590219]/10 shadow-xs' : 'hover:text-[#590219] hover:bg-[#eee8e5]' }}">
-                <i data-lucide="message-square" class="w-5 h-5 {{ request()->routeIs('chat') ? 'stroke-[2.25px]' : 'stroke-[1.75px]' }}"></i>
-                <span>Mensagens</span>
+            @php
+                $unreadMessages = Auth::check() ? Auth::user()->unreadMessagesCount() : 0;
+            @endphp
+            <a href="{{ route('chat') }}" class="relative flex flex-col items-center gap-0.5 px-2 py-1 rounded-xl transition-all duration-200 {{ request()->routeIs('chat') ? 'text-[#590219] font-bold bg-[#590219]/10 shadow-xs' : 'hover:text-[#590219] hover:bg-[#eee8e5]' }}">
+                <div class="relative">
+                    <i data-lucide="message-square" class="w-5 h-5 {{ request()->routeIs('chat') ? 'stroke-[2.25px]' : 'stroke-[1.75px]' }}"></i>
+                    @if($unreadMessages > 0)
+                        <span class="absolute -top-1.5 -right-2 min-w-[16px] h-4 px-1 bg-gradient-to-r from-[#ff007f] to-rose-600 text-white text-[9px] font-black rounded-full flex items-center justify-center border-2 border-[#f7f2f0] shadow-sm animate-pulse">
+                            {{ $unreadMessages > 99 ? '99+' : $unreadMessages }}
+                        </span>
+                    @endif
+                </div>
+                <span>Chat</span>
             </a>
 
             <a href="{{ route('profile.edit') }}" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-xl transition-all duration-200 {{ request()->routeIs('profile.edit') ? 'text-[#590219] font-bold bg-[#590219]/10 shadow-xs' : 'hover:text-[#590219] hover:bg-[#eee8e5]' }}">

@@ -37,7 +37,7 @@
     </div>
 
     <!-- Quick Navigation Links -->
-    <div class="flex flex-wrap items-center justify-between gap-y-2 text-[11px] text-[#a39598] pt-1 border-t border-[#2c1a1e]">
+    <div class="flex flex-wrap items-center justify-between gap-y-2 text-[11px] text-[#a39598] pt-2 border-t border-[#2c1a1e]">
         <div class="flex items-center gap-3">
             <a href="{{ route('termos') }}" class="hover:text-white transition-colors">Termos</a>
             <span>•</span>
@@ -51,5 +51,10 @@
         <div class="text-[10px] text-[#796a6e]">
             &copy; {{ date('Y') }} Pariva Brasil
         </div>
+    </div>
+
+    <!-- Physical Address -->
+    <div class="text-center text-[10px] text-[#796a6e] border-t border-[#2c1a1e]/60 pt-2 leading-relaxed">
+        Pariva Brasil Tecnologia Ltda. • Av. Paulista, 91 - Bela Vista, São Paulo - SP, 01311-000
     </div>
 </footer>

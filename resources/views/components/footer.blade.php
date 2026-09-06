@@ -1,74 +1,45 @@
-<!-- Professional Pariva Footer Component -->
-<footer class="w-full bg-[#221417] text-[#fbf9f8] pt-10 pb-8 px-6 border-t border-[#3f0111] flex flex-col gap-8">
-    <div class="flex flex-col items-center text-center gap-4">
+<!-- Compact & Professional Pariva Footer Component -->
+<footer class="w-full bg-[#1b0f12] text-[#fbf9f8] pt-6 pb-6 px-5 border-t border-[#3f0111] flex flex-col gap-4">
+    <div class="flex items-center justify-between gap-3">
         <!-- Logo & Brand Name -->
-        <div class="flex items-center gap-2.5">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#7c0d28] to-[#590219] flex items-center justify-center text-white font-bold text-lg shadow-md border border-white/10">
+        <a href="{{ url('/') }}" class="flex items-center gap-2">
+            <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-[#7c0d28] to-[#590219] flex items-center justify-center text-white font-bold text-xs shadow-sm border border-white/10">
                 ♥
             </div>
-            <span class="text-2xl font-black text-white tracking-tight">pariva</span>
-        </div>
-        <p class="text-xs text-[#a39598] max-w-xs leading-relaxed">
-            Conectando pessoas genuínas para relacionamentos reais, seguros e duradouros.
-        </p>
-    </div>
-
-    <hr class="border-[#39262a] w-full my-1">
-
-    <!-- Address & Contact Info -->
-    <div class="flex flex-col gap-3 text-xs text-[#d3c7c9]">
-        <p class="leading-relaxed">
-            Av. Paulista, 91 - Bela Vista<br>
-            São Paulo - SP, 01311-000
-        </p>
-        
-        <div class="flex flex-col gap-1.5 pt-2">
-            <span class="flex items-center gap-2">
-                <i data-lucide="mail" class="w-4 h-4 text-[#7c0d28]"></i>
-                <a href="mailto:suporte@pariva.com.br" class="hover:underline text-white">suporte@pariva.com.br</a>
-            </span>
-            <span class="flex items-center gap-2">
-                <i data-lucide="shield-check" class="w-4 h-4 text-[#7c0d28]"></i>
-                <span>Atendimento 24/7 para Segurança</span>
-            </span>
-        </div>
-    </div>
-
-    <hr class="border-[#39262a] w-full my-1">
-
-    <!-- Links & Legal -->
-    <div class="grid grid-cols-2 gap-4 text-xs">
-        <div class="flex flex-col gap-2">
-            <h5 class="text-white font-bold text-xs uppercase tracking-wider mb-1">Plataforma</h5>
-            <a href="{{ route('discover') }}" class="text-[#a39598] hover:text-white transition-colors">Descobrir</a>
-            <a href="{{ route('encontros') }}" class="text-[#a39598] hover:text-white transition-colors">Agenda de Dates</a>
-            <a href="{{ route('games.trivia') }}" class="text-[#a39598] hover:text-white transition-colors">Pariva Games</a>
-            <a href="{{ route('premium') }}" class="text-[#a39598] hover:text-white transition-colors">Planos Premium</a>
-        </div>
-        <div class="flex flex-col gap-2">
-            <h5 class="text-white font-bold text-xs uppercase tracking-wider mb-1">Legal & Ajuda</h5>
-            <a href="{{ route('termos') }}" class="text-[#a39598] hover:text-white transition-colors">Termos de Uso</a>
-            <a href="{{ route('privacidade') }}" class="text-[#a39598] hover:text-white transition-colors">Privacidade</a>
-            <a href="{{ route('seguranca') }}" class="text-[#a39598] hover:text-white transition-colors">Central de Segurança</a>
-            <a href="mailto:suporte@pariva.com.br" class="text-[#a39598] hover:text-white transition-colors">Suporte</a>
-        </div>
-    </div>
-
-    <!-- Social Media Icons -->
-    <div class="flex justify-center items-center gap-4 pt-2">
-        <a href="#" class="w-9 h-9 rounded-full bg-[#39262a] flex items-center justify-center text-[#d3c7c9] hover:bg-[#7c0d28] hover:text-white transition-all">
-            <i data-lucide="instagram" class="w-4 h-4"></i>
+            <span class="text-lg font-black text-white tracking-tight">pariva</span>
         </a>
-        <a href="#" class="w-9 h-9 rounded-full bg-[#39262a] flex items-center justify-center text-[#d3c7c9] hover:bg-[#7c0d28] hover:text-white transition-all">
-            <i data-lucide="twitter" class="w-4 h-4"></i>
-        </a>
-        <a href="#" class="w-9 h-9 rounded-full bg-[#39262a] flex items-center justify-center text-[#d3c7c9] hover:bg-[#7c0d28] hover:text-white transition-all">
-            <i data-lucide="linkedin" class="w-4 h-4"></i>
-        </a>
+
+        <!-- Social Media Icons (Instagram, Facebook, TikTok) -->
+        <div class="flex items-center gap-2">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-[#2c1a1e] flex items-center justify-center text-[#d3c7c9] hover:bg-[#7c0d28] hover:text-white transition-all shadow-xs" title="Instagram">
+                <i data-lucide="instagram" class="w-4 h-4"></i>
+            </a>
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-[#2c1a1e] flex items-center justify-center text-[#d3c7c9] hover:bg-[#7c0d28] hover:text-white transition-all shadow-xs" title="Facebook">
+                <i data-lucide="facebook" class="w-4 h-4"></i>
+            </a>
+            <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-[#2c1a1e] flex items-center justify-center text-[#d3c7c9] hover:bg-[#7c0d28] hover:text-white transition-all shadow-xs" title="TikTok">
+                <!-- Custom SVG for TikTok -->
+                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 1 1-5.2-1.74 2.89 2.89 0 0 1 2.31-2.84V7.63a6.34 6.34 0 0 0-6.34 6.34c0 3.5 2.84 6.34 6.34 6.34a6.34 6.34 0 0 0 6.34-6.34V9a8.27 8.27 0 0 0 4.76 1.5V7.05a4.84 4.84 0 0 1-1.01-.36z"/>
+                </svg>
+            </a>
+        </div>
     </div>
 
-    <!-- Copyright -->
-    <div class="text-center text-[11px] text-[#796a6e] pt-2">
-        &copy; {{ date('Y') }} Pariva Brasil Tecnologia Ltda. Todos os direitos reservados.
+    <!-- Quick Navigation Links -->
+    <div class="flex flex-wrap items-center justify-between gap-y-2 text-[11px] text-[#a39598] pt-1 border-t border-[#2c1a1e]">
+        <div class="flex items-center gap-3">
+            <a href="{{ route('termos') }}" class="hover:text-white transition-colors">Termos</a>
+            <span>•</span>
+            <a href="{{ route('privacidade') }}" class="hover:text-white transition-colors">Privacidade</a>
+            <span>•</span>
+            <a href="{{ route('seguranca') }}" class="hover:text-white transition-colors">Segurança</a>
+            <span>•</span>
+            <a href="mailto:suporte@pariva.com.br" class="hover:text-white transition-colors">Suporte</a>
+        </div>
+
+        <div class="text-[10px] text-[#796a6e]">
+            &copy; {{ date('Y') }} Pariva Brasil
+        </div>
     </div>
 </footer>

@@ -111,40 +111,46 @@
 
         @unless(request()->is('/') || request()->is('login') || request()->is('register') || request()->is('landing') || request()->is('forgot-password') || request()->is('reset-password'))
         <!-- Bottom Navigation Bar (Design Silencioso & Elegante Pariva) -->
-        <nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-[#f7f2f0]/95 backdrop-blur-xl border-t border-[#e8dedb] z-50 py-2 px-1 flex justify-around items-center text-[10px] text-[#796a6e] shadow-[0_-4px_20px_rgba(89,2,25,0.05)]">
-            <a href="{{ route('discover') }}" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-xl transition-all duration-200 {{ request()->routeIs('discover') ? 'text-[#590219] font-bold bg-[#590219]/10 shadow-xs' : 'hover:text-[#590219] hover:bg-[#eee8e5]' }}">
-                <i data-lucide="sparkles" class="w-5 h-5 {{ request()->routeIs('discover') ? 'stroke-[2.25px]' : 'stroke-[1.75px]' }}"></i>
+        <nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-white/95 backdrop-blur-xl border-t border-[#ede7e5] z-50 py-2 px-1 flex justify-around items-center text-[10px] text-[#796a6e] shadow-[0_-4px_20px_rgba(89,2,25,0.06)]">
+            <!-- Descobrir (Flame Icon, Tinder-style) -->
+            <a href="{{ route('discover') }}" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-2xl transition-all duration-200 {{ request()->routeIs('discover') ? 'text-[#590219] font-bold bg-[#590219]/10 shadow-xs scale-105' : 'hover:text-[#590219] hover:bg-[#eee8e5]' }}">
+                <i data-lucide="flame" class="w-5 h-5 {{ request()->routeIs('discover') ? 'text-[#ff007f] fill-[#ff007f] stroke-[#ff007f]' : 'stroke-[1.75px]' }}"></i>
                 <span>Descobrir</span>
             </a>
 
-            <a href="{{ route('explore') }}" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-xl transition-all duration-200 {{ request()->routeIs('explore') ? 'text-[#590219] font-bold bg-[#590219]/10 shadow-xs' : 'hover:text-[#590219] hover:bg-[#eee8e5]' }}">
-                <i data-lucide="compass" class="w-5 h-5 {{ request()->routeIs('explore') ? 'stroke-[2.25px]' : 'stroke-[1.75px]' }}"></i>
+            <!-- Explorar (Grid Icon) -->
+            <a href="{{ route('explore') }}" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-2xl transition-all duration-200 {{ request()->routeIs('explore') ? 'text-[#590219] font-bold bg-[#590219]/10 shadow-xs scale-105' : 'hover:text-[#590219] hover:bg-[#eee8e5]' }}">
+                <i data-lucide="layout-grid" class="w-5 h-5 {{ request()->routeIs('explore') ? 'text-[#590219] stroke-[2.25px]' : 'stroke-[1.75px]' }}"></i>
                 <span>Explorar</span>
             </a>
 
-            <a href="{{ route('encontros') }}" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-xl transition-all duration-200 {{ request()->routeIs('encontros*') ? 'text-[#590219] font-bold bg-[#590219]/10 shadow-xs' : 'hover:text-[#590219] hover:bg-[#eee8e5]' }}">
-                <i data-lucide="calendar" class="w-5 h-5 {{ request()->routeIs('encontros*') ? 'stroke-[2.25px]' : 'stroke-[1.75px]' }}"></i>
+            <!-- Agenda (Calendar Heart Icon) -->
+            <a href="{{ route('encontros') }}" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-2xl transition-all duration-200 {{ request()->routeIs('encontros*') ? 'text-[#590219] font-bold bg-[#590219]/10 shadow-xs scale-105' : 'hover:text-[#590219] hover:bg-[#eee8e5]' }}">
+                <i data-lucide="calendar-heart" class="w-5 h-5 {{ request()->routeIs('encontros*') ? 'text-[#590219] stroke-[2.25px]' : 'stroke-[1.75px]' }}"></i>
                 <span>Agenda</span>
             </a>
             
-            <a href="{{ route('likes') }}" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-xl transition-all duration-200 {{ request()->routeIs('likes') ? 'text-[#590219] font-bold bg-[#590219]/10 shadow-xs' : 'hover:text-[#590219] hover:bg-[#eee8e5]' }}">
-                <i data-lucide="heart" class="w-5 h-5 {{ request()->routeIs('likes') ? 'stroke-[2.25px]' : 'stroke-[1.75px]' }}"></i>
+            <!-- Curtidas (Heart Icon with Fill when Active) -->
+            <a href="{{ route('likes') }}" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-2xl transition-all duration-200 {{ request()->routeIs('likes') ? 'text-[#590219] font-bold bg-[#590219]/10 shadow-xs scale-105' : 'hover:text-[#590219] hover:bg-[#eee8e5]' }}">
+                <i data-lucide="heart" class="w-5 h-5 {{ request()->routeIs('likes') ? 'text-[#ff007f] fill-[#ff007f] stroke-[#ff007f]' : 'stroke-[1.75px]' }}"></i>
                 <span>Curtidas</span>
             </a>
 
-            <a href="{{ route('games.trivia') }}" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-xl transition-all duration-200 {{ request()->routeIs('games*') ? 'text-[#590219] font-bold bg-[#590219]/10 shadow-xs' : 'hover:text-[#590219] hover:bg-[#eee8e5]' }}">
-                <i data-lucide="gamepad-2" class="w-5 h-5 {{ request()->routeIs('games*') ? 'stroke-[2.25px]' : 'stroke-[1.75px]' }}"></i>
+            <!-- Jogos (Dices Icon) -->
+            <a href="{{ route('games.trivia') }}" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-2xl transition-all duration-200 {{ request()->routeIs('games*') ? 'text-[#590219] font-bold bg-[#590219]/10 shadow-xs scale-105' : 'hover:text-[#590219] hover:bg-[#eee8e5]' }}">
+                <i data-lucide="dices" class="w-5 h-5 {{ request()->routeIs('games*') ? 'text-[#590219] stroke-[2.25px]' : 'stroke-[1.75px]' }}"></i>
                 <span>Jogos</span>
             </a>
 
+            <!-- Chat (Message Circle with Unread Pulse Badge) -->
             @php
                 $unreadMessages = Auth::check() ? Auth::user()->unreadMessagesCount() : 0;
             @endphp
-            <a href="{{ route('chat') }}" class="relative flex flex-col items-center gap-0.5 px-2 py-1 rounded-xl transition-all duration-200 {{ request()->routeIs('chat') ? 'text-[#590219] font-bold bg-[#590219]/10 shadow-xs' : 'hover:text-[#590219] hover:bg-[#eee8e5]' }}">
+            <a href="{{ route('chat') }}" class="relative flex flex-col items-center gap-0.5 px-2 py-1 rounded-2xl transition-all duration-200 {{ request()->routeIs('chat') ? 'text-[#590219] font-bold bg-[#590219]/10 shadow-xs scale-105' : 'hover:text-[#590219] hover:bg-[#eee8e5]' }}">
                 <div class="relative">
-                    <i data-lucide="message-square" class="w-5 h-5 {{ request()->routeIs('chat') ? 'stroke-[2.25px]' : 'stroke-[1.75px]' }}"></i>
+                    <i data-lucide="message-circle" class="w-5 h-5 {{ request()->routeIs('chat') ? 'text-[#590219] fill-[#590219]/20 stroke-[2.25px]' : 'stroke-[1.75px]' }}"></i>
                     @if($unreadMessages > 0)
-                        <span class="absolute -top-1.5 -right-2 min-w-[16px] h-4 px-1 bg-gradient-to-r from-[#ff007f] to-rose-600 text-white text-[9px] font-black rounded-full flex items-center justify-center border-2 border-[#f7f2f0] shadow-sm animate-pulse">
+                        <span class="absolute -top-1.5 -right-2 min-w-[16px] h-4 px-1 bg-gradient-to-r from-[#ff007f] to-rose-600 text-white text-[9px] font-black rounded-full flex items-center justify-center border-2 border-white shadow-sm animate-pulse">
                             {{ $unreadMessages > 99 ? '99+' : $unreadMessages }}
                         </span>
                     @endif
@@ -152,8 +158,13 @@
                 <span>Chat</span>
             </a>
 
-            <a href="{{ route('profile.edit') }}" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-xl transition-all duration-200 {{ request()->routeIs('profile.edit') ? 'text-[#590219] font-bold bg-[#590219]/10 shadow-xs' : 'hover:text-[#590219] hover:bg-[#eee8e5]' }}">
-                <i data-lucide="user" class="w-5 h-5 {{ request()->routeIs('profile.edit') ? 'stroke-[2.25px]' : 'stroke-[1.75px]' }}"></i>
+            <!-- Perfil (Real Profile Avatar Thumbnail) -->
+            <a href="{{ route('profile.edit') }}" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-2xl transition-all duration-200 {{ request()->routeIs('profile.edit') ? 'text-[#590219] font-bold bg-[#590219]/10 shadow-xs scale-105' : 'hover:text-[#590219] hover:bg-[#eee8e5]' }}">
+                @if(Auth::check())
+                    <img src="{{ Auth::user()->avatar_url }}" onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'" class="w-5 h-5 rounded-full object-cover border-2 {{ request()->routeIs('profile.edit') ? 'border-[#590219] ring-2 ring-[#ff007f]/40' : 'border-transparent' }}" alt="Perfil">
+                @else
+                    <i data-lucide="user-round" class="w-5 h-5 {{ request()->routeIs('profile.edit') ? 'text-[#590219] stroke-[2.25px]' : 'stroke-[1.75px]' }}"></i>
+                @endif
                 <span>Perfil</span>
             </a>
         </nav>

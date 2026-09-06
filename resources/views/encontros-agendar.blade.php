@@ -27,7 +27,7 @@
     <!-- Avatar & Title Section -->
     <div class="flex flex-col items-center text-center gap-2 pt-2">
         <div class="relative w-20 h-20 rounded-full overflow-hidden border-2 border-white shadow-md">
-            <img src="{{ asset('images/avatars/rafael.jpg') }}" alt="Rafael" class="w-full h-full object-cover">
+            <img src="{{ isset($targetUser) ? $targetUser->avatar_url : asset('images/avatars/placeholder.jpg') }}" onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'" alt="{{ $targetUser->name ?? 'Usuário' }}" class="w-full h-full object-cover">
             <div class="absolute bottom-1 right-1 w-6 h-6 rounded-full bg-white text-[#221417] flex items-center justify-center shadow-md">
                 <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
             </div>
@@ -37,7 +37,7 @@
             Agendar Encontro
         </h1>
         <p class="text-xs text-[#796a6e] font-medium -mt-1">
-            com Rafael
+            com {{ isset($targetUser) ? explode(' ', $targetUser->name)[0] : 'Usuário' }}
         </p>
     </div>
 

@@ -104,7 +104,7 @@
             </div>
 
             <!-- Profile Image -->
-            <img src="{{ $user->avatar ? (str_starts_with($user->avatar, 'http') ? $user->avatar : asset('storage/' . $user->avatar)) : (file_exists(public_path('images/avatars/' . strtolower(explode(' ', $user->name)[0]) . '.jpg')) ? asset('images/avatars/' . strtolower(explode(' ', $user->name)[0]) . '.jpg') : asset('images/avatars/placeholder.jpg')) }}" 
+            <img src="{{ $user->avatar_url }}" 
                  onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'"
                  alt="{{ $user->name }}" class="card-img w-full h-full object-cover pointer-events-none transition-all duration-300">
 

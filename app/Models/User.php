@@ -111,13 +111,6 @@ class User extends Authenticatable
                 : asset('storage/' . $this->avatar);
         }
 
-        $firstName = strtolower(explode(' ', $this->name)[0] ?? '');
-        $demoPath = 'images/avatars/' . $firstName . '.jpg';
-
-        if ($firstName && file_exists(public_path($demoPath))) {
-            return asset($demoPath);
-        }
-
         return asset('images/avatars/placeholder.jpg');
     }
 

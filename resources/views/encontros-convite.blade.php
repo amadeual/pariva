@@ -13,7 +13,7 @@
             <span class="text-xl font-extrabold text-[#590219] tracking-tight">Descobrir</span>
         </div>
         <a href="{{ route('profile.edit') }}" class="w-9 h-9 rounded-full overflow-hidden border-2 border-[#590219]/20 shadow-sm">
-            <img src="{{ asset('images/avatars/isabella.jpg') }}" alt="Perfil" class="w-full h-full object-cover">
+            <img src="{{ Auth::user()->avatar_url }}" onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'" alt="Perfil" class="w-full h-full object-cover">
         </a>
     </header>
 @endsection
@@ -31,7 +31,7 @@
             Novo Convite
         </h1>
         <p class="text-xs text-[#796a6e] font-normal max-w-xs">
-            Beatriz enviou uma sugestão de encontro.
+            {{ isset($date->user) ? explode(' ', $date->user->name)[0] : 'Alguém' }} enviou uma sugestão de encontro.
         </p>
     </div>
 
@@ -41,10 +41,10 @@
         <!-- User Profile Top Section -->
         <div class="bg-[#eee9e6] p-6 flex flex-col items-center text-center gap-2 border-b border-[#ede7e5]/60">
             <div class="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-md">
-                <img src="{{ asset('images/avatars/sofia.jpg') }}" alt="Beatriz" class="w-full h-full object-cover">
+                <img src="{{ isset($date->user) ? $date->user->avatar_url : asset('images/avatars/placeholder.jpg') }}" onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'" alt="{{ $date->user->name ?? 'Convite' }}" class="w-full h-full object-cover">
             </div>
-            <h2 class="text-xl font-extrabold text-[#221417] leading-tight mt-1">Beatriz, 28</h2>
-            <span class="text-xs text-[#796a6e] font-medium -mt-1">Designer de Interiores</span>
+            <h2 class="text-xl font-extrabold text-[#221417] leading-tight mt-1">{{ $date->user->name ?? 'Convidado(a)' }}</h2>
+            <span class="text-xs text-[#796a6e] font-medium -mt-1">{{ $date->user->profession ?? 'Membro Pariva' }}</span>
         </div>
 
         <!-- Invitation Details -->

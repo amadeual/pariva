@@ -95,7 +95,7 @@
         <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-[#ede7e5] flex flex-col relative group">
             
             <div class="relative w-full h-52 overflow-hidden">
-                <img src="{{ $like->user->avatar ? (str_starts_with($like->user->avatar, 'http') ? $like->user->avatar : asset('storage/' . $like->user->avatar)) : (file_exists(public_path('images/avatars/' . strtolower(explode(' ', $like->user->name)[0]) . '.jpg')) ? asset('images/avatars/' . strtolower(explode(' ', $like->user->name)[0]) . '.jpg') : asset('images/avatars/placeholder.jpg')) }}" 
+                <img src="{{ $like->user->avatar_url }}" 
                      onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'"
                      alt="{{ $like->user->name }}" 
                      class="w-full h-full object-cover {{ !Auth::user()->canSeeWhoLiked() ? 'blur-md scale-110' : '' }}">

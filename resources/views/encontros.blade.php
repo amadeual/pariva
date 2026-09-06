@@ -97,7 +97,7 @@
         <div class="grid grid-cols-2 gap-3">
             <!-- Card 2: Jantar Romântico -->
             <a href="{{ route('encontros.agendar', ['userId' => 1]) }}" class="relative h-40 rounded-3xl overflow-hidden shadow-md group cursor-pointer border border-[#ede7e5] block">
-                <img src="{{ asset('images/avatars/mariana.jpg') }}" alt="Jantar Romântico" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                <img src="{{ asset('images/moments/museum.jpg') }}" alt="Jantar Romântico" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent"></div>
                 
                 <div class="absolute bottom-3 left-3 right-3 text-white flex flex-col gap-0.5">

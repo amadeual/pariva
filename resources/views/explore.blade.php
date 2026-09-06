@@ -9,8 +9,8 @@
             <span class="text-xl font-extrabold text-[#590219] tracking-tight">Explorar</span>
         </div>
         <a href="{{ route('profile.edit') }}" class="w-9 h-9 rounded-full overflow-hidden border-2 border-[#590219]/30 shadow-xs flex items-center justify-center bg-[#eee9e6] font-bold text-xs text-[#590219] hover:scale-105 transition-transform" title="{{ Auth::user()->name }}">
-            <img src="{{ asset('images/avatars/' . (strtolower(explode(' ', Auth::user()->name)[0])) . '.jpg') }}" 
-                 onerror="this.src='{{ asset('images/avatars/isabella.jpg') }}'" 
+            <img src="{{ Auth::user()->avatar_url }}" 
+                 onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'" 
                  alt="{{ Auth::user()->name }}" class="w-full h-full object-cover">
         </a>
     </header>
@@ -106,7 +106,7 @@
                 <div class="bg-gradient-to-br from-white to-[#f7f2f0] rounded-3xl p-4 border border-[#ede7e5] shadow-md flex items-center justify-between gap-3 hover:shadow-lg transition-all">
                     <div class="flex items-center gap-3.5 min-w-0">
                         <div class="relative w-14 h-14 rounded-2xl overflow-hidden shrink-0 border-2 border-white shadow-sm bg-[#eee9e6]">
-                            <img src="{{ $user->avatar ? (str_starts_with($user->avatar, 'http') ? $user->avatar : asset('storage/' . $user->avatar)) : (file_exists(public_path('images/avatars/' . strtolower(explode(' ', $user->name)[0]) . '.jpg')) ? asset('images/avatars/' . strtolower(explode(' ', $user->name)[0]) . '.jpg') : asset('images/avatars/placeholder.jpg')) }}" 
+                            <img src="{{ $user->avatar_url }}" 
                                  onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'"
                                  alt="{{ $user->name }}" class="w-full h-full object-cover">
                         </div>

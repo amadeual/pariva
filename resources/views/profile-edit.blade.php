@@ -52,7 +52,7 @@
             <div class="grid grid-cols-3 gap-2">
                 <!-- Main Large Photo (Spans 2 cols & 2 rows) -->
                 <div class="col-span-2 row-span-2 relative h-60 rounded-2xl overflow-hidden shadow-sm border border-[#ede7e5] bg-[#eee9e6]">
-                    <img id="avatar-preview-img" src="{{ Auth::user()->avatar ? (str_starts_with(Auth::user()->avatar, 'http') ? Auth::user()->avatar : asset('storage/' . Auth::user()->avatar)) : (file_exists(public_path('images/avatars/' . strtolower(explode(' ', Auth::user()->name)[0]) . '.jpg')) ? asset('images/avatars/' . strtolower(explode(' ', Auth::user()->name)[0]) . '.jpg') : asset('images/avatars/placeholder.jpg')) }}" 
+                    <img id="avatar-preview-img" src="{{ Auth::user()->avatar_url }}" 
                          onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'"
                          alt="Foto Principal" class="w-full h-full object-cover">
                     <!-- Principal Badge -->

@@ -244,67 +244,68 @@
                 <div class="flex items-center gap-2">
                     <span class="text-2xl">🎁</span>
                     <h3 class="font-extrabold text-base text-[#590219]">Mimos & Presentinhos</h3>
+                    <span class="text-[9px] font-extrabold text-[#ff007f] bg-[#ff007f]/10 border border-[#ff007f]/20 px-2 py-0.5 rounded-full uppercase">Especial</span>
                 </div>
                 <button type="button" onclick="closeRoseModal()" class="text-[#796a6e] hover:text-[#221417]">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
 
-            <p class="text-xs text-[#796a6e]">Escolha um mimos especial com preço único para enviar para <span id="rose-user-name" class="font-bold text-[#221417]"></span>:</p>
+            <p class="text-xs text-[#796a6e]">Escolha um mimo especial para enviar para <span id="rose-user-name" class="font-bold text-[#221417]"></span>:</p>
 
-            <!-- Gift Selection Grid with Prices -->
+            <!-- Gift Selection Grid with Prices (Without White Backgrounds) -->
             <div class="grid grid-cols-3 gap-2.5">
                 <label class="cursor-pointer">
                     <input type="radio" name="gift_type" value="rosa" checked class="sr-only peer">
-                    <div class="p-2.5 rounded-2xl bg-[#eee9e6] border-2 border-transparent peer-checked:border-[#590219] peer-checked:bg-[#590219]/10 flex flex-col items-center gap-1 transition-all text-center">
+                    <div class="p-3 rounded-2xl bg-gradient-to-b from-[#fffafd] to-[#f9f5f3] border-2 border-[#ede7e5] hover:border-[#ff007f]/30 peer-checked:border-[#ff007f] peer-checked:bg-[#ff007f]/10 peer-checked:shadow-md peer-checked:shadow-[#ff007f]/15 flex flex-col items-center gap-1 transition-all text-center">
                         <span class="text-2xl">🌹</span>
-                        <span class="text-[11px] font-bold text-[#221417]">Rosa</span>
-                        <span class="text-[10px] font-extrabold text-[#590219] bg-white px-2 py-0.5 rounded-full border border-[#ede7e5]">R$ 2,50</span>
+                        <span class="text-[11px] font-extrabold text-[#221417]">Rosa</span>
+                        <span class="text-[11px] font-black text-[#ff007f]">R$ 2,50</span>
                     </div>
                 </label>
 
                 <label class="cursor-pointer">
                     <input type="radio" name="gift_type" value="sorvete" class="sr-only peer">
-                    <div class="p-2.5 rounded-2xl bg-[#eee9e6] border-2 border-transparent peer-checked:border-[#590219] peer-checked:bg-[#590219]/10 flex flex-col items-center gap-1 transition-all text-center">
+                    <div class="p-3 rounded-2xl bg-gradient-to-b from-[#fffafd] to-[#f9f5f3] border-2 border-[#ede7e5] hover:border-[#ff007f]/30 peer-checked:border-[#ff007f] peer-checked:bg-[#ff007f]/10 peer-checked:shadow-md peer-checked:shadow-[#ff007f]/15 flex flex-col items-center gap-1 transition-all text-center">
                         <span class="text-2xl">🍦</span>
-                        <span class="text-[11px] font-bold text-[#221417]">Sorvete</span>
-                        <span class="text-[10px] font-extrabold text-[#590219] bg-white px-2 py-0.5 rounded-full border border-[#ede7e5]">R$ 3,00</span>
+                        <span class="text-[11px] font-extrabold text-[#221417]">Sorvete</span>
+                        <span class="text-[11px] font-black text-[#ff007f]">R$ 3,00</span>
                     </div>
                 </label>
 
                 <label class="cursor-pointer">
                     <input type="radio" name="gift_type" value="paquera" class="sr-only peer">
-                    <div class="p-2.5 rounded-2xl bg-[#eee9e6] border-2 border-transparent peer-checked:border-[#590219] peer-checked:bg-[#590219]/10 flex flex-col items-center gap-1 transition-all text-center">
+                    <div class="p-3 rounded-2xl bg-gradient-to-b from-[#fffafd] to-[#f9f5f3] border-2 border-[#ede7e5] hover:border-[#ff007f]/30 peer-checked:border-[#ff007f] peer-checked:bg-[#ff007f]/10 peer-checked:shadow-md peer-checked:shadow-[#ff007f]/15 flex flex-col items-center gap-1 transition-all text-center">
                         <span class="text-2xl">💌</span>
-                        <span class="text-[11px] font-bold text-[#221417]">Paquera</span>
-                        <span class="text-[10px] font-extrabold text-[#590219] bg-white px-2 py-0.5 rounded-full border border-[#ede7e5]">R$ 3,80</span>
+                        <span class="text-[11px] font-extrabold text-[#221417]">Paquera</span>
+                        <span class="text-[11px] font-black text-[#ff007f]">R$ 3,80</span>
                     </div>
                 </label>
 
                 <label class="cursor-pointer">
                     <input type="radio" name="gift_type" value="perfume" class="sr-only peer">
-                    <div class="p-2.5 rounded-2xl bg-[#eee9e6] border-2 border-transparent peer-checked:border-[#590219] peer-checked:bg-[#590219]/10 flex flex-col items-center gap-1 transition-all text-center">
+                    <div class="p-3 rounded-2xl bg-gradient-to-b from-[#fffafd] to-[#f9f5f3] border-2 border-[#ede7e5] hover:border-[#ff007f]/30 peer-checked:border-[#ff007f] peer-checked:bg-[#ff007f]/10 peer-checked:shadow-md peer-checked:shadow-[#ff007f]/15 flex flex-col items-center gap-1 transition-all text-center">
                         <span class="text-2xl">🧪</span>
-                        <span class="text-[11px] font-bold text-[#221417]">Perfume</span>
-                        <span class="text-[10px] font-extrabold text-[#590219] bg-white px-2 py-0.5 rounded-full border border-[#ede7e5]">R$ 5,00</span>
+                        <span class="text-[11px] font-extrabold text-[#221417]">Perfume</span>
+                        <span class="text-[11px] font-black text-[#ff007f]">R$ 5,00</span>
                     </div>
                 </label>
 
                 <label class="cursor-pointer col-span-2">
                     <input type="radio" name="gift_type" value="diamante" class="sr-only peer">
-                    <div class="p-2.5 rounded-2xl bg-[#eee9e6] border-2 border-transparent peer-checked:border-[#590219] peer-checked:bg-[#590219]/10 flex items-center justify-between px-4 transition-all text-center">
+                    <div class="p-3 rounded-2xl bg-gradient-to-r from-[#fffafd] via-[#fff0f6] to-[#f9f5f3] border-2 border-[#ede7e5] hover:border-[#ff007f]/30 peer-checked:border-[#ff007f] peer-checked:bg-[#ff007f]/10 peer-checked:shadow-md peer-checked:shadow-[#ff007f]/15 flex items-center justify-between px-4 transition-all text-center">
                         <div class="flex items-center gap-2">
                             <span class="text-2xl">💎</span>
-                            <span class="text-[11px] font-bold text-[#221417]">Anel de Diamante</span>
+                            <span class="text-[11px] font-extrabold text-[#221417]">Anel de Diamante</span>
                         </div>
-                        <span class="text-[10px] font-extrabold text-[#590219] bg-white px-2.5 py-0.5 rounded-full border border-[#ede7e5]">R$ 9,90</span>
+                        <span class="text-[11px] font-black text-[#ff007f]">R$ 9,90</span>
                     </div>
                 </label>
             </div>
 
-            <textarea name="message" rows="2" placeholder="Escreva um recadinho fofo (opcional)..." class="w-full bg-[#eee9e6] rounded-xl p-3 text-xs text-[#221417] border border-transparent focus:border-[#590219] focus:outline-none resize-none"></textarea>
+            <textarea name="message" rows="2" placeholder="Escreva um recadinho fofo (opcional)..." class="w-full bg-[#fdfaf8] rounded-xl p-3 text-xs text-[#221417] border border-[#ede7e5] focus:border-[#ff007f] focus:ring-1 focus:ring-[#ff007f]/20 focus:outline-none resize-none"></textarea>
 
-            <button type="submit" class="w-full py-3.5 bg-[#590219] text-white font-bold text-xs rounded-xl shadow-lg hover:bg-[#3f0111] transition-colors flex items-center justify-center gap-2">
+            <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-[#ff007f] via-[#c4065c] to-[#590219] text-white font-bold text-xs rounded-2xl shadow-lg shadow-[#ff007f]/25 hover:shadow-xl hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
                 <span>Confirmar & Enviar Mimo</span>
                 <span>✨</span>
             </button>

@@ -497,13 +497,7 @@
         </div>
     </div>
 
-    <!-- Toast Notification for Flash Messages -->
-    @if(session('success'))
-        <div class="fixed top-5 left-1/2 -translate-x-1/2 z-50 bg-emerald-700 text-white px-5 py-3 rounded-full text-xs font-bold shadow-2xl flex items-center gap-2 border border-emerald-500">
-            <i data-lucide="check-circle" class="w-4 h-4"></i>
-            <span>{{ session('success') }}</span>
-        </div>
-    @endif
+
 </div>
 
 @push('scripts')

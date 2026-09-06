@@ -96,8 +96,16 @@
         <!-- Header -->
         @yield('header')
 
+        <!-- Global Toast Notification for Flash Messages -->
+        @if(session('success'))
+            <div id="flash-toast" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 bg-gradient-to-r from-[#590219] via-[#7c0d28] to-[#ff007f] text-white px-5 py-3 rounded-full text-xs font-extrabold shadow-2xl flex items-center gap-2 border border-white/20 transition-all duration-500 transform translate-y-0 opacity-100 pointer-events-none">
+                <i data-lucide="check-circle" class="w-4 h-4 text-emerald-300"></i>
+                <span>{{ session('success') }}</span>
+            </div>
+        @endif
+
         <!-- Main Content -->
-        <main class="flex-1 w-full">
+        <main class="flex-1 w-full relative">
             @yield('content')
         </main>
 
@@ -144,6 +152,18 @@
 
     <script>
         lucide.createIcons();
+        
+        // Auto-dismiss toast notification smoothly after 1.8s
+        document.addEventListener('DOMContentLoaded', () => {
+            const toast = document.getElementById('flash-toast');
+            if (toast) {
+                setTimeout(() => {
+                    toast.style.transform = 'translate(-50%, -20px)';
+                    toast.style.opacity = '0';
+                    setTimeout(() => toast.remove(), 500);
+                }, 1800);
+            }
+        });
     </script>
     @stack('scripts')
 </body>

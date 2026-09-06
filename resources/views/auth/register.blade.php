@@ -212,9 +212,20 @@
 
     </div>
 
-    <!-- Already have account link -->
-    <div class="text-center text-xs text-[#796a6e] pt-6">
-        Já tem uma conta? <a href="{{ route('login') }}" class="text-[#590219] font-bold hover:underline">Entre</a>
+    <!-- Already have account link & Minimalist Legal Footer -->
+    <div class="flex flex-col items-center gap-3 pt-6 pb-2 border-t border-[#ede7e5]/60 mt-4">
+        <div class="text-center text-xs text-[#796a6e]">
+            Já tem uma conta? <a href="{{ route('login') }}" class="text-[#590219] font-bold hover:underline">Entre</a>
+        </div>
+        <div class="flex items-center justify-center gap-3 text-[10px] text-[#796a6e]">
+            <a href="{{ route('termos') }}" class="hover:text-[#590219] transition-colors">Termos</a>
+            <span>•</span>
+            <a href="{{ route('privacidade') }}" class="hover:text-[#590219] transition-colors">Privacidade</a>
+            <span>•</span>
+            <a href="{{ route('seguranca') }}" class="hover:text-[#590219] transition-colors">Segurança</a>
+            <span>•</span>
+            <span>&copy; {{ date('Y') }} Pariva</span>
+        </div>
     </div>
 
 </div>

@@ -92,9 +92,20 @@
 
     </div>
 
-    <!-- Don't have an account link -->
-    <div class="text-center text-xs text-[#796a6e] pt-6">
-        Não tem uma conta? <a href="{{ route('register') }}" class="text-[#590219] font-bold hover:underline">Cadastre-se</a>
+    <!-- Don't have an account link & Minimalist Legal Footer -->
+    <div class="flex flex-col items-center gap-3 pt-6 pb-2 border-t border-[#ede7e5]/60 mt-4">
+        <div class="text-center text-xs text-[#796a6e]">
+            Não tem uma conta? <a href="{{ route('register') }}" class="text-[#590219] font-bold hover:underline">Cadastre-se</a>
+        </div>
+        <div class="flex items-center justify-center gap-3 text-[10px] text-[#796a6e]">
+            <a href="{{ route('termos') }}" class="hover:text-[#590219] transition-colors">Termos</a>
+            <span>•</span>
+            <a href="{{ route('privacidade') }}" class="hover:text-[#590219] transition-colors">Privacidade</a>
+            <span>•</span>
+            <a href="{{ route('seguranca') }}" class="hover:text-[#590219] transition-colors">Segurança</a>
+            <span>•</span>
+            <span>&copy; {{ date('Y') }} Pariva</span>
+        </div>
     </div>
 
 </div>

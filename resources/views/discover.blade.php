@@ -202,35 +202,35 @@
     </form>
 
     <!-- Action Buttons Row (Tinder Floating Controls) -->
-    <div class="flex items-center justify-center gap-3 py-3 px-2">
+    <div class="flex items-center justify-center gap-2.5 sm:gap-3.5 py-4 px-2">
         <!-- Rewind / Reset Deck -->
-        <button id="btn-rewind" class="w-12 h-12 rounded-full bg-[#eee9e6] flex items-center justify-center text-[#221417] shadow-sm hover:scale-105 active:scale-95 transition-transform">
-            <i data-lucide="undo-2" class="w-5 h-5"></i>
+        <button id="btn-rewind" type="button" class="w-12 h-12 rounded-full bg-white border-2 border-amber-200 text-amber-500 shadow-md shadow-amber-500/10 hover:border-amber-400 hover:bg-amber-50/50 hover:scale-110 active:scale-95 transition-all cursor-pointer flex items-center justify-center shrink-0" title="Desfazer (Rewind)">
+            <i data-lucide="rotate-ccw" class="w-5 h-5 stroke-[2.5px]"></i>
         </button>
 
         <!-- Dislike (X - Swipe Left) -->
-        <button id="btn-dislike" class="w-14 h-14 rounded-full bg-white border border-[#ede7e5] flex items-center justify-center text-[#221417] shadow-md hover:scale-105 active:scale-95 transition-transform">
-            <i data-lucide="x" class="w-7 h-7 stroke-[2.5px]"></i>
+        <button id="btn-dislike" type="button" class="w-14 h-14 rounded-full bg-white border-2 border-rose-200 text-rose-500 shadow-lg shadow-rose-500/15 hover:border-rose-400 hover:bg-rose-50/50 hover:scale-110 active:scale-95 transition-all cursor-pointer flex items-center justify-center shrink-0" title="Passar (Nope)">
+            <i data-lucide="x" class="w-7 h-7 stroke-[3px]"></i>
         </button>
 
-        <!-- Like (Heart Burgundy - Swipe Right) -->
-        <button id="btn-like" class="w-16 h-16 rounded-full bg-[#590219] flex items-center justify-center text-white shadow-xl shadow-[#590219]/30 hover:scale-105 active:scale-95 transition-transform">
+        <!-- Super Like (Star) -->
+        <button id="btn-superlike" type="button" class="w-12 h-12 rounded-full bg-white border-2 border-sky-300 text-sky-500 shadow-md shadow-sky-500/15 hover:border-sky-400 hover:bg-sky-50/50 hover:scale-110 active:scale-95 transition-all cursor-pointer flex items-center justify-center shrink-0" title="Super Like">
+            <i data-lucide="star" class="w-5 h-5 fill-current stroke-[2.25px]"></i>
+        </button>
+
+        <!-- Like (Heart Burgundy & Pink Gradient - Swipe Right) -->
+        <button id="btn-like" type="button" class="w-16 h-16 rounded-full bg-gradient-to-tr from-[#590219] via-[#800727] to-[#ff007f] text-white shadow-xl shadow-[#590219]/40 border-2 border-white/30 hover:scale-110 active:scale-95 transition-all cursor-pointer flex items-center justify-center shrink-0" title="Curtir (Like)">
             <i data-lucide="heart" class="w-8 h-8 fill-current"></i>
         </button>
 
         <!-- Send Gift Button 🎁 -->
-        <button id="btn-rose" type="button" onclick="openRoseModal()" class="w-14 h-14 rounded-full bg-rose-50 border-2 border-rose-200 flex items-center justify-center text-rose-600 shadow-md hover:scale-105 active:scale-95 transition-transform" title="Enviar um Mimo / Presentinho">
-            <span class="text-xl">🎁</span>
+        <button id="btn-rose" type="button" onclick="openRoseModal()" class="w-12 h-12 rounded-full bg-gradient-to-tr from-fuchsia-600 via-pink-500 to-rose-400 text-white shadow-md shadow-fuchsia-500/30 border border-white/30 hover:scale-110 active:scale-95 transition-all cursor-pointer flex items-center justify-center shrink-0" title="Enviar um Mimo">
+            <i data-lucide="gift" class="w-5 h-5 stroke-[2.25px]"></i>
         </button>
 
-        <!-- Super Like (Star Yellow) -->
-        <button id="btn-superlike" class="w-14 h-14 rounded-full bg-white border border-[#ede7e5] flex items-center justify-center text-[#f5b800] shadow-md hover:scale-105 active:scale-95 transition-transform" title="Super Like">
-            <i data-lucide="star" class="w-7 h-7 fill-current"></i>
-        </button>
-
-        <!-- Chat / Message Instant (Inicia conversa usando Crédito Direto ou Match) -->
-        <button id="btn-instant-chat" type="button" onclick="startDirectChat()" class="w-12 h-12 rounded-full bg-[#eee9e6] flex items-center justify-center text-[#590219] shadow-sm hover:scale-105 active:scale-95 transition-transform" title="Iniciar Conversa">
-            <i data-lucide="message-square" class="w-5 h-5"></i>
+        <!-- Chat / Message Instant -->
+        <button id="btn-instant-chat" type="button" onclick="startDirectChat()" class="w-12 h-12 rounded-full bg-white border-2 border-purple-200 text-purple-600 shadow-md shadow-purple-500/15 hover:border-purple-400 hover:bg-purple-50/50 hover:scale-110 active:scale-95 transition-all cursor-pointer flex items-center justify-center shrink-0" title="Iniciar Conversa">
+            <i data-lucide="message-circle" class="w-5 h-5 stroke-[2.5px]"></i>
         </button>
     </div>
 

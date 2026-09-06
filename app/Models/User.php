@@ -23,6 +23,7 @@ class User extends Authenticatable
         'password',
         'google_id',
         'avatar',
+        'photos',
         'age',
         'location',
         'profession',
@@ -62,6 +63,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
         'interests' => 'array',
+        'photos' => 'array',
         'boosted_until' => 'datetime',
         'featured_until' => 'datetime',
         'see_likes_until' => 'datetime',
@@ -105,6 +107,13 @@ class User extends Authenticatable
 
     public function getAvatarUrlAttribute(): string
     {
+        $photos = $this->photos ?? [];
+        if (!empty($photos) && isset($photos[0])) {
+            return str_starts_with($photos[0], 'http')
+                ? $photos[0]
+                : asset('storage/' . $photos[0]);
+        }
+
         if (!empty($this->avatar)) {
             return str_starts_with($this->avatar, 'http')
                 ? $this->avatar
@@ -112,6 +121,22 @@ class User extends Authenticatable
         }
 
         return asset('images/avatars/placeholder.jpg');
+    }
+
+    public function getPhotoUrlsAttribute(): array
+    {
+        $photos = $this->photos ?? [];
+        if (empty($photos)) {
+            if (!empty($this->avatar)) {
+                $photos = [$this->avatar];
+            } else {
+                return [];
+            }
+        }
+
+        return array_map(function ($p) {
+            return str_starts_with($p, 'http') ? $p : asset('storage/' . $p);
+        }, $photos);
     }
 
     public function unreadMessagesCount(): int

@@ -53,66 +53,117 @@
     <form id="profile-edit-form" method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data" class="flex flex-col gap-6">
         @csrf
 
-        <!-- Hidden file input for photo upload -->
-        <input type="file" id="avatar-input" name="avatar" accept="image/*" class="hidden" onchange="previewAvatar(this)">
+        <!-- Hidden inputs for target slot and avatar upload -->
+        <input type="hidden" name="slot" id="slot-input" value="">
+        <input type="file" id="avatar-input" name="avatar" accept="image/*" class="hidden" onchange="document.getElementById('profile-edit-form').submit()">
 
-        <!-- Photos Grid (Exact Stitch Layout: 1 main big photo, 2 stacked, 3 empty slots) -->
+        @php
+            $photoUrls = Auth::user()->photo_urls;
+        @endphp
+
+        <!-- Photos Grid (5 Slots max, 5MB each) -->
         <div class="flex flex-col gap-2">
             <div class="grid grid-cols-3 gap-2">
-                <!-- Main Large Photo (Spans 2 cols & 2 rows) -->
+                <!-- Slot 0: Main Large Photo (Spans 2 cols & 2 rows) -->
+                @if(isset($photoUrls[0]))
                 <div class="col-span-2 row-span-2 relative h-60 rounded-2xl overflow-hidden shadow-sm border border-[#ede7e5] bg-[#eee9e6] group">
-                    <img id="avatar-preview-img" src="{{ Auth::user()->avatar_url }}" 
-                         onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'"
-                         alt="Foto Principal" class="w-full h-full object-cover">
+                    <img src="{{ $photoUrls[0] }}" onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'" alt="Foto 1" class="w-full h-full object-cover">
                     <!-- Principal Badge -->
                     <div class="absolute bottom-3 left-3 bg-white/90 backdrop-blur-md text-[10px] font-bold text-[#221417] px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm flex items-center gap-1">
                         <i data-lucide="star" class="w-3 h-3 text-[#590219] fill-current"></i> PRINCIPAL
                     </div>
-
-                    @if(Auth::user()->avatar)
-                    <!-- Delete Avatar Action -->
-                    <button type="button" onclick="parivaConfirm({ title: 'Remover Foto', message: 'Tem certeza que deseja remover sua foto de perfil?', icon: 'trash-2', confirmText: 'Remover', cancelText: 'Cancelar', isDestructive: true }).then(confirmed => { if(confirmed) document.getElementById('delete-avatar-form').submit(); })" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-rose-600/90 text-white flex items-center justify-center shadow-md cursor-pointer hover:bg-rose-700 transition-transform hover:scale-105" title="Remover Foto">
+                    <!-- Delete Button -->
+                    <button type="button" onclick="submitDeletePhoto(0)" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-rose-600/90 text-white flex items-center justify-center shadow-md cursor-pointer hover:bg-rose-700 transition-transform hover:scale-105" title="Remover Foto">
                         <i data-lucide="trash-2" class="w-4 h-4"></i>
                     </button>
-                    @endif
-
-                    <!-- Edit Icon Badge -->
-                    <button type="button" onclick="document.getElementById('avatar-input').click()" class="absolute bottom-3 right-3 w-8 h-8 rounded-full bg-[#590219] text-white flex items-center justify-center shadow-md cursor-pointer hover:bg-[#3f0111] transition-transform hover:scale-105" title="Alterar Foto de Perfil">
+                    <!-- Edit Button -->
+                    <button type="button" onclick="triggerUploadSlot(0)" class="absolute bottom-3 right-3 w-8 h-8 rounded-full bg-[#590219] text-white flex items-center justify-center shadow-md cursor-pointer hover:bg-[#3f0111] transition-transform hover:scale-105" title="Alterar Foto">
                         <i data-lucide="camera" class="w-4 h-4"></i>
                     </button>
                 </div>
-
-                <!-- Photo 2 Slot -->
-                <button type="button" onclick="document.getElementById('avatar-input').click()" class="relative h-[116px] rounded-2xl bg-[#eee9e6] border-2 border-dashed border-[#d6c7c4] flex flex-col items-center justify-center gap-1 text-[#796a6e] hover:bg-[#e6dfdc] transition-colors">
-                    <i data-lucide="plus" class="w-5 h-5"></i>
-                    <span class="text-[9px] font-bold">Adicionar</span>
+                @else
+                <button type="button" onclick="triggerUploadSlot(0)" class="col-span-2 row-span-2 relative h-60 rounded-2xl bg-[#eee9e6] border-2 border-dashed border-[#d6c7c4] flex flex-col items-center justify-center gap-2 text-[#796a6e] hover:bg-[#e6dfdc] transition-colors cursor-pointer group">
+                    <div class="w-12 h-12 rounded-full bg-white/80 flex items-center justify-center text-[#590219] shadow-xs group-hover:scale-110 transition-transform">
+                        <i data-lucide="plus" class="w-6 h-6"></i>
+                    </div>
+                    <span class="text-xs font-bold text-[#221417]">Adicionar Foto Principal</span>
+                    <span class="text-[10px] text-[#796a6e]">Até 5MB</span>
                 </button>
+                @endif
 
-                <!-- Photo 3 Slot -->
-                <button type="button" onclick="document.getElementById('avatar-input').click()" class="relative h-[116px] rounded-2xl bg-[#eee9e6] border-2 border-dashed border-[#d6c7c4] flex flex-col items-center justify-center gap-1 text-[#796a6e] hover:bg-[#e6dfdc] transition-colors">
+                <!-- Slot 1 -->
+                @if(isset($photoUrls[1]))
+                <div class="relative h-[116px] rounded-2xl overflow-hidden shadow-xs border border-[#ede7e5] bg-[#eee9e6] group">
+                    <img src="{{ $photoUrls[1] }}" alt="Foto 2" class="w-full h-full object-cover">
+                    <button type="button" onclick="submitDeletePhoto(1)" class="absolute top-2 right-2 w-6 h-6 rounded-full bg-rose-600/90 text-white flex items-center justify-center shadow-md cursor-pointer hover:bg-rose-700 transition-transform hover:scale-105" title="Remover Foto">
+                        <i data-lucide="trash-2" class="w-3 h-3"></i>
+                    </button>
+                </div>
+                @else
+                <button type="button" onclick="triggerUploadSlot(1)" class="relative h-[116px] rounded-2xl bg-[#eee9e6] border-2 border-dashed border-[#d6c7c4] flex flex-col items-center justify-center gap-1 text-[#796a6e] hover:bg-[#e6dfdc] transition-colors cursor-pointer">
                     <i data-lucide="plus" class="w-5 h-5"></i>
-                    <span class="text-[9px] font-bold">Adicionar</span>
+                    <span class="text-[9px] font-bold">Foto 2</span>
                 </button>
+                @endif
+
+                <!-- Slot 2 -->
+                @if(isset($photoUrls[2]))
+                <div class="relative h-[116px] rounded-2xl overflow-hidden shadow-xs border border-[#ede7e5] bg-[#eee9e6] group">
+                    <img src="{{ $photoUrls[2] }}" alt="Foto 3" class="w-full h-full object-cover">
+                    <button type="button" onclick="submitDeletePhoto(2)" class="absolute top-2 right-2 w-6 h-6 rounded-full bg-rose-600/90 text-white flex items-center justify-center shadow-md cursor-pointer hover:bg-rose-700 transition-transform hover:scale-105" title="Remover Foto">
+                        <i data-lucide="trash-2" class="w-3 h-3"></i>
+                    </button>
+                </div>
+                @else
+                <button type="button" onclick="triggerUploadSlot(2)" class="relative h-[116px] rounded-2xl bg-[#eee9e6] border-2 border-dashed border-[#d6c7c4] flex flex-col items-center justify-center gap-1 text-[#796a6e] hover:bg-[#e6dfdc] transition-colors cursor-pointer">
+                    <i data-lucide="plus" class="w-5 h-5"></i>
+                    <span class="text-[9px] font-bold">Foto 3</span>
+                </button>
+                @endif
             </div>
 
-            <!-- 3 Empty Slots Row -->
+            <!-- Bottom Row: Slots 3 and 4 -->
             <div class="grid grid-cols-3 gap-2">
-                <button type="button" onclick="document.getElementById('avatar-input').click()" class="h-24 rounded-2xl bg-[#eee9e6] border-2 border-dashed border-[#d6c7c4] flex flex-col items-center justify-center gap-1 text-[#796a6e] hover:bg-[#e6dfdc] transition-colors">
+                <!-- Slot 3 -->
+                @if(isset($photoUrls[3]))
+                <div class="relative h-24 rounded-2xl overflow-hidden shadow-xs border border-[#ede7e5] bg-[#eee9e6] group">
+                    <img src="{{ $photoUrls[3] }}" alt="Foto 4" class="w-full h-full object-cover">
+                    <button type="button" onclick="submitDeletePhoto(3)" class="absolute top-2 right-2 w-6 h-6 rounded-full bg-rose-600/90 text-white flex items-center justify-center shadow-md cursor-pointer hover:bg-rose-700 transition-transform hover:scale-105" title="Remover Foto">
+                        <i data-lucide="trash-2" class="w-3 h-3"></i>
+                    </button>
+                </div>
+                @else
+                <button type="button" onclick="triggerUploadSlot(3)" class="h-24 rounded-2xl bg-[#eee9e6] border-2 border-dashed border-[#d6c7c4] flex flex-col items-center justify-center gap-1 text-[#796a6e] hover:bg-[#e6dfdc] transition-colors cursor-pointer">
                     <i data-lucide="plus" class="w-5 h-5"></i>
-                    <span class="text-[9px] font-bold">Foto</span>
+                    <span class="text-[9px] font-bold">Foto 4</span>
                 </button>
-                <button type="button" onclick="document.getElementById('avatar-input').click()" class="h-24 rounded-2xl bg-[#eee9e6] border-2 border-dashed border-[#d6c7c4] flex flex-col items-center justify-center gap-1 text-[#796a6e] hover:bg-[#e6dfdc] transition-colors">
+                @endif
+
+                <!-- Slot 4 -->
+                @if(isset($photoUrls[4]))
+                <div class="relative h-24 rounded-2xl overflow-hidden shadow-xs border border-[#ede7e5] bg-[#eee9e6] group">
+                    <img src="{{ $photoUrls[4] }}" alt="Foto 5" class="w-full h-full object-cover">
+                    <button type="button" onclick="submitDeletePhoto(4)" class="absolute top-2 right-2 w-6 h-6 rounded-full bg-rose-600/90 text-white flex items-center justify-center shadow-md cursor-pointer hover:bg-rose-700 transition-transform hover:scale-105" title="Remover Foto">
+                        <i data-lucide="trash-2" class="w-3 h-3"></i>
+                    </button>
+                </div>
+                @else
+                <button type="button" onclick="triggerUploadSlot(4)" class="h-24 rounded-2xl bg-[#eee9e6] border-2 border-dashed border-[#d6c7c4] flex flex-col items-center justify-center gap-1 text-[#796a6e] hover:bg-[#e6dfdc] transition-colors cursor-pointer">
                     <i data-lucide="plus" class="w-5 h-5"></i>
-                    <span class="text-[9px] font-bold">Foto</span>
+                    <span class="text-[9px] font-bold">Foto 5</span>
                 </button>
-                <button type="button" onclick="document.getElementById('avatar-input').click()" class="h-24 rounded-2xl bg-[#eee9e6] border-2 border-dashed border-[#d6c7c4] flex flex-col items-center justify-center gap-1 text-[#796a6e] hover:bg-[#e6dfdc] transition-colors">
-                    <i data-lucide="plus" class="w-5 h-5"></i>
-                    <span class="text-[9px] font-bold">Foto</span>
-                </button>
+                @endif
+
+                <!-- Slot info badge -->
+                <div class="h-24 rounded-2xl bg-[#f8f5f4] border border-[#ede7e5] flex flex-col items-center justify-center p-2 text-center text-[#796a6e]">
+                    <i data-lucide="image" class="w-5 h-5 text-[#590219] mb-1"></i>
+                    <span class="text-[10px] font-bold text-[#221417]">{{ count($photoUrls) }}/5 Fotos</span>
+                    <span class="text-[8px] text-[#796a6e]">Máx 5MB/foto</span>
+                </div>
             </div>
 
             <p class="text-[11px] text-[#796a6e] text-center mt-1">
-                Adicione pelo menos 3 fotos para ter um perfil completo.
+                Adicione até 5 fotos (máximo 5MB por foto) ao seu perfil.
             </p>
         </div>
 
@@ -236,6 +287,7 @@
     <!-- Hidden Form for Avatar Deletion -->
     <form id="delete-avatar-form" action="{{ route('profile.delete-avatar') }}" method="POST" class="hidden">
         @csrf
+        <input type="hidden" name="index" id="delete-photo-index" value="0">
     </form>
 
     <!-- Logout Form Button -->
@@ -249,17 +301,25 @@
 </div>
 
 <script>
-    function previewAvatar(input) {
-        if (input.files && input.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const img = document.getElementById('avatar-preview-img');
-                if (img) {
-                    img.src = e.target.result;
-                }
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
+    function triggerUploadSlot(slot) {
+        document.getElementById('slot-input').value = slot;
+        document.getElementById('avatar-input').click();
+    }
+
+    function submitDeletePhoto(index) {
+        parivaConfirm({
+            title: 'Remover Foto',
+            message: 'Tem certeza que deseja remover esta foto de perfil?',
+            icon: 'trash-2',
+            confirmText: 'Remover',
+            cancelText: 'Cancelar',
+            isDestructive: true
+        }).then(confirmed => {
+            if (confirmed) {
+                document.getElementById('delete-photo-index').value = index;
+                document.getElementById('delete-avatar-form').submit();
+            }
+        });
     }
 
     function updateInterestCount() {

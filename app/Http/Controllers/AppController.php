@@ -187,6 +187,9 @@ class AppController extends Controller
 
         $validated = $request->validate([
             'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'],
+            'photos' => ['nullable', 'array', 'max:5'],
+            'photos.*' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'],
+            'slot' => ['nullable', 'integer', 'min:0', 'max:4'],
             'age' => ['nullable', 'integer', 'min:18', 'max:120'],
             'location' => ['nullable', 'string', 'max:255'],
             'profession' => ['nullable', 'string', 'max:255'],
@@ -195,7 +198,10 @@ class AppController extends Controller
             'interests.*' => ['string', 'max:50'],
         ], [
             'avatar.image' => 'O arquivo enviado deve ser uma imagem válida.',
-            'avatar.max' => 'A foto de perfil deve ter no máximo 5MB.',
+            'avatar.max' => 'Cada foto deve ter no máximo 5MB.',
+            'photos.*.image' => 'O arquivo enviado deve ser uma imagem válida.',
+            'photos.*.max' => 'Cada foto deve ter no máximo 5MB.',
+            'photos.max' => 'Você pode adicionar no máximo 5 fotos.',
             'age.min' => 'É necessário ter pelo menos 18 anos.',
             'age.max' => 'Informe uma idade válida.',
             'interests.max' => 'Você pode selecionar no máximo 10 interesses.',
@@ -209,28 +215,74 @@ class AppController extends Controller
             'interests' => $request->has('interests') ? array_values(array_filter($request->interests)) : ($user->interests ?? []),
         ];
 
+        $currentPhotos = $user->photos ?? ($user->avatar ? [$user->avatar] : []);
+
+        // Handle single avatar upload or target slot upload
         if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
             $path = $request->file('avatar')->store('avatars', 'public');
-            $updateData['avatar'] = $path;
+            $slot = $request->input('slot');
+
+            if ($slot !== null && is_numeric($slot)) {
+                $slotIdx = (int)$slot;
+                if (isset($currentPhotos[$slotIdx])) {
+                    if (!str_starts_with($currentPhotos[$slotIdx], 'http') && \Illuminate\Support\Facades\Storage::disk('public')->exists($currentPhotos[$slotIdx])) {
+                        \Illuminate\Support\Facades\Storage::disk('public')->delete($currentPhotos[$slotIdx]);
+                    }
+                }
+                $currentPhotos[$slotIdx] = $path;
+            } else {
+                if (count($currentPhotos) < 5) {
+                    $currentPhotos[] = $path;
+                } else {
+                    $currentPhotos[0] = $path;
+                }
+            }
         }
+
+        // Handle multiple photos upload array
+        if ($request->hasFile('photos')) {
+            foreach ($request->file('photos') as $file) {
+                if ($file && $file->isValid() && count($currentPhotos) < 5) {
+                    $path = $file->store('avatars', 'public');
+                    $currentPhotos[] = $path;
+                }
+            }
+        }
+
+        $currentPhotos = array_values($currentPhotos);
+        $updateData['photos'] = $currentPhotos;
+        $updateData['avatar'] = $currentPhotos[0] ?? null;
 
         $user->update($updateData);
 
         return back()->with('success', 'Perfil atualizado com sucesso!');
     }
 
-    public function deleteAvatar()
+    public function deletePhoto(Request $request)
     {
         $user = Auth::user();
+        $index = (int) $request->input('index', 0);
+        $photos = $user->photos ?? ($user->avatar ? [$user->avatar] : []);
 
-        if ($user->avatar) {
-            if (!str_starts_with($user->avatar, 'http') && \Illuminate\Support\Facades\Storage::disk('public')->exists($user->avatar)) {
-                \Illuminate\Support\Facades\Storage::disk('public')->delete($user->avatar);
+        if (isset($photos[$index])) {
+            $photoToDelete = $photos[$index];
+            if (!str_starts_with($photoToDelete, 'http') && \Illuminate\Support\Facades\Storage::disk('public')->exists($photoToDelete)) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($photoToDelete);
             }
-            $user->update(['avatar' => null]);
+            array_splice($photos, $index, 1);
+            $photos = array_values($photos);
+            $user->update([
+                'photos' => $photos,
+                'avatar' => $photos[0] ?? null,
+            ]);
         }
 
-        return back()->with('success', 'Foto de perfil removida com sucesso!');
+        return back()->with('success', 'Foto removida com sucesso!');
+    }
+
+    public function deleteAvatar(Request $request)
+    {
+        return $this->deletePhoto($request);
     }
 
     public function updateFilters(Request $request)

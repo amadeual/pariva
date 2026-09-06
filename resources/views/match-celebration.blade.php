@@ -63,7 +63,7 @@
         <!-- Action Buttons -->
         <div class="w-full flex flex-col gap-3 mt-6">
             <!-- Enviar mensagem -->
-            <a href="{{ route('chat') }}" class="w-full py-4 bg-[#590219] text-white font-bold text-sm rounded-2xl shadow-xl hover:bg-[#3f0111] transition-all flex items-center justify-center gap-2">
+            <a href="{{ route('chat', ['user_id' => $matchedUser->id]) }}" class="w-full py-4 bg-[#590219] text-white font-bold text-sm rounded-2xl shadow-xl hover:bg-[#3f0111] transition-all flex items-center justify-center gap-2">
                 <i data-lucide="send" class="w-4 h-4"></i>
                 <span>Enviar mensagem</span>
             </a>

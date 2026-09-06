@@ -34,8 +34,8 @@
         <div class="flex items-center gap-3 overflow-x-auto pb-1 scrollbar-none">
             @forelse($activeChats as $chatUser)
                 <a href="{{ route('chat', ['user_id' => $chatUser->id]) }}" class="flex flex-col items-center gap-1 shrink-0 group">
-                    <div class="relative w-13 h-13 rounded-2xl overflow-hidden border-2 {{ isset($selectedUser) && $selectedUser->id === $chatUser->id ? 'border-[#590219] shadow-md scale-105' : 'border-white shadow-xs' }} transition-all">
-                        <img src="{{ $chatUser->avatar ? (str_starts_with($chatUser->avatar, 'http') ? $chatUser->avatar : asset('storage/' . $chatUser->avatar)) : (file_exists(public_path('images/avatars/' . strtolower(explode(' ', $chatUser->name)[0]) . '.jpg')) ? asset('images/avatars/' . strtolower(explode(' ', $chatUser->name)[0]) . '.jpg') : asset('images/avatars/placeholder.jpg')) }}" 
+                    <div class="relative w-12 h-12 rounded-full overflow-hidden border-2 {{ isset($selectedUser) && $selectedUser->id === $chatUser->id ? 'border-[#590219] shadow-md scale-105' : 'border-white shadow-xs' }} transition-all">
+                        <img src="{{ $chatUser->avatar_url }}" 
                              onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'"
                              alt="{{ $chatUser->name }}" class="w-full h-full object-cover">
                     </div>
@@ -54,8 +54,8 @@
             <!-- Chat Recipient Header Info -->
             <div class="bg-white rounded-2xl p-3 border border-[#ede7e5] flex items-center justify-between mb-4 shadow-xs">
                 <div class="flex items-center gap-3">
-                    <div class="relative w-10 h-10 rounded-xl overflow-hidden border border-[#ede7e5]">
-                        <img src="{{ $selectedUser->avatar ? (str_starts_with($selectedUser->avatar, 'http') ? $selectedUser->avatar : asset('storage/' . $selectedUser->avatar)) : (file_exists(public_path('images/avatars/' . strtolower(explode(' ', $selectedUser->name)[0]) . '.jpg')) ? asset('images/avatars/' . strtolower(explode(' ', $selectedUser->name)[0]) . '.jpg') : asset('images/avatars/placeholder.jpg')) }}" 
+                    <div class="relative w-10 h-10 rounded-full overflow-hidden border border-[#ede7e5]">
+                        <img src="{{ $selectedUser->avatar_url }}" 
                              onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'"
                              alt="{{ $selectedUser->name }}" class="w-full h-full object-cover">
                     </div>

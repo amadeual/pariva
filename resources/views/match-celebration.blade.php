@@ -13,7 +13,7 @@
             <span class="text-xl font-extrabold text-[#590219] tracking-tight">Descobrir</span>
         </div>
         <a href="{{ route('profile.edit') }}" class="w-9 h-9 rounded-full overflow-hidden border-2 border-[#590219]/20 shadow-sm">
-            <img src="{{ asset('images/avatars/isabella.jpg') }}" alt="Perfil" class="w-full h-full object-cover">
+            <img src="{{ $currentUser->avatar_url }}" onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'" alt="Perfil" class="w-full h-full object-cover">
         </a>
     </header>
 @endsection
@@ -32,7 +32,7 @@
                 <span class="text-3xl">❤️</span>
             </div>
             <p class="text-sm text-[#796a6e] font-normal">
-                Vocês dois demonstraram interesse.
+                Você e {{ $matchedUser->name }} demonstraram interesse mútuo.
             </p>
         </div>
 
@@ -41,15 +41,15 @@
             
             <!-- Left Avatar (Logged-in User) -->
             <div class="w-36 h-36 rounded-full border-4 border-white shadow-xl overflow-hidden z-10 flex items-center justify-center bg-[#eee9e6] font-bold text-[#590219]" title="{{ $currentUser->name }}">
-                <img src="{{ asset('images/avatars/' . (strtolower(explode(' ', $currentUser->name)[0])) . '.jpg') }}" 
-                     onerror="this.src='{{ asset('images/avatars/isabella.jpg') }}'"
+                <img src="{{ $currentUser->avatar_url }}" 
+                     onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'"
                      alt="{{ $currentUser->name }}" class="w-full h-full object-cover">
             </div>
 
             <!-- Right Avatar (Matched User) -->
             <div class="w-36 h-36 rounded-full border-4 border-white shadow-xl overflow-hidden -ml-10 z-20 flex items-center justify-center bg-[#eee9e6] font-bold text-[#590219]" title="{{ $matchedUser->name }}">
-                <img src="{{ asset('images/avatars/' . (strtolower(explode(' ', $matchedUser->name)[0])) . '.jpg') }}" 
-                     onerror="this.src='{{ asset('images/avatars/mariana.jpg') }}'"
+                <img src="{{ $matchedUser->avatar_url }}" 
+                     onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'"
                      alt="{{ $matchedUser->name }}" class="w-full h-full object-cover">
             </div>
 

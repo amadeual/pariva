@@ -102,5 +102,23 @@ class User extends Authenticatable
         $latest = $this->latestVerification;
         return $latest ? $latest->status : 'unverified';
     }
+
+    public function getAvatarUrlAttribute(): string
+    {
+        if (!empty($this->avatar)) {
+            return str_starts_with($this->avatar, 'http')
+                ? $this->avatar
+                : asset('storage/' . $this->avatar);
+        }
+
+        $firstName = strtolower(explode(' ', $this->name)[0] ?? '');
+        $demoPath = 'images/avatars/' . $firstName . '.jpg';
+
+        if ($firstName && file_exists(public_path($demoPath))) {
+            return asset($demoPath);
+        }
+
+        return asset('images/avatars/placeholder.jpg');
+    }
 }
 

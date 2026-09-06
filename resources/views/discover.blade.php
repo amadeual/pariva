@@ -9,8 +9,8 @@
             <span class="text-xl font-extrabold text-[#590219] tracking-tight">Pariva</span>
         </div>
         <a href="{{ route('profile.edit') }}" class="w-9 h-9 rounded-full overflow-hidden border-2 border-[#590219]/30 shadow-xs flex items-center justify-center bg-[#eee9e6] font-bold text-xs text-[#590219] hover:scale-105 transition-transform" title="{{ Auth::user()->name }}">
-            <img src="{{ asset('images/avatars/' . (strtolower(explode(' ', Auth::user()->name)[0])) . '.jpg') }}" 
-                 onerror="this.src='{{ asset('images/avatars/isabella.jpg') }}'" 
+            <img src="{{ Auth::user()->avatar_url }}" 
+                 onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'" 
                  alt="{{ Auth::user()->name }}" class="w-full h-full object-cover">
         </a>
     </header>

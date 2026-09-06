@@ -100,6 +100,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/perfil/editar', [AppController::class, 'editProfile'])->name('profile.edit');
     Route::post('/perfil/editar', [AppController::class, 'updateProfile'])->name('profile.update');
+    Route::post('/perfil/remover-foto', [AppController::class, 'deleteAvatar'])->name('profile.delete-avatar');
 
     // Identity Verification (Kyc - Document + Selfie)
     Route::post('/perfil/verificacao', [\App\Http\Controllers\VerificationController::class, 'store'])->name('verification.store');

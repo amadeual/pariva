@@ -20,8 +20,8 @@
 
 @section('content')
 @php
-    $matchName = isset($matchedUser) ? explode(' ', $matchedUser->name)[0] : 'Rafael';
-    $matchAvatar = isset($matchedUser) ? $matchedUser->avatar_url : asset('images/avatars/rafael.jpg');
+    $matchName = isset($matchedUser) ? explode(' ', $matchedUser->name)[0] : 'Pariva Member';
+    $matchAvatar = isset($matchedUser) ? $matchedUser->avatar_url : asset('images/avatars/placeholder.jpg');
 @endphp
 <div class="px-5 py-2 flex flex-col items-center gap-6 max-w-md mx-auto pb-10">
 

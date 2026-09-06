@@ -219,6 +219,20 @@ class AppController extends Controller
         return back()->with('success', 'Perfil atualizado com sucesso!');
     }
 
+    public function deleteAvatar()
+    {
+        $user = Auth::user();
+
+        if ($user->avatar) {
+            if (!str_starts_with($user->avatar, 'http') && \Illuminate\Support\Facades\Storage::disk('public')->exists($user->avatar)) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($user->avatar);
+            }
+            $user->update(['avatar' => null]);
+        }
+
+        return back()->with('success', 'Foto de perfil removida com sucesso!');
+    }
+
     public function updateFilters(Request $request)
     {
         $user = Auth::user();

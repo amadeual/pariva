@@ -60,7 +60,7 @@
         <div class="flex flex-col gap-2">
             <div class="grid grid-cols-3 gap-2">
                 <!-- Main Large Photo (Spans 2 cols & 2 rows) -->
-                <div class="col-span-2 row-span-2 relative h-60 rounded-2xl overflow-hidden shadow-sm border border-[#ede7e5] bg-[#eee9e6]">
+                <div class="col-span-2 row-span-2 relative h-60 rounded-2xl overflow-hidden shadow-sm border border-[#ede7e5] bg-[#eee9e6] group">
                     <img id="avatar-preview-img" src="{{ Auth::user()->avatar_url }}" 
                          onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'"
                          alt="Foto Principal" class="w-full h-full object-cover">
@@ -68,6 +68,14 @@
                     <div class="absolute bottom-3 left-3 bg-white/90 backdrop-blur-md text-[10px] font-bold text-[#221417] px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm flex items-center gap-1">
                         <i data-lucide="star" class="w-3 h-3 text-[#590219] fill-current"></i> PRINCIPAL
                     </div>
+
+                    @if(Auth::user()->avatar)
+                    <!-- Delete Avatar Action -->
+                    <button type="button" onclick="if(confirm('Deseja realmente remover esta foto de perfil?')){ document.getElementById('delete-avatar-form').submit(); }" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-rose-600/90 text-white flex items-center justify-center shadow-md cursor-pointer hover:bg-rose-700 transition-transform hover:scale-105" title="Remover Foto">
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    </button>
+                    @endif
+
                     <!-- Edit Icon Badge -->
                     <button type="button" onclick="document.getElementById('avatar-input').click()" class="absolute bottom-3 right-3 w-8 h-8 rounded-full bg-[#590219] text-white flex items-center justify-center shadow-md cursor-pointer hover:bg-[#3f0111] transition-transform hover:scale-105" title="Alterar Foto de Perfil">
                         <i data-lucide="camera" class="w-4 h-4"></i>
@@ -223,6 +231,11 @@
         <button type="submit" class="w-full py-4 bg-[#590219] text-white font-bold text-sm rounded-2xl shadow-xl hover:bg-[#3f0111] transition-all text-center mt-2">
             Salvar Alterações
         </button>
+    </form>
+
+    <!-- Hidden Form for Avatar Deletion -->
+    <form id="delete-avatar-form" action="{{ route('profile.delete-avatar') }}" method="POST" class="hidden">
+        @csrf
     </form>
 
     <!-- Logout Form Button -->

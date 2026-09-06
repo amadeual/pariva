@@ -77,7 +77,7 @@
                 <!-- Document Info Tag -->
                 <div class="flex items-center gap-2 text-xs font-bold text-[#590219]">
                     <i data-lucide="file-text" class="w-4 h-4"></i>
-                    <span>Documento enviado: <strong class="uppercase text-[#221417]">{{ $v->document_type }}</strong></span>
+                    <span>Documento enviado: <strong class="uppercase text-[#221417]">{{ $v->document_type === 'rg_rne_cnh' ? 'RG / RNE / CNH' : ($v->document_type === 'passport' ? 'Passaporte' : strtoupper($v->document_type)) }}</strong></span>
                 </div>
 
                 <!-- Document Photo & Selfie Side-by-Side Comparison -->

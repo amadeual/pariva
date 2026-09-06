@@ -460,7 +460,7 @@
                     <i data-lucide="shield-check" class="w-8 h-8"></i>
                 </div>
                 <h3 class="text-xl font-extrabold text-[#221417]">Verificação de Perfil</h3>
-                <p class="text-xs text-[#796a6e]">Envie um documento oficial (RG, CNH ou Passaporte) e uma selfie para confirmar sua identidade.</p>
+                <p class="text-xs text-[#796a6e]">Envie um documento oficial (RG/RNE/CNH ou Passaporte) e uma selfie para confirmar sua identidade.</p>
             </div>
 
             @php
@@ -504,9 +504,8 @@
                             <span>1. Tipo de Documento Oficial</span>
                         </label>
                         <select name="document_type" class="w-full bg-[#fbf9f8] border border-[#ede7e5] rounded-xl p-2.5 text-xs text-[#221417] font-semibold focus:border-[#590219] focus:outline-none" required>
-                            <option value="rg">RG (Carteira de Identidade)</option>
-                            <option value="cnh">CNH (Carteira de Motorista)</option>
-                            <option value="passport">Passaporte Nacional</option>
+                            <option value="rg_rne_cnh">RG / RNE / CNH (Documento de Identidade ou Habilitação)</option>
+                            <option value="passport">Passaporte Nacional ou Internacional</option>
                         </select>
                     </div>
 

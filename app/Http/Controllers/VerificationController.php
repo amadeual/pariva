@@ -16,12 +16,12 @@ class VerificationController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'document_type' => ['required', 'string', 'in:rg,cnh,passport'],
+            'document_type' => ['required', 'string', 'in:rg_rne_cnh,rg,rne,cnh,passport'],
             'document_photo' => ['required', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'],
             'selfie_photo' => ['required', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'],
         ], [
             'document_type.required' => 'Selecione o tipo de documento enviado.',
-            'document_photo.required' => 'Por favor, envie a foto do seu documento de identidade (RG, CNH ou Passaporte).',
+            'document_photo.required' => 'Por favor, envie a foto do seu documento de identidade (RG/RNE/CNH ou Passaporte).',
             'document_photo.image' => 'A foto do documento deve ser um arquivo de imagem válido (JPG ou PNG).',
             'document_photo.max' => 'A foto do documento deve ter no máximo 5MB.',
             'selfie_photo.required' => 'Por favor, tire ou envie uma selfie segurando o rosto visível para comparação.',

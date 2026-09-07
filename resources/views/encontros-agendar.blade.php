@@ -74,24 +74,24 @@
         <div class="flex flex-col gap-2.5">
             <div class="relative">
                 <i data-lucide="sparkles" class="w-4 h-4 text-[#590219] absolute left-3.5 top-1/2 -translate-y-1/2"></i>
-                <input type="text" name="title" id="input-title" required value="Vinhos & Tapas" placeholder="Ex: Café no Fim de Tarde, Jantar Romântico..." class="w-full pl-10 pr-4 py-3 rounded-2xl border border-[#ede7e5] bg-white text-xs font-bold text-[#221417] focus:outline-none focus:border-[#590219] focus:ring-1 focus:ring-[#590219]">
+                <input type="text" name="title" id="input-title" required value="Vinhos & Tapas" placeholder="Ex: Café no Fim de Tarde, Jantar Romântico..." class="w-full pl-10 pr-4 py-3 rounded-2xl border border-[#ede7e5] bg-white text-xs font-bold text-[#221417] focus:outline-none focus:border-[#590219] focus:ring-1 focus:ring-[#590219] shadow-xs">
             </div>
 
             <!-- Vibe Cards Suggestions -->
             <div class="flex gap-2.5 overflow-x-auto pb-1 scrollbar-none">
-                <div onclick="selectVibe('Vinhos & Tapas')" class="px-3.5 py-2 rounded-xl bg-white border border-[#ede7e5] hover:border-[#590219] hover:bg-[#fdf2f4] text-xs font-bold text-[#221417] shrink-0 cursor-pointer flex items-center gap-1.5 transition-colors">
+                <div onclick="selectVibe('Vinhos & Tapas')" class="px-3.5 py-2 rounded-xl bg-white border border-[#ede7e5] hover:border-[#590219] hover:bg-[#fdf2f4] text-xs font-bold text-[#221417] shrink-0 cursor-pointer flex items-center gap-1.5 transition-colors shadow-2xs">
                     <i data-lucide="wine" class="w-3.5 h-3.5 text-[#590219]"></i>
                     <span>Vinhos & Tapas</span>
                 </div>
-                <div onclick="selectVibe('Café & Conversa')" class="px-3.5 py-2 rounded-xl bg-white border border-[#ede7e5] hover:border-[#590219] hover:bg-[#fdf2f4] text-xs font-bold text-[#221417] shrink-0 cursor-pointer flex items-center gap-1.5 transition-colors">
+                <div onclick="selectVibe('Café & Conversa')" class="px-3.5 py-2 rounded-xl bg-white border border-[#ede7e5] hover:border-[#590219] hover:bg-[#fdf2f4] text-xs font-bold text-[#221417] shrink-0 cursor-pointer flex items-center gap-1.5 transition-colors shadow-2xs">
                     <i data-lucide="coffee" class="w-3.5 h-3.5 text-[#590219]"></i>
                     <span>Café & Conversa</span>
                 </div>
-                <div onclick="selectVibe('Galeria de Arte')" class="px-3.5 py-2 rounded-xl bg-white border border-[#ede7e5] hover:border-[#590219] hover:bg-[#fdf2f4] text-xs font-bold text-[#221417] shrink-0 cursor-pointer flex items-center gap-1.5 transition-colors">
+                <div onclick="selectVibe('Galeria de Arte')" class="px-3.5 py-2 rounded-xl bg-white border border-[#ede7e5] hover:border-[#590219] hover:bg-[#fdf2f4] text-xs font-bold text-[#221417] shrink-0 cursor-pointer flex items-center gap-1.5 transition-colors shadow-2xs">
                     <i data-lucide="palette" class="w-3.5 h-3.5 text-[#590219]"></i>
                     <span>Galeria de Arte</span>
                 </div>
-                <div onclick="selectVibe('Parque & Sol')" class="px-3.5 py-2 rounded-xl bg-white border border-[#ede7e5] hover:border-[#590219] hover:bg-[#fdf2f4] text-xs font-bold text-[#221417] shrink-0 cursor-pointer flex items-center gap-1.5 transition-colors">
+                <div onclick="selectVibe('Parque & Sol')" class="px-3.5 py-2 rounded-xl bg-white border border-[#ede7e5] hover:border-[#590219] hover:bg-[#fdf2f4] text-xs font-bold text-[#221417] shrink-0 cursor-pointer flex items-center gap-1.5 transition-colors shadow-2xs">
                     <i data-lucide="trees" class="w-3.5 h-3.5 text-[#590219]"></i>
                     <span>Parque & Sol</span>
                 </div>
@@ -103,31 +103,38 @@
     <div class="flex flex-col gap-3">
         <div class="flex justify-between items-center px-1">
             <h2 class="text-base font-extrabold text-[#221417]">3. Data e Horário</h2>
+            <span class="text-[10px] text-[#590219] font-bold">Defina o Momento</span>
         </div>
 
-        <div class="bg-[#eee9e6] rounded-3xl p-4 flex flex-col gap-3 border border-[#ede7e5]">
+        <div class="bg-gradient-to-br from-white via-[#fdf2f4]/70 to-[#fae6e9] rounded-3xl p-4.5 flex flex-col gap-3.5 border border-[#590219]/20 shadow-sm">
             <div class="flex flex-col gap-1.5">
-                <label class="text-[10px] font-extrabold uppercase tracking-wider text-[#796a6e]">Selecione Data e Hora</label>
+                <label class="text-[10px] font-extrabold uppercase tracking-wider text-[#590219] flex items-center gap-1">
+                    <i data-lucide="clock" class="w-3 h-3 text-[#ff007f]"></i>
+                    <span>Escolher Data e Horário Exatos</span>
+                </label>
                 <div class="relative">
-                    <i data-lucide="calendar" class="w-4 h-4 text-[#590219] absolute left-3.5 top-1/2 -translate-y-1/2"></i>
-                    <input type="datetime-local" name="date_time" id="input-datetime" required value="{{ now()->addDays(1)->setTime(20, 0)->format('Y-m-d\TH:i') }}" class="w-full pl-10 pr-4 py-3 rounded-2xl border border-[#ede7e5] bg-white text-xs font-bold text-[#221417] focus:outline-none focus:border-[#590219]">
+                    <i data-lucide="calendar-clock" class="w-4 h-4 text-[#590219] absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                    <input type="datetime-local" name="date_time" id="input-datetime" required value="{{ now()->addDays(1)->setTime(20, 0)->format('Y-m-d\TH:i') }}" class="w-full pl-10 pr-4 py-3.5 rounded-2xl border-2 border-[#590219]/20 bg-white text-xs font-extrabold text-[#590219] focus:outline-none focus:border-[#590219] focus:ring-2 focus:ring-[#590219]/10 shadow-xs">
                 </div>
             </div>
 
             <!-- Quick Date Presets -->
-            <div class="flex flex-wrap gap-2 pt-1">
-                <button type="button" onclick="setQuickDate(0, '20:00')" class="px-3 py-1.5 rounded-xl bg-white border border-[#ede7e5] text-[11px] font-bold text-[#221417] hover:border-[#590219] hover:bg-[#fdf2f4] transition-colors">
-                    Hoje 20:00
-                </button>
-                <button type="button" onclick="setQuickDate(1, '19:30')" class="px-3 py-1.5 rounded-xl bg-white border border-[#ede7e5] text-[11px] font-bold text-[#221417] hover:border-[#590219] hover:bg-[#fdf2f4] transition-colors">
-                    Amanhã 19:30
-                </button>
-                <button type="button" onclick="setQuickDate(2, '20:00')" class="px-3 py-1.5 rounded-xl bg-white border border-[#ede7e5] text-[11px] font-bold text-[#221417] hover:border-[#590219] hover:bg-[#fdf2f4] transition-colors">
-                    Em 2 dias 20:00
-                </button>
-                <button type="button" onclick="setQuickDate(5, '20:30')" class="px-3 py-1.5 rounded-xl bg-white border border-[#ede7e5] text-[11px] font-bold text-[#221417] hover:border-[#590219] hover:bg-[#fdf2f4] transition-colors">
-                    Fim de semana
-                </button>
+            <div class="flex flex-col gap-1.5">
+                <span class="text-[9px] font-extrabold uppercase tracking-wider text-[#796a6e]">Sugestões Rápidas:</span>
+                <div class="flex flex-wrap gap-2">
+                    <button type="button" onclick="setQuickDate(0, '20:00')" class="px-3 py-1.5 rounded-xl bg-white border border-[#590219]/30 text-[11px] font-extrabold text-[#590219] hover:bg-[#590219] hover:text-white transition-all shadow-2xs">
+                        Hoje 20:00
+                    </button>
+                    <button type="button" onclick="setQuickDate(1, '19:30')" class="px-3 py-1.5 rounded-xl bg-white border border-[#590219]/30 text-[11px] font-extrabold text-[#590219] hover:bg-[#590219] hover:text-white transition-all shadow-2xs">
+                        Amanhã 19:30
+                    </button>
+                    <button type="button" onclick="setQuickDate(2, '20:00')" class="px-3 py-1.5 rounded-xl bg-white border border-[#590219]/30 text-[11px] font-extrabold text-[#590219] hover:bg-[#590219] hover:text-white transition-all shadow-2xs">
+                        Em 2 dias 20:00
+                    </button>
+                    <button type="button" onclick="setQuickDate(5, '20:30')" class="px-3 py-1.5 rounded-xl bg-white border border-[#590219]/30 text-[11px] font-extrabold text-[#590219] hover:bg-[#590219] hover:text-white transition-all shadow-2xs">
+                        Fim de semana
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -141,21 +148,21 @@
         <div class="flex flex-col gap-2.5">
             <div class="relative">
                 <i data-lucide="map-pin" class="w-4 h-4 text-[#590219] absolute left-3.5 top-1/2 -translate-y-1/2"></i>
-                <input type="text" name="location" id="input-location" required value="Vino! Vila Madalena - R. Fradique Coutinho, 47" placeholder="Ex: Café Girondino, Parque Ibirapuera..." class="w-full pl-10 pr-4 py-3 rounded-2xl border border-[#ede7e5] bg-white text-xs font-bold text-[#221417] focus:outline-none focus:border-[#590219]">
+                <input type="text" name="location" id="input-location" required value="Vino! Vila Madalena - R. Fradique Coutinho, 47" placeholder="Ex: Café Girondino, Parque Ibirapuera..." class="w-full pl-10 pr-4 py-3 rounded-2xl border border-[#ede7e5] bg-white text-xs font-bold text-[#221417] focus:outline-none focus:border-[#590219] shadow-xs">
             </div>
 
             <!-- Venue Suggestions -->
             <div class="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
-                <button type="button" onclick="setLocation('Vino! Vila Madalena - R. Fradique Coutinho, 47')" class="px-3 py-1.5 rounded-xl bg-white border border-[#ede7e5] text-[10px] font-bold text-[#796a6e] hover:text-[#590219] hover:border-[#590219] shrink-0">
+                <button type="button" onclick="setLocation('Vino! Vila Madalena - R. Fradique Coutinho, 47')" class="px-3 py-1.5 rounded-xl bg-white border border-[#ede7e5] text-[10px] font-bold text-[#796a6e] hover:text-[#590219] hover:border-[#590219] shrink-0 shadow-2xs">
                     Vino! Vila Madalena
                 </button>
-                <button type="button" onclick="setLocation('Café Girondino - Centro Histórico')" class="px-3 py-1.5 rounded-xl bg-white border border-[#ede7e5] text-[10px] font-bold text-[#796a6e] hover:text-[#590219] hover:border-[#590219] shrink-0">
+                <button type="button" onclick="setLocation('Café Girondino - Centro Histórico')" class="px-3 py-1.5 rounded-xl bg-white border border-[#ede7e5] text-[10px] font-bold text-[#796a6e] hover:text-[#590219] hover:border-[#590219] shrink-0 shadow-2xs">
                     Café Girondino
                 </button>
-                <button type="button" onclick="setLocation('Parque Ibirapuera - Portão 3')" class="px-3 py-1.5 rounded-xl bg-white border border-[#ede7e5] text-[10px] font-bold text-[#796a6e] hover:text-[#590219] hover:border-[#590219] shrink-0">
+                <button type="button" onclick="setLocation('Parque Ibirapuera - Portão 3')" class="px-3 py-1.5 rounded-xl bg-white border border-[#ede7e5] text-[10px] font-bold text-[#796a6e] hover:text-[#590219] hover:border-[#590219] shrink-0 shadow-2xs">
                     Parque Ibirapuera
                 </button>
-                <button type="button" onclick="setLocation('Terraço Itália - Av. Ipiranga, 344')" class="px-3 py-1.5 rounded-xl bg-white border border-[#ede7e5] text-[10px] font-bold text-[#796a6e] hover:text-[#590219] hover:border-[#590219] shrink-0">
+                <button type="button" onclick="setLocation('Terraço Itália - Av. Ipiranga, 344')" class="px-3 py-1.5 rounded-xl bg-white border border-[#ede7e5] text-[10px] font-bold text-[#796a6e] hover:text-[#590219] hover:border-[#590219] shrink-0 shadow-2xs">
                     Terraço Itália
                 </button>
             </div>
@@ -163,7 +170,7 @@
     </div>
 
     <!-- Safety Notice Toggle -->
-    <div class="bg-[#eee9e6] rounded-2xl p-4 flex justify-between items-center border border-[#ede7e5]">
+    <div class="bg-gradient-to-r from-[#fdf2f4] to-white rounded-2xl p-4 flex justify-between items-center border border-[#590219]/20 shadow-xs">
         <div class="flex flex-col gap-0.5 max-w-[240px]">
             <h3 class="font-bold text-xs text-[#221417] flex items-center gap-1.5">
                 <i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i>

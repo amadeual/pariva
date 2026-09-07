@@ -103,39 +103,11 @@
     <div class="flex flex-col gap-3">
         <div class="flex justify-between items-center px-1">
             <h2 class="text-base font-extrabold text-[#221417]">3. Data e Horário</h2>
-            <span class="text-[10px] text-[#590219] font-bold">Defina o Momento</span>
         </div>
 
-        <div class="bg-gradient-to-br from-white via-[#fdf2f4]/70 to-[#fae6e9] rounded-3xl p-4.5 flex flex-col gap-3.5 border border-[#590219]/20 shadow-sm">
-            <div class="flex flex-col gap-1.5">
-                <label class="text-[10px] font-extrabold uppercase tracking-wider text-[#590219] flex items-center gap-1">
-                    <i data-lucide="clock" class="w-3 h-3 text-[#ff007f]"></i>
-                    <span>Escolher Data e Horário Exatos</span>
-                </label>
-                <div class="relative">
-                    <i data-lucide="calendar-clock" class="w-4 h-4 text-[#590219] absolute left-3.5 top-1/2 -translate-y-1/2"></i>
-                    <input type="datetime-local" name="date_time" id="input-datetime" required value="{{ now()->addDays(1)->setTime(20, 0)->format('Y-m-d\TH:i') }}" class="w-full pl-10 pr-4 py-3.5 rounded-2xl border-2 border-[#590219]/20 bg-white text-xs font-extrabold text-[#590219] focus:outline-none focus:border-[#590219] focus:ring-2 focus:ring-[#590219]/10 shadow-xs">
-                </div>
-            </div>
-
-            <!-- Quick Date Presets -->
-            <div class="flex flex-col gap-1.5">
-                <span class="text-[9px] font-extrabold uppercase tracking-wider text-[#796a6e]">Sugestões Rápidas:</span>
-                <div class="flex flex-wrap gap-2">
-                    <button type="button" onclick="setQuickDate(0, '20:00')" class="px-3 py-1.5 rounded-xl bg-white border border-[#590219]/30 text-[11px] font-extrabold text-[#590219] hover:bg-[#590219] hover:text-white transition-all shadow-2xs">
-                        Hoje 20:00
-                    </button>
-                    <button type="button" onclick="setQuickDate(1, '19:30')" class="px-3 py-1.5 rounded-xl bg-white border border-[#590219]/30 text-[11px] font-extrabold text-[#590219] hover:bg-[#590219] hover:text-white transition-all shadow-2xs">
-                        Amanhã 19:30
-                    </button>
-                    <button type="button" onclick="setQuickDate(2, '20:00')" class="px-3 py-1.5 rounded-xl bg-white border border-[#590219]/30 text-[11px] font-extrabold text-[#590219] hover:bg-[#590219] hover:text-white transition-all shadow-2xs">
-                        Em 2 dias 20:00
-                    </button>
-                    <button type="button" onclick="setQuickDate(5, '20:30')" class="px-3 py-1.5 rounded-xl bg-white border border-[#590219]/30 text-[11px] font-extrabold text-[#590219] hover:bg-[#590219] hover:text-white transition-all shadow-2xs">
-                        Fim de semana
-                    </button>
-                </div>
-            </div>
+        <div class="relative">
+            <i data-lucide="calendar" class="w-4 h-4 text-[#590219] absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+            <input type="datetime-local" name="date_time" id="input-datetime" required value="{{ now()->addDays(1)->setTime(20, 0)->format('Y-m-d\TH:i') }}" class="w-full pl-10 pr-4 py-3 rounded-2xl border border-[#ede7e5] bg-white text-xs font-bold text-[#221417] focus:outline-none focus:border-[#590219] focus:ring-1 focus:ring-[#590219] shadow-xs">
         </div>
     </div>
 
@@ -223,21 +195,6 @@ function selectVibe(vibeTitle) {
 
 function setLocation(loc) {
     document.getElementById('input-location').value = loc;
-}
-
-function setQuickDate(daysToAdd, timeStr) {
-    const d = new Date();
-    d.setDate(d.getDate() + daysToAdd);
-    const [hours, minutes] = timeStr.split(':');
-    d.setHours(hours, minutes, 0, 0);
-
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    const h = String(d.getHours()).padStart(2, '0');
-    const m = String(d.getMinutes()).padStart(2, '0');
-
-    document.getElementById('input-datetime').value = `${year}-${month}-${day}T${h}:${m}`;
 }
 </script>
 @endsection

@@ -74,7 +74,7 @@
         <div class="flex flex-col gap-2.5">
             <div class="relative">
                 <i data-lucide="sparkles" class="w-4 h-4 text-[#590219] absolute left-3.5 top-1/2 -translate-y-1/2"></i>
-                <input type="text" name="title" id="input-title" required value="Vinhos & Tapas" placeholder="Ex: Café no Fim de Tarde, Jantar Romântico..." class="w-full pl-10 pr-4 py-3 rounded-2xl border border-[#ede7e5] bg-white text-xs font-bold text-[#221417] focus:outline-none focus:border-[#590219] focus:ring-1 focus:ring-[#590219] shadow-xs">
+                <input type="text" name="title" id="input-title" required value="Vinhos & Tapas" placeholder="Ex: Café no Fim de Tarde, Jantar Romântico..." class="w-full h-12 pl-10 pr-4 rounded-2xl border border-[#ede7e5] bg-white text-xs font-bold text-[#221417] focus:outline-none focus:border-[#590219] shadow-xs">
             </div>
 
             <!-- Vibe Cards Suggestions -->
@@ -105,9 +105,11 @@
             <h2 class="text-base font-extrabold text-[#221417]">3. Data e Horário</h2>
         </div>
 
-        <div class="relative">
-            <i data-lucide="calendar" class="w-4 h-4 text-[#590219] absolute left-3.5 top-1/2 -translate-y-1/2"></i>
-            <input type="datetime-local" name="date_time" id="input-datetime" required value="{{ now()->addDays(1)->setTime(20, 0)->format('Y-m-d\TH:i') }}" class="w-full pl-10 pr-4 py-3 rounded-2xl border border-[#ede7e5] bg-white text-xs font-bold text-[#221417] focus:outline-none focus:border-[#590219] focus:ring-1 focus:ring-[#590219] shadow-xs">
+        <div class="flex flex-col gap-2.5">
+            <div class="relative">
+                <i data-lucide="calendar" class="w-4 h-4 text-[#590219] absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                <input type="datetime-local" name="date_time" id="input-datetime" required value="{{ now()->addDays(1)->setTime(20, 0)->format('Y-m-d\TH:i') }}" class="w-full h-12 pl-10 pr-4 rounded-2xl border border-[#ede7e5] bg-white text-xs font-bold text-[#221417] focus:outline-none focus:border-[#590219] shadow-xs">
+            </div>
         </div>
     </div>
 
@@ -120,7 +122,7 @@
         <div class="flex flex-col gap-2.5">
             <div class="relative">
                 <i data-lucide="map-pin" class="w-4 h-4 text-[#590219] absolute left-3.5 top-1/2 -translate-y-1/2"></i>
-                <input type="text" name="location" id="input-location" required value="Vino! Vila Madalena - R. Fradique Coutinho, 47" placeholder="Ex: Café Girondino, Parque Ibirapuera..." class="w-full pl-10 pr-4 py-3 rounded-2xl border border-[#ede7e5] bg-white text-xs font-bold text-[#221417] focus:outline-none focus:border-[#590219] shadow-xs">
+                <input type="text" name="location" id="input-location" required value="Vino! Vila Madalena - R. Fradique Coutinho, 47" placeholder="Ex: Café Girondino, Parque Ibirapuera..." class="w-full h-12 pl-10 pr-4 rounded-2xl border border-[#ede7e5] bg-white text-xs font-bold text-[#221417] focus:outline-none focus:border-[#590219] shadow-xs">
             </div>
 
             <!-- Venue Suggestions -->

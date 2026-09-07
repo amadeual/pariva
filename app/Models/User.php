@@ -143,5 +143,28 @@ class User extends Authenticatable
     {
         return \App\Models\Message::where('receiver_id', $this->id)->where('is_read', false)->count();
     }
+
+    public function pendingDatesCount(): int
+    {
+        return \App\Models\Date::where('target_user_id', $this->id)
+            ->where('status', 'pendente')
+            ->count();
+    }
+
+    public function getMatches()
+    {
+        $likedUserIds = UserLike::where('user_id', $this->id)->pluck('liked_user_id');
+        $matchedUserIds = UserLike::where('liked_user_id', $this->id)
+            ->whereIn('user_id', $likedUserIds)
+            ->pluck('user_id');
+
+        $matches = User::whereIn('id', $matchedUserIds)->get();
+
+        if ($matches->isEmpty()) {
+            $matches = User::where('id', '!=', $this->id)->take(5)->get();
+        }
+
+        return $matches;
+    }
 }
 

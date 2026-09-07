@@ -127,9 +127,19 @@
                 <span>Explorar</span>
             </a>
 
-            <!-- Agenda (Calendar Heart Icon) -->
-            <a href="{{ route('encontros') }}" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-2xl transition-all duration-200 {{ request()->routeIs('encontros*') ? 'text-[#590219] font-bold bg-[#590219]/10 shadow-xs scale-105' : 'hover:text-[#590219] hover:bg-[#eee8e5]' }}">
-                <i data-lucide="calendar-heart" class="w-5 h-5 {{ request()->routeIs('encontros*') ? 'text-[#590219] stroke-[2.25px]' : 'stroke-[1.75px]' }}"></i>
+            <!-- Agenda (Calendar Heart Icon with Pending Invites Badge) -->
+            @php
+                $pendingDatesCount = Auth::check() ? Auth::user()->pendingDatesCount() : 0;
+            @endphp
+            <a href="{{ route('encontros') }}" class="relative flex flex-col items-center gap-0.5 px-2 py-1 rounded-2xl transition-all duration-200 {{ request()->routeIs('encontros*') ? 'text-[#590219] font-bold bg-[#590219]/10 shadow-xs scale-105' : 'hover:text-[#590219] hover:bg-[#eee8e5]' }}">
+                <div class="relative">
+                    <i data-lucide="calendar-heart" class="w-5 h-5 {{ request()->routeIs('encontros*') ? 'text-[#590219] stroke-[2.25px]' : 'stroke-[1.75px]' }}"></i>
+                    @if($pendingDatesCount > 0)
+                        <span class="absolute -top-1.5 -right-2 min-w-[16px] h-4 px-1 bg-gradient-to-r from-[#ff007f] to-rose-600 text-white text-[9px] font-black rounded-full flex items-center justify-center border-2 border-white shadow-sm animate-pulse">
+                            {{ $pendingDatesCount > 99 ? '99+' : $pendingDatesCount }}
+                        </span>
+                    @endif
+                </div>
                 <span>Agenda</span>
             </a>
             

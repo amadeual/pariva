@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Agendar Encontro com Rafael - Pariva')
+@section('title', 'Agendar Encontro - Pariva')
 
 @section('header')
     <header class="w-full px-5 py-4 flex justify-between items-center bg-[#fbf9f8] border-b border-[#ede7e5]/40">
@@ -10,182 +10,167 @@
         </div>
         <a href="{{ route('encontros') }}" class="text-xs font-bold text-[#590219] hover:underline flex items-center gap-1">
             <i data-lucide="calendar" class="w-4 h-4"></i>
-            <span>Agenda</span>
+            <span>Minha Agenda</span>
         </a>
     </header>
 @endsection
 
 @section('content')
-<form action="{{ route('encontros.store') }}" method="POST" class="px-5 py-3 flex flex-col gap-6 max-w-md mx-auto pb-12">
+<form action="{{ route('encontros.store') }}" method="POST" class="px-5 py-3 flex flex-col gap-6 max-w-md mx-auto pb-16">
     @csrf
 
-    <!-- Hidden Fields for Vibe, Location and DateTime -->
-    <input type="hidden" name="title" id="input-title" value="Vinhos & Tapas com Rafael">
-    <input type="hidden" name="location" id="input-location" value="Vino! Vila Madalena - R. Fradique Coutinho, 47">
-    <input type="hidden" name="date_time" id="input-datetime" value="2026-10-13 20:00:00">
+    <!-- Hidden Field for Selected Target User -->
+    <input type="hidden" name="target_user_id" id="input-target-user-id" value="{{ $targetUser->id ?? '' }}">
 
-    <!-- Avatar & Title Section -->
+    <!-- Page Header & Match Profile Banner -->
     <div class="flex flex-col items-center text-center gap-2 pt-2">
-        <div class="relative w-20 h-20 rounded-full overflow-hidden border-2 border-white shadow-md">
-            <img src="{{ isset($targetUser) ? $targetUser->avatar_url : asset('images/avatars/placeholder.jpg') }}" onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'" alt="{{ $targetUser->name ?? 'Usuário' }}" class="w-full h-full object-cover">
-            <div class="absolute bottom-1 right-1 w-6 h-6 rounded-full bg-white text-[#221417] flex items-center justify-center shadow-md">
-                <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
+        <div class="relative w-20 h-20 rounded-full overflow-hidden border-4 border-white shadow-md">
+            <img id="selected-user-avatar" src="{{ isset($targetUser) ? $targetUser->avatar_url : asset('images/avatars/placeholder.jpg') }}" onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'" alt="{{ $targetUser->name ?? 'Match' }}" class="w-full h-full object-cover">
+            <div class="absolute bottom-0 right-0 w-6 h-6 rounded-full bg-[#590219] text-white flex items-center justify-center shadow-md">
+                <i data-lucide="heart" class="w-3.5 h-3.5 fill-white"></i>
             </div>
         </div>
 
         <h1 class="text-2xl font-extrabold text-[#221417] tracking-tight mt-1">
             Agendar Encontro
         </h1>
-        <p class="text-xs text-[#796a6e] font-medium -mt-1">
-            com {{ isset($targetUser) ? explode(' ', $targetUser->name)[0] : 'Usuário' }}
+        <p id="selected-user-label" class="text-xs text-[#796a6e] font-medium -mt-1">
+            Convite para <strong class="text-[#590219] font-bold">{{ isset($targetUser) ? $targetUser->name : 'Seu Match' }}</strong>
         </p>
     </div>
 
-    <!-- Section 1: A Vibe -->
+    <!-- Section 1: Escolher a Pessoa (Match) -->
     <div class="flex flex-col gap-3">
         <div class="flex justify-between items-center px-1">
-            <h2 class="text-base font-extrabold text-[#221417]">A Vibe</h2>
-            <button type="button" class="text-[10px] font-extrabold uppercase tracking-widest text-[#590219] hover:underline">VER MAIS</button>
+            <h2 class="text-base font-extrabold text-[#221417]">1. Selecionar Match</h2>
+            <span class="text-[10px] text-[#796a6e] font-medium">Pessoas com Match</span>
         </div>
 
-        <!-- Horizontal Vibe Cards Carousel -->
-        <div class="flex gap-3 overflow-x-auto pb-1 scrollbar-none">
-            
-            <!-- Vibe 1: Vinho & Tapas (Selected with Checkmark) -->
-            <div onclick="selectVibe('Vinhos & Tapas com Rafael')" class="relative min-w-[140px] w-36 h-44 rounded-2xl overflow-hidden shadow-sm border-2 border-[#590219] shrink-0 cursor-pointer">
-                <img src="{{ asset('images/moments/cafe.jpg') }}" alt="Vinhos & Tapas" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
-
-                <!-- Selected Checkmark Icon -->
-                <div class="absolute top-2.5 right-2.5 w-5 h-5 rounded-full bg-[#590219] text-white flex items-center justify-center shadow-xs">
-                    <i data-lucide="check" class="w-3 h-3 stroke-[3]"></i>
-                </div>
-
-                <div class="absolute bottom-3 left-3 right-3 text-white flex flex-col">
-                    <span class="text-[9px] font-extrabold uppercase tracking-wider opacity-90">RELAXADO</span>
-                    <h3 class="font-bold text-xs leading-tight">Vinhos & Tapas</h3>
-                </div>
-            </div>
-
-            <!-- Vibe 2: Galeria de Arte -->
-            <div onclick="selectVibe('Galeria de Arte com Rafael')" class="relative min-w-[140px] w-36 h-44 rounded-2xl overflow-hidden shadow-sm border border-[#ede7e5] shrink-0 cursor-pointer">
-                <img src="{{ asset('images/moments/museum.jpg') }}" alt="Galeria de Arte" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
-
-                <div class="absolute bottom-3 left-3 right-3 text-white flex flex-col">
-                    <span class="text-[9px] font-extrabold uppercase tracking-wider opacity-90">CULTURAL</span>
-                    <h3 class="font-bold text-xs leading-tight">Galeria de Arte</h3>
-                </div>
-            </div>
-
-            <!-- Vibe 3: Picnic -->
-            <div onclick="selectVibe('Parque & Sol com Rafael')" class="relative min-w-[140px] w-36 h-44 rounded-2xl overflow-hidden shadow-sm border border-[#ede7e5] shrink-0 cursor-pointer">
-                <img src="{{ asset('images/moments/picnic.jpg') }}" alt="Passeio" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
-
-                <div class="absolute bottom-3 left-3 right-3 text-white flex flex-col">
-                    <span class="text-[9px] font-extrabold uppercase tracking-wider opacity-90">AR LIVRE</span>
-                    <h3 class="font-bold text-xs leading-tight">Parque & Sol</h3>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- Section 2: Quando? -->
-    <div class="flex flex-col gap-3">
-        <h2 class="text-base font-extrabold text-[#221417]">Quando?</h2>
-
-        <div class="bg-[#eee9e6] rounded-3xl p-5 flex flex-col gap-4 border border-[#ede7e5]">
-            <!-- Calendar Month Header -->
-            <div class="flex justify-between items-center px-2">
-                <button type="button" class="text-[#796a6e] hover:text-[#590219]">
-                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
-                </button>
-                <span class="text-xs font-extrabold uppercase tracking-widest text-[#221417]">OUTUBRO 2026</span>
-                <button type="button" class="text-[#796a6e] hover:text-[#590219]">
-                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
-                </button>
-            </div>
-
-            <!-- Calendar Days Row -->
-            <div class="grid grid-cols-5 gap-2 text-center">
-                <div class="flex flex-col items-center gap-1.5 cursor-pointer">
-                    <span class="text-[10px] font-semibold text-[#796a6e]">Qui</span>
-                    <span class="text-xs font-bold text-[#221417]">12</span>
-                </div>
-                <div class="flex flex-col items-center gap-1.5 cursor-pointer">
-                    <span class="text-[10px] font-bold text-[#590219]">Sex</span>
-                    <span class="w-8 h-8 rounded-full bg-[#590219] text-white flex items-center justify-center text-xs font-extrabold shadow-md">13</span>
-                </div>
-                <div class="flex flex-col items-center gap-1.5 cursor-pointer">
-                    <span class="text-[10px] font-semibold text-[#796a6e]">Sáb</span>
-                    <span class="text-xs font-bold text-[#221417]">14</span>
-                </div>
-                <div class="flex flex-col items-center gap-1.5 cursor-pointer">
-                    <span class="text-[10px] font-semibold text-[#796a6e]">Dom</span>
-                    <span class="text-xs font-bold text-[#221417]">15</span>
-                </div>
-                <div class="flex flex-col items-center gap-1.5 cursor-pointer">
-                    <span class="text-[10px] font-semibold text-[#796a6e]">Seg</span>
-                    <span class="text-xs font-bold text-[#221417]">16</span>
-                </div>
-            </div>
-
-            <div class="h-px bg-[#ede7e5]"></div>
-
-            <!-- Time Options -->
-            <div class="flex justify-between items-center gap-2 pt-1">
-                <button type="button" class="flex-1 py-2.5 rounded-xl bg-transparent text-[#221417] text-xs font-bold hover:bg-white/50 transition-colors text-center">
-                    19:00
-                </button>
-                <button type="button" class="flex-1 py-2.5 rounded-xl bg-[#590219] text-white text-xs font-bold shadow-md text-center">
-                    20:00
-                </button>
-                <button type="button" class="flex-1 py-2.5 rounded-xl bg-transparent text-[#221417] text-xs font-bold hover:bg-white/50 transition-colors text-center">
-                    21:00
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Section 3: Onde? -->
-    <div class="flex flex-col gap-3">
-        <div class="flex justify-between items-center">
-            <h2 class="text-base font-extrabold text-[#221417]">Onde?</h2>
-            <button type="button" class="text-[#796a6e] hover:text-[#590219]">
-                <i data-lucide="search" class="w-4 h-4"></i>
-            </button>
-        </div>
-
-        <!-- Venue Card with Map Background -->
-        <div class="relative w-full rounded-2xl overflow-hidden border border-[#ede7e5] bg-sky-100 p-3 shadow-xs">
-            <div class="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] [background-size:12px_12px] opacity-70"></div>
-            
-            <div class="relative z-10 bg-white/95 backdrop-blur-md rounded-xl p-3 flex justify-between items-center border border-[#ede7e5]">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-[#f8d7da] flex items-center justify-center text-[#590219]">
-                        <i data-lucide="wine" class="w-5 h-5"></i>
+        <div class="flex gap-3 overflow-x-auto pb-2 scrollbar-none px-1">
+            @forelse($matches as $match)
+                <div onclick="selectMatch('{{ $match->id }}', '{{ e($match->name) }}', '{{ e($match->avatar_url) }}')" id="match-card-{{ $match->id }}" class="match-card flex flex-col items-center gap-1.5 p-2 rounded-2xl border-2 transition-all cursor-pointer shrink-0 w-24 {{ (isset($targetUser) && $targetUser->id == $match->id) ? 'border-[#590219] bg-[#fdf2f4] shadow-sm' : 'border-[#ede7e5] bg-white hover:border-[#590219]/40' }}">
+                    <div class="relative w-14 h-14 rounded-full overflow-hidden border border-[#ede7e5]">
+                        <img src="{{ $match->avatar_url }}" onerror="this.src='{{ asset('images/avatars/placeholder.jpg') }}'" class="w-full h-full object-cover" alt="{{ $match->name }}">
+                        <div id="check-icon-{{ $match->id }}" class="match-check-icon absolute inset-0 bg-[#590219]/30 flex items-center justify-center {{ (isset($targetUser) && $targetUser->id == $match->id) ? '' : 'hidden' }}">
+                            <i data-lucide="check" class="w-5 h-5 text-white stroke-[3]"></i>
+                        </div>
                     </div>
-                    <div class="flex flex-col">
-                        <h3 class="font-bold text-xs text-[#221417]">Vino! Vila Madalena</h3>
-                        <p class="text-[10px] text-[#796a6e] font-medium">R. Fradique Coutinho, 47 - Pin...</p>
-                    </div>
+                    <span class="text-xs font-bold text-[#221417] truncate w-full text-center">{{ explode(' ', $match->name)[0] }}</span>
                 </div>
+            @empty
+                <div class="w-full bg-white rounded-2xl p-4 border border-[#ede7e5] text-center text-xs text-[#796a6e]">
+                    Nenhum match encontrado. Explore mais perfis para dar match!
+                </div>
+            @endforelse
+        </div>
+    </div>
 
-                <button type="button" class="text-[#796a6e] hover:text-[#590219]">
-                    <i data-lucide="pencil" class="w-4 h-4"></i>
+    <!-- Section 2: Qual a Vibe? -->
+    <div class="flex flex-col gap-3">
+        <div class="flex justify-between items-center px-1">
+            <h2 class="text-base font-extrabold text-[#221417]">2. A Vibe do Date</h2>
+        </div>
+
+        <div class="flex flex-col gap-2.5">
+            <div class="relative">
+                <i data-lucide="sparkles" class="w-4 h-4 text-[#590219] absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                <input type="text" name="title" id="input-title" required value="Vinhos & Tapas" placeholder="Ex: Café no Fim de Tarde, Jantar Romântico..." class="w-full pl-10 pr-4 py-3 rounded-2xl border border-[#ede7e5] bg-white text-xs font-bold text-[#221417] focus:outline-none focus:border-[#590219] focus:ring-1 focus:ring-[#590219]">
+            </div>
+
+            <!-- Vibe Cards Suggestions -->
+            <div class="flex gap-2.5 overflow-x-auto pb-1 scrollbar-none">
+                <div onclick="selectVibe('Vinhos & Tapas')" class="px-3.5 py-2 rounded-xl bg-white border border-[#ede7e5] hover:border-[#590219] hover:bg-[#fdf2f4] text-xs font-bold text-[#221417] shrink-0 cursor-pointer flex items-center gap-1.5 transition-colors">
+                    <i data-lucide="wine" class="w-3.5 h-3.5 text-[#590219]"></i>
+                    <span>Vinhos & Tapas</span>
+                </div>
+                <div onclick="selectVibe('Café & Conversa')" class="px-3.5 py-2 rounded-xl bg-white border border-[#ede7e5] hover:border-[#590219] hover:bg-[#fdf2f4] text-xs font-bold text-[#221417] shrink-0 cursor-pointer flex items-center gap-1.5 transition-colors">
+                    <i data-lucide="coffee" class="w-3.5 h-3.5 text-[#590219]"></i>
+                    <span>Café & Conversa</span>
+                </div>
+                <div onclick="selectVibe('Galeria de Arte')" class="px-3.5 py-2 rounded-xl bg-white border border-[#ede7e5] hover:border-[#590219] hover:bg-[#fdf2f4] text-xs font-bold text-[#221417] shrink-0 cursor-pointer flex items-center gap-1.5 transition-colors">
+                    <i data-lucide="palette" class="w-3.5 h-3.5 text-[#590219]"></i>
+                    <span>Galeria de Arte</span>
+                </div>
+                <div onclick="selectVibe('Parque & Sol')" class="px-3.5 py-2 rounded-xl bg-white border border-[#ede7e5] hover:border-[#590219] hover:bg-[#fdf2f4] text-xs font-bold text-[#221417] shrink-0 cursor-pointer flex items-center gap-1.5 transition-colors">
+                    <i data-lucide="trees" class="w-3.5 h-3.5 text-[#590219]"></i>
+                    <span>Parque & Sol</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 3: Quando? (Data e Horário) -->
+    <div class="flex flex-col gap-3">
+        <div class="flex justify-between items-center px-1">
+            <h2 class="text-base font-extrabold text-[#221417]">3. Data e Horário</h2>
+        </div>
+
+        <div class="bg-[#eee9e6] rounded-3xl p-4 flex flex-col gap-3 border border-[#ede7e5]">
+            <div class="flex flex-col gap-1.5">
+                <label class="text-[10px] font-extrabold uppercase tracking-wider text-[#796a6e]">Selecione Data e Hora</label>
+                <div class="relative">
+                    <i data-lucide="calendar" class="w-4 h-4 text-[#590219] absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                    <input type="datetime-local" name="date_time" id="input-datetime" required value="{{ now()->addDays(1)->setTime(20, 0)->format('Y-m-d\TH:i') }}" class="w-full pl-10 pr-4 py-3 rounded-2xl border border-[#ede7e5] bg-white text-xs font-bold text-[#221417] focus:outline-none focus:border-[#590219]">
+                </div>
+            </div>
+
+            <!-- Quick Date Presets -->
+            <div class="flex flex-wrap gap-2 pt-1">
+                <button type="button" onclick="setQuickDate(0, '20:00')" class="px-3 py-1.5 rounded-xl bg-white border border-[#ede7e5] text-[11px] font-bold text-[#221417] hover:border-[#590219] hover:bg-[#fdf2f4] transition-colors">
+                    Hoje 20:00
+                </button>
+                <button type="button" onclick="setQuickDate(1, '19:30')" class="px-3 py-1.5 rounded-xl bg-white border border-[#ede7e5] text-[11px] font-bold text-[#221417] hover:border-[#590219] hover:bg-[#fdf2f4] transition-colors">
+                    Amanhã 19:30
+                </button>
+                <button type="button" onclick="setQuickDate(2, '20:00')" class="px-3 py-1.5 rounded-xl bg-white border border-[#ede7e5] text-[11px] font-bold text-[#221417] hover:border-[#590219] hover:bg-[#fdf2f4] transition-colors">
+                    Em 2 dias 20:00
+                </button>
+                <button type="button" onclick="setQuickDate(5, '20:30')" class="px-3 py-1.5 rounded-xl bg-white border border-[#ede7e5] text-[11px] font-bold text-[#221417] hover:border-[#590219] hover:bg-[#fdf2f4] transition-colors">
+                    Fim de semana
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Section 4: Compartilhar Encontro Toggle Card -->
+    <!-- Section 4: Onde? (Local) -->
+    <div class="flex flex-col gap-3">
+        <div class="flex justify-between items-center px-1">
+            <h2 class="text-base font-extrabold text-[#221417]">4. Local do Encontro</h2>
+        </div>
+
+        <div class="flex flex-col gap-2.5">
+            <div class="relative">
+                <i data-lucide="map-pin" class="w-4 h-4 text-[#590219] absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                <input type="text" name="location" id="input-location" required value="Vino! Vila Madalena - R. Fradique Coutinho, 47" placeholder="Ex: Café Girondino, Parque Ibirapuera..." class="w-full pl-10 pr-4 py-3 rounded-2xl border border-[#ede7e5] bg-white text-xs font-bold text-[#221417] focus:outline-none focus:border-[#590219]">
+            </div>
+
+            <!-- Venue Suggestions -->
+            <div class="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
+                <button type="button" onclick="setLocation('Vino! Vila Madalena - R. Fradique Coutinho, 47')" class="px-3 py-1.5 rounded-xl bg-white border border-[#ede7e5] text-[10px] font-bold text-[#796a6e] hover:text-[#590219] hover:border-[#590219] shrink-0">
+                    Vino! Vila Madalena
+                </button>
+                <button type="button" onclick="setLocation('Café Girondino - Centro Histórico')" class="px-3 py-1.5 rounded-xl bg-white border border-[#ede7e5] text-[10px] font-bold text-[#796a6e] hover:text-[#590219] hover:border-[#590219] shrink-0">
+                    Café Girondino
+                </button>
+                <button type="button" onclick="setLocation('Parque Ibirapuera - Portão 3')" class="px-3 py-1.5 rounded-xl bg-white border border-[#ede7e5] text-[10px] font-bold text-[#796a6e] hover:text-[#590219] hover:border-[#590219] shrink-0">
+                    Parque Ibirapuera
+                </button>
+                <button type="button" onclick="setLocation('Terraço Itália - Av. Ipiranga, 344')" class="px-3 py-1.5 rounded-xl bg-white border border-[#ede7e5] text-[10px] font-bold text-[#796a6e] hover:text-[#590219] hover:border-[#590219] shrink-0">
+                    Terraço Itália
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Safety Notice Toggle -->
     <div class="bg-[#eee9e6] rounded-2xl p-4 flex justify-between items-center border border-[#ede7e5]">
         <div class="flex flex-col gap-0.5 max-w-[240px]">
-            <h3 class="font-bold text-xs text-[#221417]">Compartilhar Encontro</h3>
+            <h3 class="font-bold text-xs text-[#221417] flex items-center gap-1.5">
+                <i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i>
+                <span>Compartilhar Encontro Seguro</span>
+            </h3>
             <p class="text-[10px] text-[#796a6e] leading-snug">
-                Seus contatos de confiança receberão os detalhes de local e horário automaticamente.
+                Notifica automaticamente seus contatos de emergência quando o date for aceito.
             </p>
         </div>
 
@@ -196,16 +181,56 @@
     </div>
 
     <!-- Confirm Invite Button -->
-    <button type="submit" class="w-full py-4 bg-[#590219] text-white font-bold text-sm rounded-2xl shadow-xl hover:bg-[#3f0111] transition-all flex items-center justify-center gap-2 text-center mt-2 cursor-pointer">
-        <span>Confirmar e Agendar</span>
+    <button type="submit" class="w-full py-4 bg-gradient-to-r from-[#590219] via-[#7c0d28] to-[#ff007f] text-white font-extrabold text-sm rounded-2xl shadow-xl hover:opacity-95 transition-all flex items-center justify-center gap-2 cursor-pointer border border-white/20">
+        <span>Enviar Convite e Agendar</span>
         <i data-lucide="send" class="w-4 h-4"></i>
     </button>
-
 </form>
 
 <script>
+function selectMatch(userId, name, avatarUrl) {
+    document.getElementById('input-target-user-id').value = userId;
+    document.getElementById('selected-user-avatar').src = avatarUrl;
+    document.getElementById('selected-user-label').innerHTML = 'Convite para <strong class="text-[#590219] font-bold">' + name + '</strong>';
+
+    document.querySelectorAll('.match-card').forEach(el => {
+        el.classList.remove('border-[#590219]', 'bg-[#fdf2f4]', 'shadow-sm');
+        el.classList.add('border-[#ede7e5]', 'bg-white');
+    });
+    document.querySelectorAll('.match-check-icon').forEach(el => el.classList.add('hidden'));
+
+    const selectedCard = document.getElementById('match-card-' + userId);
+    const selectedIcon = document.getElementById('check-icon-' + userId);
+    if (selectedCard) {
+        selectedCard.classList.remove('border-[#ede7e5]', 'bg-white');
+        selectedCard.classList.add('border-[#590219]', 'bg-[#fdf2f4]', 'shadow-sm');
+    }
+    if (selectedIcon) {
+        selectedIcon.classList.remove('hidden');
+    }
+}
+
 function selectVibe(vibeTitle) {
     document.getElementById('input-title').value = vibeTitle;
+}
+
+function setLocation(loc) {
+    document.getElementById('input-location').value = loc;
+}
+
+function setQuickDate(daysToAdd, timeStr) {
+    const d = new Date();
+    d.setDate(d.getDate() + daysToAdd);
+    const [hours, minutes] = timeStr.split(':');
+    d.setHours(hours, minutes, 0, 0);
+
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    const h = String(d.getHours()).padStart(2, '0');
+    const m = String(d.getMinutes()).padStart(2, '0');
+
+    document.getElementById('input-datetime').value = `${year}-${month}-${day}T${h}:${m}`;
 }
 </script>
 @endsection

@@ -122,7 +122,8 @@ class AppController extends Controller
     public function encontros()
     {
         $user = Auth::user();
-        $dates = Date::where('user_id', $user->id)
+        $dates = Date::with(['user', 'targetUser'])
+                     ->where('user_id', $user->id)
                      ->orWhere('target_user_id', $user->id)
                      ->orderBy('date_time', 'asc')
                      ->get();
@@ -307,20 +308,27 @@ class AppController extends Controller
         $user = Auth::user();
 
         $validated = $request->validate([
+            'target_user_id' => ['required', 'exists:users,id'],
             'title' => ['required', 'string', 'max:255'],
             'location' => ['required', 'string', 'max:255'],
             'date_time' => ['required', 'date'],
+        ], [
+            'target_user_id.required' => 'Selecione uma pessoa para o encontro.',
+            'title.required' => 'Informe a Vibe / título do encontro.',
+            'location.required' => 'Informe o local do encontro.',
+            'date_time.required' => 'Selecione a data e horário do encontro.',
         ]);
 
         Date::create([
             'user_id' => $user->id,
+            'target_user_id' => $validated['target_user_id'],
             'title' => $validated['title'],
             'location' => $validated['location'],
             'date_time' => $validated['date_time'],
-            'status' => 'confirmado',
+            'status' => 'pendente',
         ]);
 
-        return redirect()->route('encontros')->with('success', 'Encontro agendado com sucesso!');
+        return redirect()->route('encontros')->with('success', 'Convite de encontro enviado com sucesso! Aguardando confirmação.');
     }
 
     public function chat(Request $request)
@@ -642,10 +650,21 @@ class AppController extends Controller
         return view('moments');
     }
 
-    public function agendarEncontro($userId)
+    public function agendarEncontro($userId = null)
     {
-        $targetUser = User::findOrFail($userId);
-        return view('encontros-agendar', compact('targetUser'));
+        $user = Auth::user();
+        $matches = $user->getMatches();
+
+        $targetUser = null;
+        if ($userId) {
+            $targetUser = User::find($userId);
+        }
+
+        if (!$targetUser) {
+            $targetUser = $matches->first();
+        }
+
+        return view('encontros-agendar', compact('matches', 'targetUser'));
     }
 
     public function storeEncontro(Request $request)
@@ -656,14 +675,36 @@ class AppController extends Controller
     public function conviteEncontro($dateId)
     {
         $date = Date::with(['user', 'targetUser'])->findOrFail($dateId);
+        $user = Auth::user();
+
+        if ($date->user_id !== $user->id && $date->target_user_id !== $user->id) {
+            abort(403, 'Acesso não autorizado ao convite.');
+        }
+
         return view('encontros-convite', compact('date'));
     }
 
     public function responderEncontro(Request $request, $dateId)
     {
         $date = Date::findOrFail($dateId);
-        $date->update(['status' => $request->input('status', 'aceito')]);
-        return redirect()->route('encontros')->with('success', 'Resposta enviada!');
+        $user = Auth::user();
+
+        if ($date->target_user_id !== $user->id) {
+            return back()->withErrors(['unauthorized' => 'Você não tem permissão para responder este convite.']);
+        }
+
+        $status = $request->input('status', 'confirmado');
+        if (!in_array($status, ['confirmado', 'recusado', 'cancelado'])) {
+            $status = 'confirmado';
+        }
+
+        $date->update(['status' => $status]);
+
+        $message = $status === 'confirmado'
+            ? 'Convite de encontro aceito com sucesso! Foi confirmado na sua agenda.'
+            : 'Convite de encontro recusado.';
+
+        return redirect()->route('encontros')->with('success', $message);
     }
 }
 

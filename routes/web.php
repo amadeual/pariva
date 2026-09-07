@@ -75,7 +75,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/encontros', [AppController::class, 'encontros'])->name('encontros');
 
-    Route::get('/encontros/agendar/{userId}', [AppController::class, 'agendarEncontro'])->name('encontros.agendar');
+    Route::get('/encontros/agendar/{userId?}', [AppController::class, 'agendarEncontro'])->name('encontros.agendar');
     Route::post('/encontros/agendar', [AppController::class, 'storeEncontro'])->name('encontros.store');
 
     Route::get('/encontros/convite/{dateId}', [AppController::class, 'conviteEncontro'])->name('encontros.convite');
